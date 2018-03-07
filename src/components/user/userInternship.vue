@@ -1,12 +1,13 @@
 <template>
 <div>
-
+  <h3>工作经历</h3>
   <ul class="intern_ul">
-    <li v-for="(item , index) in data">
+    <li v-for="(item , index) in workData">
       <span class="item" style="font-size: large">{{item.company}}<span style="display: inline-block;margin-left: 10px">( {{item.position}} )</span></span>
-      <el-button class="button" type="danger" plain size="small" @click="deleteRow(index,data)">删除</el-button>
+      <!--<el-button class="button" type="danger" plain size="small" @click="deleteRow(index,workData)">删除</el-button>-->
+      <span style="text-align: right;float: right;"> <el-button type="info" plain class="delete" @click="deleteRow(index,workData)"  >╳</el-button></span>
       <span class="item">{{item.start}} - {{item.end}}</span>
-      <span class="describe">{{item.describe}}</span>
+      <span class="describe">{{item.statement}}</span>
     </li>
   </ul>
 
@@ -46,8 +47,8 @@
               ></el-date-picker>
             </el-col>
           </el-form-item>
-          <el-form-item label="项目描述" prop="describe">
-            <el-input type="textarea" v-model="form.describe"></el-input>
+          <el-form-item label="项目描述" prop="statement">
+            <el-input type="textarea" v-model="form.statement"></el-input>
           </el-form-item>
           <!--<el-form-item>-->
           <!--<el-button @click="dialogVisible = false">取 消</el-button>-->
@@ -69,17 +70,27 @@
 
 <script>
     export default {
-        name: "user-internship",
+      name: "user-internship",
+      created(){
+        this.$reqs.get('/users/getUserWork' )
+          .then((res)=> {
+            // let data = res.data;
+            this.workData = res.data;
+            // this.form = this.info;
+            console.log(this.workData)
+          }).catch(function (res) {
+        })
+      },
       data(){
           return {
             dialogVisible:false,
-            data: [
+            workData: [
               {
-                company: 'A公司',
-                position: 'java工程师',
-                start: "2015.02.11",
-                end: '2015.05.15',
-                describe: '期间........................00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000............'
+                // company: 'A公司',
+                // position: 'java工程师',
+                // start: "2015.02.11",
+                // end: '2015.05.15',
+                // describe: '期间........................00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000............'
               }
             ],
             form:{
@@ -87,7 +98,7 @@
               position: '',
               start: "",
               end: '',
-              describe: ''
+              statement: ''
             },
             rules:{
               company: [
@@ -96,7 +107,7 @@
               position: [
                 { required: true, message: '请输入职位名称', trigger: 'blur' }
               ],
-              describe: [
+              statement: [
                 { required: true, message: '请输入任职期间经历', trigger: 'blur' }
               ],
               start: [
@@ -110,7 +121,15 @@
       },
       methods:{
         deleteRow(index, rows) {
-          rows.splice(index, 1);
+          let data = rows.splice(index, 1);
+          console.log(data[0].keyid)
+          this.$reqs.post('/users/deleteUserWork', {
+            keyid:data[0].keyid,
+          }).then( (res)=> {
+            let data = res.data;
+            console.log(data)
+          }).catch(function (res) {
+          });
         },
         submitForm(formName) {
           this.$refs[formName].validate((valid) => {
@@ -120,11 +139,22 @@
               var obj={
                 company:this.form.company,
                 position:this.form.position,
-                describe:this.form.describe,
+                statement:this.form.statement,
                 start:this.form.start,
                 end:this.form.end,
               }
-              this.data.push(obj)
+              this.$reqs.post('/users/insertUserWork', {
+                company:this.form.company,
+                position:this.form.position,
+                statement:this.form.statement,
+                start:this.form.start,
+                end:this.form.end,
+              }).then( (res)=> {
+                let data = res.data;
+                console.log(data)
+              }).catch(function (res) {
+              });
+              this.workData.push(obj)
             } else {
               console.log('error submit!!');
               return false;
@@ -135,7 +165,7 @@
           this.$refs[formName].resetFields();
           this.form.company=''
           this.form.position=''
-          this.form.describe=''
+          this.form.statement=''
           this.form.start=''
           this.form.end=''
           this.dialogVisible = false
@@ -146,13 +176,13 @@
 
 <style scoped>
 .intern_ul{
-  width: 700px;
+  width: 600px;
   list-style: none;
   margin: 30px auto;
   padding: 0 0 0 0;
 }
 .intern_ul>li{
-  width: 600px;
+  width: 500px;
   padding: 30px 30px 30px 40px;
   height: auto;
   border: whitesmoke solid 1px;
@@ -163,7 +193,7 @@
 }
   .item{
     display: inline-block;
-    width: 500px;
+    width: 400px;
     margin: 0 0 10px 0;
     text-align: left;
   }
@@ -179,6 +209,12 @@
   .button{
     float: right;
   }
+.delete{
+  height: 20px;
+  width: 20px;
+  line-height: 20px;
+  padding: 0 0 0 0;
+}
 .form_content{
   width: 400px;
   margin: 0 auto;

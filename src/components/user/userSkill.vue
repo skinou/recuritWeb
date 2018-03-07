@@ -1,12 +1,13 @@
 <template>
 <div>
+  <h3>技能</h3>
   <div class="content">
     <ul>
       <li v-for="(item,index) in skillData" :key="index">
         <div class="skill">
-          <h3 class="title">{{item.skill}}</h3>
+          <h4 class="title">{{item.skill}}</h4>
           <el-button class="button" icon="el-icon-close" size="mini" @click="deleteRow(index,skillData)"></el-button>
-          <el-progress :text-inside="true" :stroke-width="16" :percentage="item.value"></el-progress>
+          <el-progress :text-inside="true" :stroke-width="16" :percentage="item.sValue"></el-progress>
         </div>
       </li>
     </ul>
@@ -28,8 +29,8 @@
               <el-input v-model="form.skill"></el-input>
             </el-col>
           </el-form-item>
-          <el-form-item label="熟练度" prop="value">
-            <el-slider v-model="form.value"></el-slider>
+          <el-form-item label="熟练度" prop="sValue">
+            <el-slider v-model="form.sValue"></el-slider>
           </el-form-item>
         </el-form>
       </div>
@@ -46,23 +47,54 @@
 
 <script>
     export default {
-        name: "user-skill",
+      name: "user-skill",
+      created(){
+        this.$reqs.get('/users/getUserSkill' )
+          .then((res)=> {
+            // let data = res.data;
+            this.skillData = res.data;
+            // this.form = this.info;
+            console.log(this.skillData)
+          }).catch(function (error) {
+
+
+          if (error.response) {
+            // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+          } else if (error.request) {
+            // The request was made but no response was received
+            // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+            // http.ClientRequest in node.js
+            console.log(error.request);
+          } else {
+            // Something happened in setting up the request that triggered an Error
+            console.log('Error', error.message);
+          }
+          console.log(error.config);
+
+
+
+        })
+      },
       data(){
           return{
             dialogVisible: false,
             skillData:[
-              {
-                skill:'JavaScript',
-                value: 80
-              },
-              {
-                skill:'html5',
-                value: 70
-              },
+              // {
+              //   skill:'JavaScript',
+              //   sValue: 80
+              // },
+              // {
+              //   skill:'html5',
+              //   sValue: 70
+              // },
             ],
             form:{
               skill:'',
-              value:10
+              sValue:10
             },
             rules: {
               skill: [
@@ -83,7 +115,15 @@
           }
         },
         deleteRow(index, rows) {
-          rows.splice(index, 1);
+          let data = rows.splice(index, 1);
+          console.log(data[0].keyid)
+          this.$reqs.post('/users/deleteUserSkill', {
+            keyid:data[0].keyid,
+          }).then( (res)=> {
+            let data = res.data;
+            console.log(data)
+          }).catch(function (res) {
+          });
         },
         submitForm(formName) {
           this.$refs[formName].validate((valid) => {
@@ -92,8 +132,16 @@
               this.dialogVisible = false
               var obj={
                 skill:this.form.skill,
-                value:this.form.value,
+                sValue:this.form.sValue,
               }
+              this.$reqs.post('/users/insertUserSkill', {
+                skill:this.form.skill,
+                sValue:this.form.sValue,
+              }).then( (res)=> {
+                let data = res.data;
+                console.log(data)
+              }).catch(function (res) {
+              });
               this.skillData.push(obj)
             } else {
               console.log('error submit!!');
@@ -107,7 +155,7 @@
 
 <style scoped>
 .content{
-  width: 600px;
+  width: 500px;
   /*padding: 30px 50px 30px 50px;*/
   margin: 30px auto;
   /*min-height: 100px;*/
@@ -121,7 +169,7 @@
   }
 
 .content>ul>li{
-  width: 400px;
+  width: 300px;
   margin: 20px auto;
   padding: 0 10px 20px 10px;
   background-color: white;
