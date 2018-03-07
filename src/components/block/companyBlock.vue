@@ -1,19 +1,19 @@
 <template>
   <div class="company_item">
-    <div class="logo"></div>
-    <span class="company"><router-link to="/company">{{company.name}}</router-link></span>
-    <span class="company_introduction">{{company.field.join()}}</span>
-    <span class="company_describe">{{company.describe}}</span>
+    <img class="logo" :src="data.company_img"/>
+    <span class="company"><router-link to="/company">{{data.company_name}}</router-link></span>
+    <span class="company_introduction">{{data.company_field}}</span>
+    <span class="company_describe">{{data.company_statement}}</span>
     <div class="block">
-      <span class="number">{{company.interview}}</span>
+      <span class="number">{{data.num_comment}}</span>
       <span class="block_item">面试评价</span>
     </div>
     <div class="block">
-      <span class="number">{{company.position}}</span>
+      <span class="number">{{data.num_position}}</span>
       <span class="block_item">在招职位</span>
     </div>
     <div class="block">
-      <span class="number">{{company.rate}}%</span>
+      <span class="number">{{data.num_rate}}%</span>
       <span class="block_item">简历处理率</span>
     </div>
   </div>
@@ -23,7 +23,7 @@
     export default {
       name: "company-block",
       props:{
-       company: Object
+       data: Object
       }
     }
 </script>
@@ -67,7 +67,7 @@
     width: 150px;
     color: #333333;
     font-weight: lighter;
-    font-size: small;
+    /*font-size: small;*/
     cursor: pointer;
     text-decoration: none;
     display: inline-block;
@@ -96,10 +96,10 @@
 
   .company_describe{
     display: block;
-    text-align: left;
     margin: 0 20px 0 20px;
     color: #9d9d9d;
     height: 25px;
+    text-align: center;
     font-size: small;
     white-space: nowrap;
     overflow: hidden;

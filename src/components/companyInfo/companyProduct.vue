@@ -26,7 +26,7 @@
     <el-dialog
       title="产品信息"
       :visible.sync="dialogVisible"
-      width="800px"
+      width="700px"
     >
 
       <div class="form_content">
@@ -171,7 +171,7 @@
   .right{
     width: 540px;
     min-height: 200px;
-    padding-bottom: 20px;
+    padding-bottom: 30px;
     padding-top: 20px;
     /*float: left;*/
     /*overflow: auto;*/
@@ -219,7 +219,7 @@
     text-align: left;
     white-space: pre-wrap;
     word-break: break-all;
-    width: 100%;
+    width: 450px;
     overflow: auto;
     margin: 0 0 0 0;
     font-size: smaller;
@@ -231,7 +231,7 @@
     padding: 0 0 0 0;
   }
   .form_content{
-    width: 700px;
+    width: 600px;
     margin: 0 auto;
     text-align: left;
   }

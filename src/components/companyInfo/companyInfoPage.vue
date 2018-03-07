@@ -6,8 +6,7 @@
         :router="true"
       >
         <el-menu-item index="/companyInfo">
-          <span slot="title">基本信息</span>
-          <i class="el-icon-arrow-right"></i>
+          <span slot="title">基本信息<i class="el-icon-arrow-right"></i></span>
         </el-menu-item>
         <el-menu-item index="/companyProduct">
           <span slot="title">公司产品<i class="el-icon-arrow-right"></i></span>

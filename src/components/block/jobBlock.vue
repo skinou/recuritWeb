@@ -1,16 +1,17 @@
 <template>
   <div class="job_item">
     <div class="job_intro">
-      <span class="job_name"><router-link to="/job">{{job.name}}</router-link></span>
-      <span class="job_time">{{job.time}}</span>
-      <span class="job_condition">{{job.experience}}/{{job.degree}}</span>
-      <span class="job_salary">{{job.salary}}</span>
+      <router-link to="/job"><span class="job_name">{{data.job_name}}</span></router-link>
+      <span class="job_time">{{data.job_time}}</span>
+      <span class="job_condition">{{data.job_experience}}/{{data.job_degree}}</span>
+      <span class="job_salary">{{data.job_salary}}</span>
+      <span class="job_tag"> <el-tag v-for="(item,index) in tags" :key="index" size="mini">{{item}}</el-tag> </span>
     </div>
     <hr>
     <div class="job_company">
-      <div class="img"></div>
-      <span class="company_name">{{job.company}}</span><br>
-      <span class="company_intro">{{job.field}}/{{job.financing}}/{{job.address}}</span>
+      <img class="img" :src="data.company_img"/>
+      <span class="company_name">{{data.company_name}}</span><br>
+      <span class="company_intro">{{data.company_field}}/{{data.company_fiance}}/{{data.company_city}}</span>
     </div>
   </div>
 </template>
@@ -19,7 +20,13 @@
     export default {
       name: "job-block",
       props : {
-        job: Object
+        data: Object
+      },
+      computed:{
+        tags(){
+          let arr = this.data.job_tag.split(',')
+          return arr
+        }
       }
     }
 </script>
@@ -27,7 +34,7 @@
 <style scoped>
   .job_item{
     width: 280px;
-    height: 180px;
+    height: 200px;
     padding-top: 20px;
     margin-right: 20px;
     margin-left: 30px;
@@ -43,7 +50,7 @@
 
   .job_intro{
     width: 100%;
-    height: 70px;
+    height: 90px;
   }
 
   .job_company{
@@ -55,13 +62,18 @@
   .job_name{
     float: left;
     margin-left: 15px;
-    font-weight: lighter;
+    /*font-weight: lighter;*/
     width: 150px;
     height: 22px;
     text-align: left;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    color: dodgerblue;
+  }
+
+  a{
+    color: dodgerblue;
   }
 
   .job_time{
@@ -77,10 +89,19 @@
   }
 
   .job_salary {
-    color: deepskyblue;
+    color: red;
     display: inline-block;
     margin: 10px 20px 0 0;
     float: right;
+  }
+
+  .job_tag{
+    display: inline-block;
+    margin: 10px 0 0 15px;
+  }
+
+  .el-tag{
+    margin-right: 10px;
   }
 
   .job_condition{
@@ -92,6 +113,7 @@
     color: #9d9d9d;
     display: inline-block;
     text-align: left;
+    width: 150px;
   }
 
   hr{
@@ -103,9 +125,9 @@
   .img{
     width: 50px;
     height: 50px;
-    background: yellow;
+    /*background: yellow;*/
     float: left;
-    margin: 10px 0 0 10px;
+    margin: 10px 5px 0 15px;
     /*display: inline-block;*/
   }
 

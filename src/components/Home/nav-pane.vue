@@ -29,9 +29,9 @@
     </div>
   </div>
 
-  <el-carousel height="210px">
-    <el-carousel-item v-for="item in 4" :key="item">
-      <h3>{{ item }}</h3>
+  <el-carousel height="300px">
+    <el-carousel-item v-for="item in imgData" :key="item">
+      <img :src="item" class="image">
     </el-carousel-item>
   </el-carousel>
 </div>
@@ -39,12 +39,17 @@
 
 <script>
   import dataList from '@/store/nav-pane'
+  import img1 from '@/assets/1.jpg'
+  import img2 from '@/assets/2.jpg'
+  import img3 from '@/assets/3.jpg'
+  import img4 from '@/assets/4.png'
     export default {
       name: "nav-pane",
       data(){
         return{
           nav: dataList.nav,
-          data: dataList.data[0]
+          data: dataList.data[0],
+          imgData:[img1,img2,img3,img4]
         }
       },
       created (){
@@ -60,25 +65,25 @@
 
 <style scoped>
 .el-menu{
-  width: 100px;
+  width: 150px;
   float: left;
   color: dimgrey;
 }
 .el-menu>li{
-  height: 30px;
-  line-height: 30px;
+  height: 40px;
+  line-height: 40px;
   font-size: 12px;
 
 }
   .nav-content{
     float: left;
     width: 400px;
-    height: 210px;
+    height: 300px;
     background-color: white;
   }
 
 .navItem{
-  margin-bottom: 10px;
+  margin-bottom: 15px;
   width: 380px;
 }
 
@@ -88,7 +93,7 @@
   padding-left: 10px;
   color: rgba(0,0,0,0.77);
   display: block;
-  font-size: 10px;
+  font-size: 13px;
 }
 
 .aItem{
@@ -96,11 +101,11 @@
 }
 
 .aItem>a{
-  margin: 0 10px 5px 20px;
-  padding: 2px 5px 2px 5px;
+  margin: 0 10px 10px 20px;
+  padding: 5px 8px 5px 8px;
   cursor: pointer;
-  font-size: x-small;
-  border: dimgrey solid 1px;
+  font-size: small;
+  /*border: dimgrey solid 1px;*/
   border-radius: 2px;
   background-color: ghostwhite;
   color: dimgrey;
@@ -136,5 +141,10 @@
 
   span{
     font-family: Microsoft YaHei;
+  }
+
+  .image{
+    width: 700px;
+    height: 300px;
   }
 </style>
