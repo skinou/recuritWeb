@@ -5,12 +5,12 @@
       <h4>基本信息</h4>
     </div>
     <div class="item_body">
-      <img src="@/assets/img1.jpg"/>
+      <img src="@/assets/img1.jpg" class="img"/>
       <ul>
-        <li><span class="title">公司名称：</span>{{form.name}}</li>
-        <li><span class="title">所在城市：</span>{{form.field.join()}}</li>
-        <li><span class="title">公司类型：</span>{{form.fiance}}</li>
-        <li><span class="title">融资阶段：</span>{{form.sentence}}</li>
+        <li><span class="title">公司名称：</span><span class="content">{{form.name}}</span></li>
+        <li><span class="title">所在城市：</span><span class="content">{{form.field.join()}}</span></li>
+        <li><span class="title">公司类型：</span><span class="content">{{form.fiance}}</span></li>
+        <li><span class="title">融资阶段：</span><span class="sentence">{{form.sentence}}</span></li>
         <li><el-button type="primary" plain   @click="dialogVisible = true">修改</el-button></li>
       </ul>
      </div>
@@ -88,7 +88,7 @@
               ],
               sentence: [
                 { required: true, message: '不能为空', trigger: 'change' },
-                { min: 1, max: 20, message: '长度在 1 到 30 个字符', trigger: 'blur' }
+                { min: 1, max: 30, message: '长度在 1 到 30 个字符', trigger: 'blur' }
               ],
               city: [
                 { required: true, message: '请输入所在城市', trigger: 'blur' }
@@ -153,18 +153,30 @@
     margin: 0 auto;
   }
   .title{
-    width: 150px;
+    width: 240px;
+    padding-right: 20px;
+    display: inline-block;
+    text-align: right;
+    vertical-align: top;
+  }
+  .content{
+    width: 310px;
+    display: inline-block;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+    text-align: left;
+    vertical-align: top;
   }
   .item_body>ul{
     width: 600px;
     list-style: none;
+    margin: 0 auto;
+    padding: 0 0 0 0;
   }
-.item_body>ul{
+.item_body>ul>li{
   width: 600px;
-  list-style: none;
+  margin: 20px 0 20px 0;
 }
   .form_content{
     width: 600px;
@@ -173,5 +185,18 @@
   }
   .red{
     color: red;
+  }
+  .img{
+    width: 100px;
+    height: 100px;
+    margin: 10px auto;
+  }
+  .sentence{
+    width: 310px;
+    text-align: left;
+    display: inline-block;
+    white-space: pre-wrap;
+    word-break: break-all;
+    vertical-align: top;
   }
 </style>

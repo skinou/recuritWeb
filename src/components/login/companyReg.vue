@@ -8,8 +8,8 @@
       <el-form-item label="密码" prop="password">
         <el-input v-model="form.password"></el-input>
       </el-form-item>
-      <el-form-item label="公司名称" prop="name">
-        <el-input v-model="form.name"></el-input>
+      <el-form-item label="公司名称" prop="cname">
+        <el-input v-model="form.cname"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" plain @click="submitForm('form')">提交</el-button>
@@ -30,7 +30,7 @@
           form:{
             user: '',
             password: '',
-            name: '',
+            cname: '',
           },
           rules: {
             user: [
@@ -39,7 +39,7 @@
             password: [
               { required: true, message: '请输入密码', trigger: 'blur' }
             ],
-            name: [
+            cname: [
               { required: true, message: '请输入公司名称', trigger: 'blur' }
             ],
           }
@@ -47,12 +47,28 @@
       },
       methods: {
         submitForm(formName) {
+          let that = this
           this.$refs[formName].validate((valid) => {
             if (valid) {
-              this.$message({
-                message: '注册成功',
-                type: 'success'
-              });
+              this.$reqs.post('/login/companyReg', {
+                account:that.form.user,
+                password:that.form.password,
+                cname:that.form.cname
+              }).then(function (res) {
+                let data = res.data
+                if(data === '注册成功'){
+                  console.log(data)
+                  // that.$message.error(data);
+                  that.$router.push('/regSuccess')
+                }else{
+                  that.$message.error(data);
+                }
+              }).catch(function (res) {
+              })
+              // this.$message({
+              //   message: '注册成功',
+              //   type: 'success'
+              // });
             } else {
               console.log('error submit!!');
               return false;
