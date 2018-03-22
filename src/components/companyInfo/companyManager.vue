@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div class="tag">
-      <h4>公司标签</h4>
+    <h4>公司标签</h4>
+    <div class="tag" v-if="created===true">
       <el-tag
         :key="tag"
         v-for="tag in dynamicTags"
@@ -22,14 +22,23 @@
       </el-input>
       <el-button v-else class="buttonNewTag" size="small" @click="showInput">+ New Tag</el-button>
     </div>
+    <div class="tag" v-else>
+      <el-button type="primary" size="small" @click="createTags">创建标签</el-button>
+    </div>
+
+
+
+
     <div class="manager">
       <h4>管理团队</h4>
-      <ul>
+      <ul v-show="leader.length!==0">
         <li v-for="(item , index) in leader" :key="index">
           <div class="item">
-            <img src="@/assets/img3.jpg"/>
-            <span>{{item.name}}&nbsp;&nbsp;&nbsp;({{item.position}})</span>
-            <span style="text-align: right"> <el-button type="info" plain class="delete" @click="deleteRow(index,leader)"  >╳</el-button></span>
+            <img :src="item.mimg"/>
+            <span class="name">{{item.mname}}</span>
+            <span class="name">/</span>
+            <span class="name">{{item.mposition}}</span>
+            <span class="del"> <el-button type="primary" plain class="delete" @click="deleteRow(index,leader)"  >╳</el-button></span>
           </div>
         </li>
       </ul>
@@ -46,6 +55,12 @@
     >
 
       <div class="form_content">
+
+        <div class="imgBox">
+          <img id="imgContent3" :src="form.img"/>
+          <input @change="fileImage" type="file" name="image" accept="image/*" class="imgUpload">
+        </div>
+
         <el-form ref="form" :model="form" :rules="rules" label-width="120px">
           <el-form-item label="姓名" prop="name">
             <el-col :span="20">
@@ -73,19 +88,55 @@
 <script>
     export default {
       name: "company-manager",
+      created(){
+
+        this.$reqs.get('/company/selectCompanyTags')
+          .then( (res)=> {
+            let data = res.data[0];
+            console.log(data);
+            if(data.length !== 0){
+              this.created=true;
+              this.dynamicTags=data.tags.split(',');
+            }else {
+              this.created=false;
+            }
+        }).catch( (res)=> {
+          console.log(res.toString())
+        });
+
+        this.$reqs.get('/company/selectCompanyManager')
+          .then( (res)=> {
+            let data = res.data;
+            console.log(data);
+            if(data.length !== 0){
+              this.leader=data;
+              console.log(this.leader);
+              console.log('11111111111111111111111111111111111111111111111111111111')
+            }
+          }).catch( (res)=> {
+          console.log(res.toString())
+        });
+
+
+      },
       data() {
         return {
+          created:false,
           dialogVisible:false,
-          dynamicTags: ['标签一', '标签二', '标签三'],
+          // dynamicTags: ['标签一', '标签二', '标签三'],
+          dynamicTags:[],
           inputVisible: false,
           inputValue: '',
-          leader: [
-            {
-              name: '张三',
-              position: 'CEO'
-            }
-          ],
+          // leader: [
+          //   {
+          //     img:'',
+          //     name: '张三',
+          //     position: 'CEO'
+          //   }
+          // ],
+          leader:[],
           form: {
+            img:null,
             name:'',
             position:''
           },
@@ -101,8 +152,26 @@
         }
       },
       methods: {
+
+        createTags(){
+          this.$reqs.post('/company/insertCompanyTags')
+            .then( (res)=> {
+              this.created = true
+            }).catch( (res)=> {
+            console.log(res.toString())
+          });
+        },
+
         handleClose(tag) {
           this.dynamicTags.splice(this.dynamicTags.indexOf(tag), 1);
+          this.$reqs.post('/company/updateCompanyTags',{
+            tags:this.dynamicTags.toString()
+          })
+            .then( (res)=> {
+              console.log(res.data);
+            }).catch( (res)=> {
+            console.log(res.toString())
+          });
         },
 
         showInput() {
@@ -123,26 +192,65 @@
           let inputValue = this.inputValue;
           if (inputValue) {
             this.dynamicTags.push(inputValue);
+
+            this.$reqs.post('/company/updateCompanyTags',{
+              tags:this.dynamicTags.toString()
+            })
+              .then( (res)=> {
+                console.log(res.data);
+              }).catch( (res)=> {
+                console.log(res.toString())
+            });
           }
           this.inputVisible = false;
           this.inputValue = '';
         },
+
+
         deleteRow(index, rows) {
-          rows.splice(index, 1);
+          let data = rows.splice(index, 1);
+          console.log(data[0]);
+          this.$reqs.post('/company/deleteCompanyManager',{
+            mkey:data[0].mkey
+          }).then( (res)=> {
+
+            this.$message({
+              message: '删除成功',
+              type: 'success'
+            });
+            this.dialogVisible = false
+
+          }).catch( (res)=> {
+            console.log(res.toString())
+          });
         },
+
+
         submitForm(formName) {
           this.$refs[formName].validate((valid) => {
             if (valid) {
-              var obj={
-                name:this.form.name,
-                position:this.form.position,
-              }
-              this.leader.push(obj)
-              this.$message({
-                message: '成功',
-                type: 'success'
+              let obj={
+                mimg:this.form.img,
+                mname:this.form.name,
+                mposition:this.form.position,
+              };
+              this.leader.push(obj);
+
+              this.$reqs.post('/company/insertCompanyManager',{
+                manager:obj
+              }).then( (res)=> {
+
+                this.$message({
+                  message: '成功',
+                  type: 'success'
+                });
+                this.dialogVisible = false
+
+                }).catch( (res)=> {
+                console.log(res.toString())
               });
-              this.dialogVisible = false
+
+
             } else {
               console.log('error submit!!');
               return false;
@@ -151,28 +259,49 @@
         },
         resetForm(formName) {
           this.$refs[formName].resetFields();
-          this.form.product=''
+          this.form.product='';
           this.form.describe=''
-        }
+        },
+
+        fileImage:function(e){
+          let file = e.target.files[0];
+          let reader = new FileReader();
+          reader.readAsDataURL(file);
+          reader.onloadend = ()=> {
+            this.form.img = reader.result;
+            // this.$reqs.post('/company/companyImg', {
+            //   img: this.form.cimg
+            // }).then(function (res) {
+            // }).catch(function (res) {
+            //   console.log(res.toString())
+            // })
+          };
+        },
+
+
+
+
       }
     }
 </script>
 
 <style scoped>
-  .el-tag + .el-tag {
-    margin: 10px 0 0 10px;
-  }
+  /*.el-tag + .el-tag {*/
+    /*margin: 10px 0 0 10px;*/
+  /*}*/
   .buttonNewTag {
-    margin-left: 10px;
     height: 32px;
     line-height: 30px;
     padding-top: 0;
     padding-bottom: 0;
+    vertical-align: top;
+    margin-left: 10px;
   }
   .input-new-tag {
     width: 90px;
+    vertical-align: top;
     margin-left: 10px;
-    vertical-align: bottom;
+
   }
   .tag{
     margin: 50px auto;
@@ -183,13 +312,13 @@
   }
   .manager>ul{
     padding: 0 0 0 0;
-    margin: 0 100px 0 100px;
+    margin: 0 150px 0 150px;
     /*height: 500px;*/
     list-style: none;
   }
 
   li{
-    background-color: ghostwhite;
+    background-color: whitesmoke;
     margin-bottom: 30px;
   }
 
@@ -202,14 +331,40 @@
     height: 60px;
     vertical-align: bottom;
   }
-  .item>span{
+  /*.item>span{*/
+    /*display: inline-block;*/
+    /*width: 100px;*/
+    /*height: 30px;*/
+    /*line-height: 30px;*/
+    /*vertical-align: bottom;*/
+    /*!*text-align: center;*!*/
+    /*color: dodgerblue;*/
+    /*font-size: large;*/
+    /*text-overflow: ellipsis;*/
+    /*overflow: hidden;*/
+    /*white-space: nowrap;*/
+  /*}*/
+  .name{
     display: inline-block;
-    width: 150px;
+    max-width: 100px;
     height: 90px;
     line-height: 90px;
-    vertical-align: bottom;
+    /*margin: 15px 0 10px 0;*/
+    /*vertical-align: bottom;*/
     /*text-align: center;*/
-    padding-left: 50px;
+    color: dodgerblue;
+    /*font-size: large;*/
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    vertical-align: top;
+    font-size: 1em;
+  }
+  .del{
+    float: right;
+    width: 50px;
+    line-height: 90px;
+    height: 90px;
   }
   .delete{
     height: 20px;
@@ -221,5 +376,40 @@
     width: 400px;
     margin: 0 auto;
     text-align: left;
+  }
+  .el-tag{
+    max-width: 100px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    vertical-align: top;
+    margin: 0 10px 0 10px;
+  }
+
+
+  .imgBox{
+    margin: 0 auto;
+    padding-bottom: 40px;
+    width: 205px
+  }
+
+  #imgContent3{
+    position: relative;
+    left: 50px;
+    display: inline-block;
+    width: 100px;
+    height: 100px;
+    z-index: 20;
+    vertical-align: top;
+    margin: 0 0 0 0;
+  }
+  .imgUpload{
+    display: inline-block;
+    width: 100px;
+    height: 100px;
+    position: relative;
+    left: -55px;
+    opacity: 0;
+    z-index: 50;
   }
 </style>

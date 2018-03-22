@@ -2,11 +2,11 @@
   <div class="info">
     <h4>账号信息</h4>
     <div class="now">
-      <span>现有账号：</span><span>123456789</span>
+      <span>现有账号：</span><span>{{$store.state.account}}</span>
     </div>
     <el-form ref="form" :model="form" :rules="rules"  label-width="80px">
-      <el-form-item label="新账号" prop="phone">
-        <el-input v-model="form.phone"></el-input>
+      <el-form-item label="新账号" prop="account">
+        <el-input v-model="form.account"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="submitForm('form')">确认</el-button>
@@ -35,8 +35,11 @@
 <script>
     export default {
       name: "company-account",
+      created(){
+        console.log(this.$store.state.account);
+      },
       data() {
-        var validatePass = (rule, value, callback) => {
+        let validatePass = (rule, value, callback) => {
           if (value === '') {
             callback(new Error('请输入密码'));
           } else {
@@ -46,7 +49,7 @@
             callback();
           }
         };
-        var validatePass2 = (rule, value, callback) => {
+        let validatePass2 = (rule, value, callback) => {
           if (value === '') {
             callback(new Error('请再次输入密码'));
           } else if (value !== this.ruleForm2.pass) {
@@ -57,10 +60,10 @@
         };
         return {
           form: {
-            phone: ''
+            account: ''
           },
           rules: {
-            phone: [
+            account: [
               {required: true, message: '请输入新账号', trigger: 'blur'},
             ]
           },
@@ -82,7 +85,24 @@
         submitForm(formName) {
           this.$refs[formName].validate((valid) => {
             if (valid) {
-              alert('submit!');
+              this.$reqs.post('/company/updateCompanyAccount', {
+                account:this.form.account,
+              }).then( (res)=> {
+                let data = res.data;
+                if(data === '账号已被注册'){
+                  this.$message({
+                    message:data ,
+                    type: 'error'
+                  });
+                } else {
+                  this.$message({
+                    message: '成功',
+                    type: 'success'
+                  });
+                }
+              }).catch(function (res) {
+                console.log(res.toString())
+              });
             } else {
               console.log('error submit!!');
               return false;
@@ -96,7 +116,16 @@
         submitForm2(formName) {
           this.$refs[formName].validate((valid) => {
             if (valid) {
-              alert('submit!');
+              this.$reqs.post('/company/updateCompanyPassword', {
+                password:this.ruleForm2.pass,
+              }).then( (res)=> {
+                this.$message({
+                  message: '成功',
+                  type: 'success'
+                });
+              }).catch(function (res) {
+                console.log(res.toString())
+              });
             } else {
               console.log('error submit!!');
               return false;

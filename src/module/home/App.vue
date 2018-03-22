@@ -5,13 +5,18 @@
 
         <div class="header-tab">
           <a class="companyEntrance" href="/index.html'"> < 企业入口</a>
-          <div  v-if="username === '' ">
+          <div  v-if="accountType === '' ">
             <a class="userEntrance" href="/index.html'"> 登陆 </a>
           </div>
-          <div v-else>
+          <div v-else-if="accountType === '个人用户'">
             <router-link class="userEntrance" to="/userPage" @click.native="getActive=0">个人信息</router-link>
             <router-link class="userEntrance" to="/deliveryPage" @click.native="getActive=0">投递箱</router-link>
             <router-link class="userEntrance" to="/userPage" @click.native="getActive=0">个人简历</router-link>
+          </div >
+          <div v-else-if="accountType === '公司用户'">
+            <router-link class="userEntrance" to="/companyInfo" @click.native="getActive=0">公司信息</router-link>
+            <!--<router-link class="userEntrance" to="/deliveryPage" @click.native="getActive=0">投递箱</router-link>-->
+            <!--<router-link class="userEntrance" to="/userPage" @click.native="getActive=0">个人简历</router-link>-->
           </div >
         </div>
 
@@ -37,7 +42,8 @@
       data(){
         return{
           getActive:0,
-          username:''
+          username:'',
+          accountType:''
         }
       },
       created(){
@@ -55,10 +61,13 @@
 
         this.$reqs.get('/login/home' )
           .then( (res)=> {
-            let data = res.data
-            this.username = data.name
+            let data = res.data;
+            this.username = data.name;
+            this.accountType = data.type;
+            this.$store.commit('setAccount',data.account);
             console.log(data)
         }).catch(function (res) {
+
         })
 
       },
@@ -77,6 +86,25 @@
   .header{
     min-width: 1000px;
   }
+
+
+  @font-face {
+    font-family: 'iconfont';  /* project id 588199 */
+    src: url('//at.alicdn.com/t/font_588199_pf42h4vkemptx1or.eot');
+    src: url('//at.alicdn.com/t/font_588199_pf42h4vkemptx1or.eot?#iefix') format('embedded-opentype'),
+    url('//at.alicdn.com/t/font_588199_pf42h4vkemptx1or.woff') format('woff'),
+    url('//at.alicdn.com/t/font_588199_pf42h4vkemptx1or.ttf') format('truetype'),
+    url('//at.alicdn.com/t/font_588199_pf42h4vkemptx1or.svg#iconfont') format('svg');
+  }
+
+  .iconfont{
+    font-family:"iconfont" !important;
+    font-size:16px;font-style:normal;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-stroke-width: 0.2px;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
 
   .userEntrance{
     float: right;

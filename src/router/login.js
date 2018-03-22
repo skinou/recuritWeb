@@ -6,6 +6,8 @@ import reg from '@/components/login/reg.vue'
 import companyReg from '@/components/login/companyReg.vue'
 import success from '@/components/login/success.vue'
 import regSuccess from '@/components/login/regSuccess.vue'
+import companyLoginInfo from '@/components/login/companyLoginInfo.vue'
+
 
 Vue.use(Router)
 
@@ -40,6 +42,11 @@ export default new Router({
       path: '/regSuccess',
       name: 'regSuccess',
       component: regSuccess
+    },
+    {
+      path: '/companyLoginInfo',
+      name: 'companyLoginInfo',
+      component: companyLoginInfo
     }
 
   ]

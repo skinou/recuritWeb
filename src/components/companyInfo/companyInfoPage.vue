@@ -6,25 +6,25 @@
         :router="true"
       >
         <el-menu-item index="/companyInfo">
-          <span slot="title">基本信息<i class="el-icon-arrow-right"></i></span>
+          <span slot="title"><i class="iconfont">&#xe640;</i>基本信息<i class="el-icon-arrow-right"></i></span>
         </el-menu-item>
         <el-menu-item index="/companyProduct">
-          <span slot="title">公司产品<i class="el-icon-arrow-right"></i></span>
+          <span slot="title"><i class="iconfont">&#xe783;</i>公司产品<i class="el-icon-arrow-right"></i></span>
         </el-menu-item>
         <el-menu-item index="/companyIntro">
-          <span slot="title">公司介绍<i class="el-icon-arrow-right"></i></span>
+          <span slot="title"><i class="iconfont">&#xe75b;</i>公司介绍<i class="el-icon-arrow-right"></i></span>
         </el-menu-item>
         <el-menu-item index="/companyManager">
-          <span slot="title">管理团队<i class="el-icon-arrow-right"></i></span>
+          <span slot="title"><i class="iconfont">&#xe654;</i>管理团队<i class="el-icon-arrow-right"></i></span>
         </el-menu-item>
         <el-menu-item index="/companyPosition">
-          <span slot="title">招聘职位<i class="el-icon-arrow-right"></i></span>
+          <span slot="title"><i class="iconfont">&#xe7bd;</i>招聘职位<i class="el-icon-arrow-right"></i></span>
         </el-menu-item>
         <el-menu-item index="/companyResume">
-          <span slot="title">简历查看<i class="el-icon-arrow-right"></i></span>
+          <span slot="title"><i class="iconfont">&#xe68d;</i>简历查看<i class="el-icon-arrow-right"></i></span>
         </el-menu-item>
         <el-menu-item index="/companyAccount">
-          <span slot="title">账号设置<i class="el-icon-arrow-right"></i></span>
+          <span slot="title"><i class="iconfont">&#xe65b;</i>账号设置<i class="el-icon-arrow-right"></i></span>
         </el-menu-item>
       </el-menu>
     </el-aside>
@@ -67,5 +67,42 @@
   }
   .main{
     overflow: hidden;
+    min-height: 800px;
   }
+
+  .iconfont{
+    font-family:"iconfont" !important;
+    font-size:18px;
+    font-style:normal;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-stroke-width: 0.2px;
+    -moz-osx-font-smoothing: grayscale;
+    color: black;
+    /*height: 20px;*/
+    /*line-height: 20px;*/
+    margin-right: 5px;
+    padding-bottom: 2px;
+    /*display: inline-block;*/
+  }
+
+  .el-menu-item:hover{
+    background-color: dodgerblue;
+    color: white;
+  }
+
+  .el-menu-item:hover span{
+    /*background-color: dodgerblue;*/
+    color: white;
+  }
+
+  .el-menu-item:hover i{
+    /*background-color: dodgerblue;*/
+    color: white;
+  }
+
+  .is-active,.is-active>span,.is-active>i{
+    background-color: dodgerblue;
+    color: white;
+  }
+
 </style>

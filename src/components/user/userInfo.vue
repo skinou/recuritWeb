@@ -1,9 +1,9 @@
 <template>
     <div>
-      <div style="margin: 50px auto;width: 310px">
+      <div style="margin: 40px auto;width: 190px">
         <i :class="{'text':imageShow}" class="avatar"></i>
         <img id="imgContent3" :src="form.img"/>
-        <div style="margin: 10px auto;width: 305px;text-align: center">
+        <div style="margin: 10px auto;width: 195px;text-align: center">
           <input type="file" name="file" id="imgFile2" accept="image/png,image/gif,image/jpeg" style="display: none">
           <el-button type="primary" plain size="mini" @click="loadImg2">更换头像</el-button>
         </div>
@@ -148,10 +148,10 @@
                 phone:that.form.phone,
                 email:that.form.email
               }).then(function (res) {
-                let data = res.data
+                let data = res.data;
                 console.log(data)
               }).catch(function (res) {
-              })
+              });
               this.dialogVisible = false
             } else {
               console.log('error submit!!');
@@ -251,9 +251,9 @@
   .avatar {
     font-size: 28px;
     color: #8c939d;
-    width: 150px;
-    height: 200px;
-    line-height: 150px;
+    width: 85px;
+    height: 100px;
+    line-height: 100px;
     text-align: center;
     z-index: 10;
     /*border:  dashed antiquewhite 3px;*/
@@ -262,14 +262,14 @@
     vertical-align: top;
     /*float: left;*/
     position: relative;
-    left: 79px;
+    left: 50px;
   }
   #imgContent3{
     position: relative;
-    left: -75px;
+    left: -40px;
     display: inline-block;
-    width: 150px;
-    height: 200px;
+    width: 85px;
+    height: 100px;
     z-index: 20;
     vertical-align: top;
   }

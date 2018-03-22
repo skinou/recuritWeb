@@ -24,25 +24,25 @@
           :router="true"
         >
           <el-menu-item index="/userInfo">
-            <span slot="title">基本信息<i class="el-icon-arrow-right"></i></span>
+            <span slot="title"><i class="iconfont">&#xe615;</i>基本信息<i class="el-icon-arrow-right"></i></span>
           </el-menu-item>
           <el-menu-item index="/userWork">
-            <span slot="title">期望工作<i class="el-icon-arrow-right"></i></span>
+            <span slot="title"><i class="iconfont">&#xe613;</i>期望工作<i class="el-icon-arrow-right"></i></span>
           </el-menu-item>
           <el-menu-item index="/userEducation">
-            <span slot="title">教育经历<i class="el-icon-arrow-right"></i></span>
+            <span slot="title"><i class="iconfont">&#xe606;</i>教育经历<i class="el-icon-arrow-right"></i></span>
           </el-menu-item>
           <el-menu-item index="/userInternship">
-            <span slot="title">工作经验<i class="el-icon-arrow-right"></i></span>
+            <span slot="title"><i class="iconfont">&#xe61a;</i>工作经验<i class="el-icon-arrow-right"></i></span>
           </el-menu-item>
           <el-menu-item index="/userProject">
-            <span slot="title">项目经验<i class="el-icon-arrow-right"></i></span>
+            <span slot="title"><i class="iconfont">&#xe614;</i>项目经验<i class="el-icon-arrow-right"></i></span>
           </el-menu-item>
           <el-menu-item index="/userDescription">
-            <span slot="title">自我描述<i class="el-icon-arrow-right"></i></span>
+            <span slot="title"><i class="iconfont">&#xe618;</i>自我描述<i class="el-icon-arrow-right"></i></span>
           </el-menu-item>
           <el-menu-item index="/userSkill">
-            <span slot="title">技能评价<i class="el-icon-arrow-right"></i></span>
+            <span slot="title"><i class="iconfont">&#xe63f;</i>技能评价<i class="el-icon-arrow-right"></i></span>
           </el-menu-item>
         </el-menu>
       </div>
@@ -71,7 +71,7 @@
 }
 .main{
   width: 700px;
-  /*height: 400px;*/
+  min-height: 800px;
   /*background-color: dodgerblue;*/
   /*display: inline-block;*/
 }
@@ -104,10 +104,11 @@
 }
 
   .el-menu{
-    text-align: right;
+    text-align: center;
   }
   .el-menu-item{
     padding: 0 30px 0 30px;
+    margin: 10px 0 10px 0;
   }
 .el-menu-item>span{
   letter-spacing: 2px;
@@ -118,4 +119,41 @@
     color: black;
     /*font-weight: bold;*/
   }
+.iconfont{
+  font-family:"iconfont" !important;
+  font-size:18px;
+  font-style:normal;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-stroke-width: 0.2px;
+  -moz-osx-font-smoothing: grayscale;
+  color: black;
+  /*height: 20px;*/
+  /*line-height: 20px;*/
+  margin-right: 5px;
+  padding-bottom: 2px;
+  /*display: inline-block;*/
+}
+
+  .el-menu-item:hover{
+    background-color: dodgerblue;
+    color: white;
+  }
+
+.el-menu-item:hover span{
+  /*background-color: dodgerblue;*/
+  color: white;
+}
+
+.el-menu-item:hover i{
+  /*background-color: dodgerblue;*/
+  color: white;
+}
+
+  .is-active,.is-active>span,.is-active>i{
+    background-color: dodgerblue;
+    color: white;
+  }
+
+
+
 </style>

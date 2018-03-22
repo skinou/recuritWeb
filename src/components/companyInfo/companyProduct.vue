@@ -4,16 +4,18 @@
       <h4>公司产品</h4>
     </div>
     <div class="item_body">
-      <ul class="productList">
+      <ul class="productList" v-show="proData!==null">
         <li v-for="(item , index) in proData" :key="index">
           <div>
             <div class="left">
-              <img src="@/assets/img1.jpg"/>
+              <img :src="item.pimg"/>
             </div>
             <div class="right">
-              <span>{{item.product}}</span>
-              <el-button type="info" plain class="delete" @click="deleteRow(index,proData)"  >╳</el-button>
-              <p v-for="(arrItem , index) in describeInfo(item.describe)" :key="index">{{arrItem}}</p>
+              <span>{{item.pname}}</span>
+              <el-button type="primary" plain class="delete" @click="deleteRow(index,proData)"  >╳</el-button>
+              <div class="content">
+                <p v-for="(arrItem , index) in describeInfo(item.des)" :key="index">{{arrItem}}</p>
+              </div>
             </div>
           </div>
         </li>
@@ -30,6 +32,12 @@
     >
 
       <div class="form_content">
+
+        <div class="imgBox">
+          <img id="imgContent3" :src="form.img"/>
+          <input @change="fileImage" type="file" name="image" accept="image/*" class="imgUpload">
+        </div>
+
         <el-form ref="form" :model="form" :rules="rules" label-width="120px">
           <el-form-item label="产品名称" prop="product">
             <el-col :span="11">
@@ -54,31 +62,42 @@
 </template>
 
 <script>
+  import img1 from '@/assets/img1.jpg'
     export default {
       name: "company-product",
+      created(){
+        this.$reqs.get('/company/getCompanyProduct')
+          .then( (res)=> {
+            console.log(res.data);
+            this.proData = res.data
+        }).catch( (res)=> {
+          console.log(res.toString())
+        })
+      },
       data(){
         return{
           dialogVisible:false,
-          proData:[
-            {
-            product:'微商城',
-            describe:'米矿服务品牌，从新零售做起\n' +
-            '一家全渠道融合运营滴服务公司，成立两年一直稳步发展。\n' +
-            '无论你喜欢相对稳定的环境还是快速发展的激情，这里都有属于你的舞台。\n' +
-            '\n' +
-            '合作项目繁多，分布在广东周边地域，总有一个是你家~\n' +
-            '新零售电商+移动互联网拓展整合ing，物色着同样有新零售互联网思维滴你加入！\n' +
-            '传统企业的产品+互联网思维运营，\n' +
-            '蛋糕已经准备好了，你还等待啥？\n' +
-            '\n' +
-            '【氛围】\n' +
-            '✔年轻团队，全部＜35\n' +
-            '✔扁平开放去阶级，高效协作常常自嗨\n' +
-            '✔追求高效能，偏好新技术、新工具\n' +
-            '✔协作核心：自我驱动+自律',
-            }
-          ],
+          proData:null,
+            // {
+            //   img:img1,
+            //   product:'微商城',
+            //   describe:'米矿服务品牌，从新零售做起\n' +
+            //   '一家全渠道融合运营滴服务公司，成立两年一直稳步发展。\n' +
+            //   '无论你喜欢相对稳定的环境还是快速发展的激情，这里都有属于你的舞台。\n' +
+            //   '\n' +
+            //   '合作项目繁多，分布在广东周边地域，总有一个是你家~\n' +
+            //   '新零售电商+移动互联网拓展整合ing，物色着同样有新零售互联网思维滴你加入！\n' +
+            //   '传统企业的产品+互联网思维运营，\n' +
+            //   '蛋糕已经准备好了，你还等待啥？\n' +
+            //   '\n' +
+            //   '【氛围】\n' +
+            //   '✔年轻团队，全部＜35\n' +
+            //   '✔扁平开放去阶级，高效协作常常自嗨\n' +
+            //   '✔追求高效能，偏好新技术、新工具\n' +
+            //   '✔协作核心：自我驱动+自律',
+            // }
           form:{
+            img:null,
             product:'',
             describe:''
           },
@@ -105,26 +124,57 @@
         },
       },
       methods:{
+        fileImage:function(e){
+          let file = e.target.files[0];
+          let reader = new FileReader();
+          reader.readAsDataURL(file);
+          reader.onloadend = ()=> {
+            this.form.img = reader.result;
+            // this.$reqs.post('/company/companyImg', {
+            //   img: this.form.cimg
+            // }).then(function (res) {
+            // }).catch(function (res) {
+            //   console.log(res.toString())
+            // })
+          };
+        },
         describeInfo (item) {
-          var arr = item.split('\n');
+          let arr = item.split('\n');
           return arr
         },
         deleteRow(index, rows) {
-          rows.splice(index, 1);
+          // rows.splice(index, 1);
+          let data = rows.splice(index, 1);
+          console.log(data[0].pkey);
+          this.$reqs.post('/company/deleteCompanyProduct', {
+            pkey:data[0].pkey,
+          }).then( (res)=> {
+            let data = res.data;
+            console.log(data)
+          }).catch(function (res) {
+            console.log(res.toString())
+          });
         },
         submitForm(formName) {
           this.$refs[formName].validate((valid) => {
             if (valid) {
-              var obj={
-                product:this.form.product,
-                describe:this.form.describe,
-              }
-              this.proData.push(obj)
-              this.$message({
-                message: '成功',
-                type: 'success'
+              let obj={
+                pimg:this.form.img,
+                pname:this.form.product,
+                desc:this.form.describe,
+              };
+              this.$reqs.post('/company/insertCompanyProduct', {
+                obj:obj
+              }).then( (res) =>{
+                this.proData.push(obj);
+                this.$message({
+                  message: '成功',
+                  type: 'success'
+                });
+                this.dialogVisible = false
+              }).catch( (res)=> {
+                console.log(res.toString())
               });
-              this.dialogVisible = false
             } else {
               console.log('error submit!!');
               return false;
@@ -133,7 +183,7 @@
         },
         resetForm(formName) {
           this.$refs[formName].resetFields();
-          this.form.product=''
+          this.form.product='';
           this.form.describe=''
         }
       }
@@ -161,25 +211,49 @@
   }
   .left{
     width: 180px;
-    min-height: 160px;
+    min-height: 150px;
     /*float: left;*/
-    padding: 20px 10px 10px 10px;
+    padding: 30px 10px 10px 10px;
     display: inline-block;
     vertical-align: top;
     /*background-color: dodgerblue;*/
   }
   .right{
     width: 540px;
-    min-height: 200px;
+    min-height: 150px;
     padding-bottom: 30px;
     padding-top: 20px;
     /*float: left;*/
     /*overflow: auto;*/
-    background-color: ghostwhite;
+    background-color: whitesmoke;
     text-align: left;
     display: inline-block;
     vertical-align: top;
   }
+  .content {
+    width: 505px;
+    height: 145px;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+
+  .content::-webkit-scrollbar {/*滚动条整体样式*/
+    width: 4px;     /*高宽分别对应横竖滚动条的尺寸*/
+    height: 4px;
+  }
+  .content::-webkit-scrollbar-thumb {/*滚动条里面小方块*/
+    border-radius: 5px;
+    -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+    background: #31b0d5;
+  }
+  .content::-webkit-scrollbar-track {/*滚动条里面轨道*/
+    -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+    border-radius: 0;
+    background: white;
+  }
+
+
   .item_foot{
     text-align: right;
     width: 560px;
@@ -193,7 +267,7 @@
     display: inline-block;
     width: 490px;
     margin: 10px 0 15px 0;
-    background-color: ghostwhite;
+    background-color: whitesmoke;
     /*padding: 0 20px 0 20px;*/
   }
   .left>img{
@@ -213,15 +287,15 @@
   .productList>li{
     margin-top: 20px;
     /*float: left;*/
-    background-color: ghostwhite;
+    background-color: whitesmoke;
   }
-  .right>p{
+  .content>p{
     text-align: left;
     white-space: pre-wrap;
     word-break: break-all;
     width: 450px;
     overflow: auto;
-    margin: 0 0 0 0;
+    margin: 0 0 2px 0;
     font-size: smaller;
   }
   .delete{
@@ -237,6 +311,47 @@
   }
   .red{
     color: red;
+  }
+
+
+  .imgBox{
+    margin: 20px auto;
+    width: 310px
+  }
+
+  /*.avatar {*/
+    /*font-size: 28px;*/
+    /*color: #8c939d;*/
+    /*width: 100px;*/
+    /*height: 100px;*/
+    /*line-height: 150px;*/
+    /*text-align: center;*/
+    /*z-index: 10;*/
+    /*!*border:  dashed antiquewhite 3px;*!*/
+    /*border-radius: 2px;*/
+    /*display: inline-block;*/
+    /*vertical-align: top;*/
+    /*!*float: left;*!*/
+    /*position: relative;*/
+    /*!*left: 50px;*!*/
+  /*}*/
+  #imgContent3{
+    position: relative;
+    left: 80px;
+    display: inline-block;
+    width: 150px;
+    height: 150px;
+    z-index: 20;
+    vertical-align: top;
+  }
+  .imgUpload{
+    display: inline-block;
+    width: 150px;
+    height: 150px;
+    position: relative;
+    left: -75px;
+    opacity: 0;
+    z-index: 50;
   }
 
 </style>

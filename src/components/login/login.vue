@@ -28,6 +28,26 @@
 <script>
     export default {
       name: "login",
+      created(){
+        let a = {
+          b:'123456'
+        };
+        let b = {
+          c:1
+        };
+        let string = '123123';
+        let arr = ['12','121','565'];
+        let arr2 = [];
+        arr2 = arr;
+        a.b = arr;
+        let d = b;
+        b.c++;
+        console.log(a.b);
+        console.log(d.c);
+        console.log('123123');
+        console.log(arr2);
+        console.log(arr.toString())
+      },
       data() {
         return{
          form:{
@@ -49,22 +69,25 @@
             // console.log("1231231")
           this.$refs[form].validate((valid) => {
             if (valid) {
-              var that = this
               this.$reqs.post('/login/userLogin', {
-                account:that.form.user,
-              }).then(function (res) {
-                let data = res.data
-                console.log(data[0])
+                account:this.form.user,
+                obj:{
+                  num:10,
+                  num2:20
+                }
+              }).then( (res)=> {
+                let data = res.data;
+                console.log(data[0]);
                 if(data.length ===0 ){
-                  that.$message.error('账号不存在');
+                  this.$message.error('账号不存在');
                 }
                 else {
-                  if (data[0].password === that.form.password) {
+                  if (data[0].password === this.form.password) {
                     // that.$message.error('密码错误');
                     window.location.href='/home.html'
                   }
                   else {
-                    that.$message.error('密码错误');
+                    this.$message.error('密码错误');
                   }
                 }
               }).catch(function (res) {

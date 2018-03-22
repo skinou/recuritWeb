@@ -5,12 +5,26 @@
       <h4>基本信息</h4>
     </div>
     <div class="item_body">
-      <img src="@/assets/img1.jpg" class="img"/>
+      <!--<img src="@/assets/img1.jpg" class="img"/>-->
+
+      <div style="margin: 50px auto;width: 210px">
+        <i :class="{'text':imageShow}" class="avatar"></i>
+        <img id="imgContent3" :src="info.cimg"/>
+        <div style="margin: 10px auto;width: 205px;text-align: center">
+          <!--<input type="file" name="file" id="imgFile2" accept="image/png,image/gif,image/jpeg" style="display: none">-->
+          <input @change="fileImage" type="file" name="image" accept="image/*" class="imgUpload">
+          <el-button type="primary" plain size="mini">更换公司图标</el-button>
+        </div>
+      </div>
+
+
       <ul>
-        <li><span class="title">公司名称：</span><span class="content">{{form.name}}</span></li>
-        <li><span class="title">所在城市：</span><span class="content">{{form.field.join()}}</span></li>
-        <li><span class="title">公司类型：</span><span class="content">{{form.fiance}}</span></li>
-        <li><span class="title">融资阶段：</span><span class="sentence">{{form.sentence}}</span></li>
+        <li><span class="title">公司名称：</span><span class="content">{{info.cname}}</span></li>
+        <li><span class="title">所在城市：</span><span class="content">{{info.city}}</span></li>
+        <li><span class="title">公司类型：</span><span class="content">{{info.field}}</span></li>
+        <li><span class="title">融资阶段：</span><span class="content">{{info.fiance}}</span></li>
+        <li><span class="title">公司地址：</span><span class="sentence">{{info.address}}</span></li>
+        <li><span class="title">融资阶段：</span><span class="sentence">{{info.sentence}}</span></li>
         <li><el-button type="primary" plain   @click="dialogVisible = true">修改</el-button></li>
       </ul>
      </div>
@@ -24,7 +38,7 @@
       <div class="form_content">
         <el-form ref="form" :model="form" :rules="rules" label-width="180px">
           <el-form-item label="公司名称" prop="name">
-            <el-col :span="11">
+            <el-col :span="15">
               <el-input v-model="form.name"></el-input>
             </el-col>
           </el-form-item>
@@ -43,13 +57,18 @@
               <el-option v-for="(item , index) in fieldItem" :key="index" :label="item" :value="item"></el-option>
             </el-select>
           </el-form-item>
+          <el-form-item label="公司地址" prop="address">
+            <el-col :span="20">
+              <!--<el-input v-model="form.name"></el-input>-->
+              <el-input v-model="form.address"></el-input>
+            </el-col>
+          </el-form-item>
           <el-form-item label="一句话介绍（30字以内）" prop="sentence">
             <el-col :span="20">
               <!--<el-input v-model="form.name"></el-input>-->
               <el-input v-model="form.sentence"></el-input>
-              <span :class="{'red':form.sentence.length>=30}">{{form.sentence.length}}</span>
+              <span :class="{'red':form.sentence.length>=30}">{{form.sentence.length}}字</span>
             </el-col>
-            <br>
           </el-form-item>
         </el-form>
       </div>
@@ -68,6 +87,32 @@
 <script>
     export default {
       name: "company-info",
+      created(){
+        let date = new Date();
+        console.log(date.getTime());
+        this.$reqs.get('/company/getCompany')
+          .then( (res)=> {
+            this.info  = res.data[0];
+            // this.form = this.info
+            console.log(this.info);
+            let arr = this.info.field.split(',') ;
+            this.form.sentence=this.info.sentence;
+            this.form.name=this.info.cname;
+            this.form.city=this.info.city;
+            this.form.field = arr;
+            this.form.address=this.info.address;
+            this.form.fiance=this.info.fiance;
+          }).catch(function (res) {
+            console.log(res)
+        })
+      },
+      // computed:{
+      //   // setValues(){
+      //   //   let obj = [...this.info];
+      //   //
+      //   //   obj.
+      //   // }
+      // },
       data(){
           return{
             fianceItem: ['未融资','天使轮','A轮','B轮','C轮','D轮','D轮以上','上市公司','不需要融资'],
@@ -75,12 +120,15 @@
               '文化娱乐','游戏','O2O','硬件','旅游','医疗健康',
               '生活服务','广告营销','数据服务','社交服务','分类信息','信息安全','招聘','其他'],
             dialogVisible:false,
+            imageShow: false,
+            info:{},
             form:{
-              name:'广州米矿信息科技有限公司',
-              city:'广州',
-              field:['企业服务'],
-              fiance:'D轮及以上',
-              sentence:'一句话介绍'
+              name:'',
+              city:'',
+              field:[],
+              fiance:'',
+              address:'',
+              sentence:''
             },
             rules: {
               name: [
@@ -98,6 +146,9 @@
               ],
               field: [
                 { required: true, message: '请选择公司类别', trigger: 'blur' }
+              ],
+              address: [
+                { required: true, message: '请选择公司类别', trigger: 'blur' }
               ]
             }
           }
@@ -106,18 +157,45 @@
         submitForm(formName) {
           this.$refs[formName].validate((valid) => {
             if (valid) {
-              if(this.form.field.length>3){
+              if(this.form.field.length<=3){
+                this.$reqs.post('/company/updateCompany', {
+                  data:{
+                    cname:this.form.name,
+                    city:this.form.city,
+                    field:this.form.field.toString(),
+                    fiance:this.form.fiance,
+                    address:this.form.address,
+                    sentence:this.form.sentence
+                  }
+                }).then( (res)=> {
+                  let data = res.data;
+                  if(data === '公司名已被注册'){
+                    this.$message({
+                      message: data,
+                      type: 'warning'
+                    });
+                  }else{
+                    this.info.name=this.form.name;
+                    this.info.city=this.form.city;
+                    this.info.field=this.form.field.toString();
+                    this.info.fiance=this.form.fiance;
+                    this.info.address=this.form.address;
+                    this.info.sentence=this.form.sentence
+                    this.dialogVisible = false
+                  }
+                  console.log(data)
+                }).catch(function (res) {
+                });
+
+              }
+              else{
                 this.$message({
                   message: '类别不能超过三个',
                   type: 'warning'
                 });
-              } else {
-                this.$message({
-                  message: '成功',
-                  type: 'success'
-                });
-                this.dialogVisible = false
               }
+
+
             } else {
               console.log('error submit!!');
               return false;
@@ -129,21 +207,41 @@
           this.form.city = '';
           this.form.field = [];
           this.form.fiance = '';
+          this.form.address = '';
           this.form.sentence = ''
-        }
+        },
+
+        fileImage:function(e){
+          // let that = this
+          let file = e.target.files[0];
+          let reader = new FileReader();
+          reader.readAsDataURL(file);
+          reader.onloadend = ()=> {
+            this.info.cimg = reader.result;
+            this.$reqs.post('/company/companyImg', {
+              img: this.info.cimg
+            }).then(function (res) {
+            }).catch(function (res) {
+              console.log(res)
+            })
+          };
+          this.imageShow = true;
+          console.log(this.imageShow)
+        },
+
       }
     }
 </script>
 
 <style scoped>
 .item_head{
-  width: 760px;
+  width: 800px;
   height: 30px;
   line-height: 30px;
   margin: 20px 0 20px 0;
 }
 .item_head>h4{
-  margin: 0 0 0 50px;
+  margin: 0 0 0 0;
   text-align: center;
 }
 
@@ -153,7 +251,7 @@
     margin: 0 auto;
   }
   .title{
-    width: 240px;
+    width: 180px;
     padding-right: 20px;
     display: inline-block;
     text-align: right;
@@ -198,5 +296,42 @@
     white-space: pre-wrap;
     word-break: break-all;
     vertical-align: top;
+  }
+
+.avatar {
+  font-size: 28px;
+  color: #8c939d;
+  width: 100px;
+  height: 100px;
+  line-height: 150px;
+  text-align: center;
+  z-index: 10;
+  /*border:  dashed antiquewhite 3px;*/
+  border-radius: 2px;
+  display: inline-block;
+  vertical-align: top;
+  /*float: left;*/
+  position: relative;
+  left: 50px;
+}
+#imgContent3{
+  position: relative;
+  left: -55px;
+  display: inline-block;
+  width: 100px;
+  height: 100px;
+  z-index: 20;
+  vertical-align: top;
+}
+.text{
+  opacity: 0;
+}
+  .imgUpload{
+    display: inline-block;
+    width: 110px;
+    position: relative;
+    top: 28px;
+    height: 28px;
+    opacity: 0;
   }
 </style>

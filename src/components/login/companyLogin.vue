@@ -43,24 +43,24 @@
       methods: {
         btnSubmit:function (form) {
           // console.log("1231231")
-          let that = this
+          // let that = this
           this.$refs[form].validate((valid) => {
             if (valid) {
               this.$reqs.post('/login/companyLogin', {
-                account:that.form.user,
-              }).then(function (res) {
-                let data = res.data
-                console.log(data[0])
+                account:this.form.user,
+              }).then( (res)=> {
+                let data = res.data;
+                console.log(data[0]);
                 if(data.length ===0 ){
-                  that.$message.error('账号不存在');
+                  this.$message.error('账号不存在');
                 }
                 else {
-                  if (data[0].password === that.form.password) {
+                  if (data[0].password === this.form.password) {
                     // that.$message.error('密码错误');
                     window.location.href='/home.html#/companyInfoPage'
                   }
                   else {
-                    that.$message.error('密码错误');
+                    this.$message.error('密码错误');
                   }
                 }
               }).catch(function (res) {
