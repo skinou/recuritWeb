@@ -1,10 +1,10 @@
 <template>
   <div class="item">
     <img src="@/assets/img2.jpg" class="img"/>
-    <span class="job_name"><router-link to="/positionJob">{{positionData.name}}[{{positionData.address}}]</router-link></span>
+    <router-link to="/positionJob"><span class="job_name">{{positionData.name}}</span></router-link>
     <span class="job_salary">({{positionData.salary}})</span>
     <span class="job_time">{{positionData.time}}</span>
-    <span class="job_condition">{{positionData.experience}}/{{positionData.degree}}</span><br>
+    <span class="job_condition">{{positionData.address}} / {{positionData.experience}} / {{positionData.degree}}</span><br>
     <span class="job_tag"><el-tag type="info" v-for="(item,index) in positionData.jobTag" :key="index" size="mini" >{{item}}</el-tag></span>
   </div>
 </template>
@@ -23,10 +23,12 @@
     width: 550px;
     height: 105px;
     /*background-color: black;*/
-    margin: 0 auto;
-    border: whitesmoke solid 2px;
+    /*margin: 0 auto;*/
+    /*border: whitesmoke solid 2px;*/
     border-radius: 5px;
     text-align: left;
+    display: inline-block;
+    vertical-align: top;
 
   }
 
@@ -36,6 +38,12 @@
     margin: 13px 0 0 20px;
     display: inline-block;
     height: 30px;
+    color: dodgerblue;
+    max-width: 200px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    vertical-align: top;
   }
 
   .job_time {
@@ -49,10 +57,6 @@
     text-align: right;
   }
 
-  .job_name>a{
-    text-decoration: none;
-    color: dodgerblue;
-  }
 
   .job_salary {
     text-align: left;
@@ -61,6 +65,7 @@
     margin: 13px 0 0 20px;
     /*float: right;*/
     height: 30px;
+    vertical-align: top;
     /*float: left;*/
 
   }

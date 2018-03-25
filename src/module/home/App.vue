@@ -84,17 +84,16 @@
     /*margin-top: 60px;*/
   }
   .header{
-    min-width: 1000px;
+    min-width: 1200px;
   }
-
 
   @font-face {
     font-family: 'iconfont';  /* project id 588199 */
-    src: url('//at.alicdn.com/t/font_588199_pf42h4vkemptx1or.eot');
-    src: url('//at.alicdn.com/t/font_588199_pf42h4vkemptx1or.eot?#iefix') format('embedded-opentype'),
-    url('//at.alicdn.com/t/font_588199_pf42h4vkemptx1or.woff') format('woff'),
-    url('//at.alicdn.com/t/font_588199_pf42h4vkemptx1or.ttf') format('truetype'),
-    url('//at.alicdn.com/t/font_588199_pf42h4vkemptx1or.svg#iconfont') format('svg');
+    src: url('//at.alicdn.com/t/font_588199_ixdkmzk9rt4ndn29.eot');
+    src: url('//at.alicdn.com/t/font_588199_ixdkmzk9rt4ndn29.eot?#iefix') format('embedded-opentype'),
+    url('//at.alicdn.com/t/font_588199_ixdkmzk9rt4ndn29.woff') format('woff'),
+    url('//at.alicdn.com/t/font_588199_ixdkmzk9rt4ndn29.ttf') format('truetype'),
+    url('//at.alicdn.com/t/font_588199_ixdkmzk9rt4ndn29.svg#iconfont') format('svg');
   }
 
   .iconfont{
@@ -125,7 +124,7 @@
   }
 
   .footer{
-    min-width: 1000px;
+    min-width: 1200px;
     height: 80px;
     margin-top: 30px;
     background-color:whitesmoke;

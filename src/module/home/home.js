@@ -6,7 +6,10 @@ import Vuex from 'vuex'
 import 'element-ui/lib/theme-chalk/index.css'
 import axios from 'axios'
 import store from '@/store/store'
+import animate from 'animate.css'
 
+
+Vue.use(animate);
 Vue.use(ElementUI);
 Vue.use(Vuex);
 

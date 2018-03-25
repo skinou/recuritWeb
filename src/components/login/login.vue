@@ -29,24 +29,28 @@
     export default {
       name: "login",
       created(){
-        let a = {
-          b:'123456'
-        };
-        let b = {
-          c:1
-        };
-        let string = '123123';
-        let arr = ['12','121','565'];
-        let arr2 = [];
-        arr2 = arr;
-        a.b = arr;
-        let d = b;
-        b.c++;
-        console.log(a.b);
-        console.log(d.c);
-        console.log('123123');
-        console.log(arr2);
-        console.log(arr.toString())
+        // let a = {
+        //   b:'123456'
+        // };
+        // let b = {
+        //   c:1
+        // };
+        // let string = '123123';
+        // let arr = ['12','121','565'];
+        // let arr2 = [];
+        // arr2 = arr;
+        // a.b = arr;
+        // let d = b;
+        // b.c++;
+        // console.log(a.b);
+        // console.log(d.c);
+        // console.log('123123');
+        // console.log(arr2);
+        // console.log(arr.toString())
+        let time = new Date();
+        console.log(time);
+        let time2 = this.formatDateTime(new Date());
+        console.log(time2)
       },
       data() {
         return{
@@ -65,6 +69,21 @@
         }
       },
       methods: {
+        formatDateTime(inputTime) {
+          let date = new Date(inputTime);
+          let y = date.getFullYear();
+          let m = date.getMonth() + 1;
+          m = m < 10 ? ('0' + m) : m;
+          let d = date.getDate();
+          d = d < 10 ? ('0' + d) : d;
+          let h = date.getHours();
+          h = h < 10 ? ('0' + h) : h;
+          let minute = date.getMinutes();
+          let second = date.getSeconds();
+          minute = minute < 10 ? ('0' + minute) : minute;
+          second = second < 10 ? ('0' + second) : second;
+          return y + '-' + m + '-' + d+' '+h+':'+minute+':'+second;
+        },
         btnSubmit:function (form) {
             // console.log("1231231")
           this.$refs[form].validate((valid) => {

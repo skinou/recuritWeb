@@ -30,7 +30,7 @@
     width: 100%;
     height: 120px;
     background-color: ghostwhite;
-    min-width: 1000px;
+    min-width: 1200px;
     margin-bottom: 30px;
   }
 
