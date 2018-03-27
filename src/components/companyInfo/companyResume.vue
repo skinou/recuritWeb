@@ -65,7 +65,7 @@
 
 
       </div>
-      
+
 
       <ul class="list">
         <li v-for="(item,index) in getItemData" :key="index">

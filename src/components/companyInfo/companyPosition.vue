@@ -92,6 +92,14 @@
   import position from '@/components/block/positionBlock'
     export default {
       name: "company-position",
+      created(){
+        this.$reqs.get('/company/insertCompanyProduct')
+          .then( (res) =>{
+            console.log(res.data)
+        }).catch( (res)=> {
+          console.log(res.toString())
+        });
+      },
       components:{
         'position':position
       },
@@ -107,6 +115,8 @@
       computed: {
         filterData() {
           let list = [...this.list];
+          this.list2 = [...this.list];
+          console.log(this.list2);
           if (this.filterType !== '全部') {
             list = list.filter(item => item.type === this.filterType)
           }
@@ -140,6 +150,7 @@
             companyTag:['前景大','90后'],
           },
           currentPage: 1,
+          list2:[],
           list: [
             {
               name: '海外运营总监2',

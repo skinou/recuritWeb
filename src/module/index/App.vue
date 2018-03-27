@@ -3,11 +3,9 @@
     <!--<a href="/home.html">123</a>-->
     <!--<router-view/>-->
 
-    <div class="header">
-    </div>
-    <div class="body">
-      <router-view/>
-    </div>
+    <!--<div class="header">-->
+    <!--</div>-->
+    <router-view/>
 
   </div>
 </template>
@@ -24,16 +22,21 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
-}
-.body{
-  height: 250px;
+  background-color: dodgerblue;
   width: 100%;
+  height: 100%;
+
 }
 
-.header{
-  height: 250px;
-  width: 100%;
-  background-color: #31b0d5;
-}
+
+/*.body{*/
+  /*height: 250px;*/
+  /*width: 100%;*/
+/*}*/
+
+/*.header{*/
+  /*height: 250px;*/
+  /*width: 100%;*/
+  /*background-color: #31b0d5;*/
+/*}*/
 </style>

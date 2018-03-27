@@ -19,9 +19,9 @@
         <el-button @click="resetForm('form')">重置</el-button>
       </el-form-item>
     </el-form>
-    <div class="back">
-      <router-link to="/companyLogin">< 登陆</router-link>
-    </div>
+
+    <router-link to="/companyLogin" class="back">登陆</router-link>
+
   </div>
 </template>
 
@@ -90,12 +90,12 @@
 
 <style scoped>
   .box{
-    height: 500px;
+    height: 480px;
     width: 500px;
     margin: 50px auto;
     position: relative;
-    top: 20%;
-    transform: translateY(-60%);
+    transform: translateY(10%);
+    box-shadow: 0 0 5px 2px ghostwhite;
     background-color: whitesmoke;
   }
   .tab{
@@ -113,13 +113,39 @@
     margin: 0 0 0 50px;
   }
   .back{
-    height: 30px;
-    text-align: left;
+    height: 60px;
+    width: 60px;
+    line-height: 60px;
+    border: dodgerblue solid 2px;
+    border-radius: 90px;
     margin-left: 20px;
-  }
-  .back>a{
-    margin: 0 0 0 10px;
-    color: dodgerblue;
+    background-color: dodgerblue;
     text-decoration: none;
+    display: block;
+    position: relative;
+    color: whitesmoke;
+    top: -50px;
+    text-align: center;
+    box-shadow: 0 0 5px 2px dodgerblue;
+  }
+
+  .back:hover{
+    /*background-color: whitesmoke;*/
+    /*color: dodgerblue;*/
+    /*border: whitesmoke solid 2px;*/
+    animation: change 1s;
+  }
+
+  @keyframes change
+  {
+    0% {
+      transform:scale(1);
+    }
+    50% {
+      transform:scale(1.3);
+    }
+    100% {
+      transform:scale(1);
+    }
   }
 </style>

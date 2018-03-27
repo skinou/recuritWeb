@@ -127,11 +127,12 @@
     height: 350px;
     width: 350px;
     position: relative;
-    top: 20%;
-    transform: translateY(-50%);
+    top: -20%;
+    transform: translateY(50%);
     margin: 0 auto;
     background-color: whitesmoke;
     text-align: center;
+    box-shadow: 0 0 5px 2px ghostwhite;
   }
 
   .tab{
