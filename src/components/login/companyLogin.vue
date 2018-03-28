@@ -82,7 +82,7 @@
     width: 350px;
     position: relative;
     margin: 0 auto;
-    background-color: rgba(255, 255, 255, 0.6);
+    background-color: rgba(255, 255, 255, 0.9);
     text-align: center;
     box-shadow: 0 0 5px 2px whitesmoke;
     transform: translateY(40%);

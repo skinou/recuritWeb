@@ -96,7 +96,7 @@
     position: relative;
     /*top: 20%;*/
     /*transform: translateY(-60%);*/
-    background-color: rgba(255, 255, 255, 0.6);
+    background-color: rgba(255, 255, 255, 0.9);
     box-shadow: 0 0 5px 2px whitesmoke;
     transform: translateY(20%);
      border-radius: 5px;

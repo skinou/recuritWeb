@@ -1,57 +1,5 @@
 <template>
     <div class="job">
-      <!--<el-tabs type="border-card">-->
-        <!--<router-link to="jobRelease"><el-button size="small" type="primary" class="add">发布职位</el-button></router-link>-->
-        <!--<el-tab-pane label="全部">-->
-          <!--&lt;!&ndash;<el-button size="small" type="primary" class="add">发布职位</el-button>&ndash;&gt;-->
-          <!--<ul>-->
-            <!--<li v-for="(item,index) in getItemData" :key="index">-->
-              <!--<el-button type="primary" plain class="delete" @click="deleteRow(index,list)"  >╳</el-button>-->
-              <!--<position :positionData="item"></position>-->
-            <!--</li>-->
-          <!--</ul>-->
-          <!--<el-pagination-->
-            <!--background-->
-            <!--layout="prev, pager, next"-->
-            <!--:page-size="4"-->
-            <!--:current-page.sync="currentPage"-->
-            <!--:total="getPages">-->
-          <!--</el-pagination>-->
-        <!--</el-tab-pane>-->
-        <!--<el-tab-pane label="技术">-->
-          <!--<ul>-->
-            <!--<li v-for="(item,index) in getItemData" :key="index">-->
-              <!--<el-button type="info" plain class="delete" @click="deleteRow(index,list)"  >╳</el-button>-->
-              <!--<position :positionData="item"></position>-->
-            <!--</li>-->
-          <!--</ul>-->
-          <!--<el-pagination-->
-            <!--background-->
-            <!--layout="prev, pager, next"-->
-            <!--:page-size="4"-->
-            <!--:current-page.sync="currentPage"-->
-            <!--:total="getPages">-->
-          <!--</el-pagination>-->
-        <!--</el-tab-pane>-->
-        <!--<el-tab-pane label="产品">-->
-
-        <!--</el-tab-pane>-->
-        <!--<el-tab-pane label="视觉设计">-->
-
-        <!--</el-tab-pane>-->
-        <!--<el-tab-pane label="运营">-->
-
-        <!--</el-tab-pane>-->
-        <!--<el-tab-pane label="市场">-->
-
-        <!--</el-tab-pane>-->
-        <!--<el-tab-pane label="人力资源">-->
-
-        <!--</el-tab-pane>-->
-        <!--<el-tab-pane label="金融">-->
-
-        <!--</el-tab-pane>-->
-      <!--</el-tabs>-->
 
       <div class="condition">
         <span class="head">类别</span>
@@ -68,7 +16,7 @@
 
       </div>
 
-      <el-button size="small" type="primary" class="add">发布职位</el-button>
+      <router-link to="/jobRelease"><el-button size="small" type="primary" class="add">发布职位</el-button></router-link>
 
       <ul class="list">
         <li v-for="(item,index) in getItemData" :key="index">
@@ -93,9 +41,12 @@
     export default {
       name: "company-position",
       created(){
-        this.$reqs.get('/company/insertCompanyProduct')
+        this.$reqs.get('/job/selectJobForCompany')
           .then( (res) =>{
-            console.log(res.data)
+            console.log(res.data);
+            this.list2  = [...res.data];
+            console.log('11111111111111111111111111111111');
+            console.log(this.list2)
         }).catch( (res)=> {
           console.log(res.toString())
         });
@@ -114,9 +65,9 @@
       },
       computed: {
         filterData() {
-          let list = [...this.list];
-          this.list2 = [...this.list];
-          console.log(this.list2);
+          let list = [...this.list2];
+          // this.list2 = [...this.list];
+          // console.log(this.list2);
           if (this.filterType !== '全部') {
             list = list.filter(item => item.type === this.filterType)
           }

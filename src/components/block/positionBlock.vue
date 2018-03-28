@@ -1,7 +1,7 @@
 <template>
   <div class="item">
     <img src="@/assets/img2.jpg" class="img"/>
-    <router-link to="/positionJob"><span class="job_name">{{positionData.name}}</span></router-link>
+    <router-link to="/positionJob"><span class="job_name">{{positionData.jname}}</span></router-link>
     <span class="job_salary">({{positionData.salary}})</span>
     <span class="job_time">{{positionData.time}}</span>
     <span class="job_condition">{{positionData.address}} / {{positionData.experience}} / {{positionData.degree}}</span><br>

@@ -55,9 +55,9 @@
       <el-button type="primary" plain @click="submitForm('form')">注册</el-button>
       <el-button @click="resetForm('form')">重置</el-button>
     </div>
-   
+
     <router-link to="/companyReg" class="back">上一步</router-link>
-   
+
   </div>
 </template>
 
@@ -191,7 +191,7 @@
     position: relative;
     transform: translateY(10%);
      box-shadow: 0 0 5px 2px whitesmoke;
-    background-color: rgba(255, 255, 255, 0.6);
+    background-color: rgba(255, 255, 255, 0.9);
      border-radius: 5px;
     text-align: left;
   }
@@ -210,7 +210,7 @@
     width: 210px;
     /* background-color: darkblue; */
   }
- 
+
   .el-form{
     width: 600px;
     margin: 0 auto;
@@ -220,7 +220,7 @@
     margin: 0 auto;
     text-align: center;
   }
-   
+
   #imgContent3{
     position: relative;
     display: inline-block;

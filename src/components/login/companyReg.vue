@@ -100,7 +100,7 @@
     position: relative;
     transform: translateY(10%);
     box-shadow: 0 0 5px 2px whitesmoke;
-    background-color: rgba(255, 255, 255, 0.6);
+    background-color: rgba(255, 255, 255, 0.8);
      border-radius: 5px;
   }
   .tab{
