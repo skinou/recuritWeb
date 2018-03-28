@@ -82,9 +82,9 @@
     width: 350px;
     position: relative;
     margin: 0 auto;
-    background-color: whitesmoke;
+    background-color: rgba(255, 255, 255, 0.6);
     text-align: center;
-    box-shadow: 0 0 5px 2px ghostwhite;
+    box-shadow: 0 0 5px 2px whitesmoke;
     transform: translateY(40%);
   }
 
@@ -93,7 +93,7 @@
     width: 80%;
     margin: 30px auto;
     padding-top: 20px;
-    color: #31b0d5;
+    color: dodgerblue;
     text-align: center;
     letter-spacing: 2px;
   }

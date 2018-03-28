@@ -56,30 +56,34 @@
       methods: {
         submitForm(formName) {
           // let that = this;
-          this.$refs[formName].validate((valid) => {
-            if (valid) {
+          // this.$refs[formName].validate((valid) => {
+          //   if (valid) {
 
-              this.$reqs.post('/login/companyReg', {
-                account:this.form.account,
-                cname:this.form.cname,
-                cid:this.form.cid
-              }).then( (res)=>{
-                console.log(res);
-                let data = res.data;
-                if(data === '注册成功'){
-                  this.$store.commit('setValueLogin',this.form);
-                  this.$router.push('/companyLoginInfo');
-                }else{
-                  this.$message.error(data);
-                }
-              }).catch( (res)=> {
-                console.log(res.toString())
-              })
-            } else {
-              console.log('error submit!!');
-              return false;
-            }
-          });
+          //     this.$reqs.post('/login/companyReg', {
+          //       account:this.form.account,
+          //       cname:this.form.cname,
+          //       cid:this.form.cid
+          //     }).then( (res)=>{
+          //       console.log(res);
+          //       let data = res.data;
+          //       if(data === '注册成功'){
+          //         this.$store.commit('setValueLogin',this.form);
+          //         this.$router.push('/companyLoginInfo');
+          //       }else{
+          //         this.$message.error(data);
+          //       }
+          //     }).catch( (res)=> {
+          //       console.log(res.toString())
+          //     })
+
+          //   } else {
+          //     console.log('error submit!!');
+          //     return false;
+          //   }
+          // });
+
+           this.$router.push('/companyLoginInfo');
+
         },
         resetForm(formName) {
           this.$refs[formName].resetFields();
@@ -95,15 +99,16 @@
     margin: 50px auto;
     position: relative;
     transform: translateY(10%);
-    box-shadow: 0 0 5px 2px ghostwhite;
-    background-color: whitesmoke;
+    box-shadow: 0 0 5px 2px whitesmoke;
+    background-color: rgba(255, 255, 255, 0.6);
+     border-radius: 5px;
   }
   .tab{
     font-weight:bold;
     width: 80%;
     margin: 20px auto;
     padding: 0 0 20px 0;
-    color: #31b0d5;
+    color: dodgerblue;
     text-align: center;
     letter-spacing: 2px;
     display: inline-block;

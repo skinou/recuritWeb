@@ -3,13 +3,13 @@
     <h1 class="tab">公 司 注  册</h1>
 
     <div class="imgBox">
-      <i :class="{'text':imageShow}" class="avatar"></i>
+      <!-- <i :class="{'text':imageShow}" class="avatar"></i> -->
       <img id="imgContent3" :src="form.cimg"/>
-      <div style="margin: 10px auto;width: 205px;text-align: center">
-        <!--<input type="file" name="file" id="imgFile2" accept="image/png,image/gif,image/jpeg" style="display: none">-->
-        <input @change="fileImage" type="file" name="image" accept="image/*" class="imgUpload">
-        <el-button type="primary" plain size="mini">添加公司图标</el-button>
-      </div>
+      <input @change="fileImage" type="file" name="image" accept="image/*" class="imgUpload">
+      <!-- <div style="margin: 10px auto;width: 205px;text-align: center">
+        <!<input type="file" name="file" id="imgFile2" accept="image/png,image/gif,image/jpeg" style="display: none">-->
+        <!-- <el-button type="primary" plain size="mini">添加公司图标</el-button> -->
+      <!-- </div> -->
     </div>
 
     <el-form ref="form" :model="form" :rules="rules" label-width="180px">
@@ -55,9 +55,9 @@
       <el-button type="primary" plain @click="submitForm('form')">注册</el-button>
       <el-button @click="resetForm('form')">重置</el-button>
     </div>
-    <div class="back">
-      <router-link to="/companyReg">< 上一步</router-link>
-    </div>
+   
+    <router-link to="/companyReg" class="back">上一步</router-link>
+   
   </div>
 </template>
 
@@ -77,7 +77,7 @@
                   this.$store.commit('setValueInfo',this.form);
                   let company_login = this.$store.state.company_login;
                   let company_info = this.$store.state.company_info;
-                  console.log('1112313');
+                  // console.log('1112313');
                   console.log(company_login);
                   console.log(company_info);
                   this.$reqs.post('/company/insertCompany', {
@@ -189,9 +189,10 @@
     width: 700px;
     margin: 50px auto;
     position: relative;
-    top: 20%;
-    transform: translateY(-30%);
-    background-color: whitesmoke;
+    transform: translateY(10%);
+     box-shadow: 0 0 5px 2px whitesmoke;
+    background-color: rgba(255, 255, 255, 0.6);
+     border-radius: 5px;
     text-align: left;
   }
   .tab{
@@ -199,25 +200,17 @@
     width: 100%;
     margin: 20px auto;
     /*padding: 0 0 20px 0;*/
-    color: #31b0d5;
+    color: dodgerblue;
     text-align: center;
     letter-spacing: 2px;
     display: inline-block;
   }
   .imgBox{
     margin: 20px auto;
-    width: 210px
+    width: 210px;
+    /* background-color: darkblue; */
   }
-  .back{
-    height: 30px;
-    text-align: left;
-    margin-left: 20px;
-  }
-  .back>a{
-    margin: 0 0 0 10px;
-    color: dodgerblue;
-    text-decoration: none;
-  }
+ 
   .el-form{
     width: 600px;
     margin: 0 auto;
@@ -227,40 +220,63 @@
     margin: 0 auto;
     text-align: center;
   }
-  .avatar {
-    font-size: 28px;
-    color: #8c939d;
-    width: 100px;
-    height: 100px;
-    line-height: 150px;
-    text-align: center;
-    z-index: 10;
-    /*border:  dashed antiquewhite 3px;*/
-    border-radius: 2px;
-    display: inline-block;
-    vertical-align: top;
-    /*float: left;*/
-    position: relative;
-    left: 50px;
-  }
+   
   #imgContent3{
     position: relative;
-    left: -55px;
     display: inline-block;
     width: 100px;
     height: 100px;
     z-index: 20;
+    left: 55px;
     vertical-align: top;
   }
   .imgUpload{
     display: inline-block;
-    width: 110px;
     position: relative;
-    top: 28px;
-    height: 28px;
+    width: 100px;
+    height: 100px;
+    left: -50px;
+    z-index: 30;
     opacity: 0;
   }
   .text{
     opacity: 0;
+  }
+
+   .back{
+    height: 60px;
+    width: 60px;
+    line-height: 60px;
+    border: dodgerblue solid 2px;
+    border-radius: 90px;
+    margin-left: 20px;
+    background-color: dodgerblue;
+    text-decoration: none;
+    display: block;
+    position: relative;
+    color: whitesmoke;
+    top: -50px;
+    text-align: center;
+    box-shadow: 0 0 5px 2px dodgerblue;
+  }
+
+  .back:hover{
+    /*background-color: whitesmoke;*/
+    /*color: dodgerblue;*/
+    /*border: whitesmoke solid 2px;*/
+    animation: change 1s;
+  }
+
+  @keyframes change
+  {
+    0% {
+      transform:scale(1);
+    }
+    50% {
+      transform:scale(1.3);
+    }
+    100% {
+      transform:scale(1);
+    }
   }
 </style>

@@ -96,16 +96,17 @@
     position: relative;
     /*top: 20%;*/
     /*transform: translateY(-60%);*/
-    background-color: whitesmoke;
-    box-shadow: 0 0 5px 2px ghostwhite;
+    background-color: rgba(255, 255, 255, 0.6);
+    box-shadow: 0 0 5px 2px whitesmoke;
     transform: translateY(20%);
+     border-radius: 5px;
   }
   .tab{
     font-weight:bold;
     width: 80%;
     margin: 20px auto;
     padding: 0 0 20px 0;
-    color: #31b0d5;
+    color: dodgerblue;
     text-align: center;
     letter-spacing: 2px;
     display: inline-block;
