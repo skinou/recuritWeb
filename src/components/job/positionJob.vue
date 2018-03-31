@@ -330,6 +330,15 @@
                 }
               }).then((res)=>{
                 console.log(res.data);
+                this.form.name=this.form2.name;
+                this.form.salary=this.form2.salary;
+                this.form.city=this.form2.city;
+                this.form.direction=this.form2.direction;
+                this.form.experience=this.form2.experience;
+                this.form.degree=this.form2.degree;
+                this.form.jtype=this.form2.jtype;
+                this.form.time=this.form2.time;
+                this.form.jobTag=this.form2.jobTag;
                 this.$message({
                   message: '成功',
                   type: 'success'
@@ -353,7 +362,13 @@
               jkey:this.$route.params.jkey,
             }).then((res)=>{
 
-              console.log(res.data)
+              console.log(res.data);
+              this.form.temptation=this.form2.temptation;
+              this.dialog2=false;
+              this.$message({
+                message: '成功',
+                type: 'success'
+              });
 
             }).catch((err)=>{
               console.log(err.toString())
@@ -375,7 +390,13 @@
               jkey:this.$route.params.jkey,
             }).then((res)=>{
 
-              console.log(res.data)
+              console.log(res.data);
+              this.form.duty=this.form2.duty;
+              this.dialog3=false;
+              this.$message({
+                message: '成功',
+                type: 'success'
+              });
 
             }).catch((err)=>{
               console.log(err.toString())
@@ -396,7 +417,13 @@
               jkey:this.$route.params.jkey,
             }).then((res)=>{
 
-              console.log(res.data)
+              console.log(res.data);
+              this.form.ability=this.form2.ability;
+              this.dialog4=false;
+              this.$message({
+                message: '成功',
+                type: 'success'
+              });
 
             }).catch((err)=>{
               console.log(err.toString())
@@ -417,7 +444,13 @@
               jkey:this.$route.params.jkey,
             }).then((res)=>{
 
-              console.log(res.data)
+              console.log(res.data);
+              this.form.skill=this.form2.skill;
+              this.dialog5=false;
+              this.$message({
+                message: '成功',
+                type: 'success'
+              });
 
             }).catch((err)=>{
               console.log(err.toString())
@@ -438,7 +471,13 @@
               jkey:this.$route.params.jkey,
             }).then((res)=>{
 
-              console.log(res.data)
+              console.log(res.data);
+              this.form.address=this.form2.address;
+              this.dialog6=false;
+              this.$message({
+                message: '成功',
+                type: 'success'
+              });
 
             }).catch((err)=>{
               console.log(err.toString())
