@@ -195,6 +195,21 @@
   // import jobData from '@/store/job'
     export default {
       name: "position-job",
+
+      created(){
+        this.$reqs.post('/job/selectJobDetail',{
+          jkey:this.$route.params.jkey,
+        }).then((res)=>{
+
+          this.jobDetail = Object.assign(this.jobDetail,res.data[0]);
+          console.log(this.jobDetail);
+          console.log(this.jobDetail.ability)
+
+        }).catch((err)=>{
+          console.log(err.toString())
+        })
+      },
+
       methods:{
         handleClose(tag) {
           this.form.jobTag.splice(this.form.jobTag.indexOf(tag), 1);
@@ -225,7 +240,7 @@
         submit1(form) {
           this.$refs[form].validate((valid) => {
             if (valid) {
-              var date = new Date()
+              var date = new Date();
               this.form.date=date.toLocaleDateString() + date.toLocaleTimeString()
               // this.jobContentData=form
               this.$message({
@@ -332,6 +347,7 @@
       },
       data(){
         return{
+          jobDetail:{},
           form: {
             name:'Java开发工程师',
             salary: '10k-20k',

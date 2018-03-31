@@ -96,7 +96,7 @@ export default new Router({
           component: companyResume,
         },
         {
-          path: '/positionJob',
+          path: '/positionJob/:jkey',
           name: 'positionJob',
           component: positionJob
         },

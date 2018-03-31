@@ -20,7 +20,7 @@
 
       <ul class="list">
         <li v-for="(item,index) in getItemData" :key="index">
-          <el-button type="primary" plain class="delete" @click="deleteRow(index,list)"  >╳</el-button>
+          <el-button type="primary" plain class="delete" @click="deleteRow(index,list2)"  >╳</el-button>
           <position :positionData="item"></position>
         </li>
       </ul>
@@ -45,7 +45,6 @@
           .then( (res) =>{
             console.log(res.data);
             this.list2  = [...res.data];
-            console.log('11111111111111111111111111111111');
             console.log(this.list2)
         }).catch( (res)=> {
           console.log(res.toString())
@@ -56,7 +55,8 @@
       },
       methods:{
         deleteRow(index, rows) {
-          rows.splice(index, 1);
+          let data = rows.splice(index, 1);
+          console.log(data)
         },
         handleType(item){
           this.filterType = item
@@ -69,8 +69,11 @@
           // this.list2 = [...this.list];
           // console.log(this.list2);
           if (this.filterType !== '全部') {
-            list = list.filter(item => item.type === this.filterType)
+            list = list.filter(item => item.direction === this.filterType)
           }
+
+
+
           return list
         },
         getPages() {
@@ -166,16 +169,18 @@
 .list{
   list-style: none;
   padding: 10px 0 20px 0;
+  margin: 5px 0 5px 0;
   /*width: 609px;*/
 
 }
 .list>li{
-  margin: 15px auto;
+  margin: 20px auto;
   width: 650px;
   text-align: left;
   background-color: whitesmoke;
   /*padding: 10px 0 10px 0;*/
   padding-left: 20px;
+
 }
   .item{
     width: 100%;
@@ -240,12 +245,6 @@
     display: inline-block;
     /*height: 50px;*/
   }
-
-  /*.search_condition>ul>li{*/
-    /*!*width: 70px;*!*/
-    /*!*float: left;*!*/
-    /*display: block;*/
-  /*}*/
 
   .head{
     font-weight: bold;

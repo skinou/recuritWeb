@@ -1,11 +1,10 @@
 <template>
   <div class="item">
-    <img src="@/assets/img2.jpg" class="img"/>
-    <router-link to="/positionJob"><span class="job_name">{{positionData.jname}}</span></router-link>
-    <span class="job_salary">({{positionData.salary}})</span>
-    <span class="job_time">{{positionData.time}}</span>
-    <span class="job_condition">{{positionData.address}} / {{positionData.experience}} / {{positionData.degree}}</span><br>
-    <span class="job_tag"><el-tag type="info" v-for="(item,index) in positionData.jobTag" :key="index" size="mini" >{{item}}</el-tag></span>
+    <router-link :to="'/positionJob/'+ positionData.jkey"><span class="job_name">{{positionData.jname}}</span></router-link>
+    <span class="job_salary">{{positionData.salary}}</span>
+    <span class="job_time">{{positionData.jtime}}</span>
+    <span class="job_condition">{{positionData.city}} / {{positionData.experience}} / {{positionData.degree}}</span><br>
+    <span class="job_tag" v-show="getTags!==null"><el-tag type="primary" v-for="(item,index) in getTags" :key="index" size="mini" >{{item}}</el-tag></span>
   </div>
 </template>
 
@@ -15,12 +14,24 @@
       props:{
         positionData: Object,
       },
+      computed:{
+        getTags(){
+          if(this.positionData.jobTag){
+            let tag =  this.positionData.jobTag.split(',');
+            return tag
+          }
+          else{
+            return null
+          }
+
+        }
+      }
     }
 </script>
 
 <style scoped>
   .item{
-    width: 550px;
+    width: 600px;
     height: 105px;
     /*background-color: black;*/
     /*margin: 0 auto;*/
@@ -44,6 +55,7 @@
     white-space: nowrap;
     text-overflow: ellipsis;
     vertical-align: top;
+    font-size: large;
   }
 
   .job_time {
@@ -53,33 +65,37 @@
     font-size: small;
     display: inline-block;
     height: 30px;
-    width: 50px;
+    /*width: 50px;*/
     text-align: right;
   }
 
 
   .job_salary {
     text-align: left;
-    color: dodgerblue;
+    color: red;
     display: inline-block;
     margin: 13px 0 0 20px;
     /*float: right;*/
     height: 30px;
     vertical-align: top;
+    font-size: large;
     /*float: left;*/
 
   }
 
   .job_condition{
     text-align: left;
-    font-weight: lighter;
+    /*font-weight: lighter;*/
     margin: 0 0 0 20px;
-    font-size: smaller;
+    font-size: small;
     display: inline-block;
     height: 23px;
-    width: 400px;
+    width: 570px;
     color: black;
     float: left;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
   }
 
   .job_tag{
