@@ -101,12 +101,12 @@ export default new Router({
           component: positionJob
         },
         {
-          path: '/resumeList',
+          path: '/resumeList/:jkey',
           name: 'resumeList',
           component: resumeList
         },
         {
-          path: '/resume',
+          path: '/resume/:rkey/:id',
           name: 'resume',
           component: resume
         },

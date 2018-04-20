@@ -1,56 +1,5 @@
 <template>
     <div class="resume">
-      <!--<el-tabs type="border-card">-->
-        <!--<el-tab-pane label="全部">-->
-          <!--<ul>-->
-            <!--<li v-for="(item,index) in getItemData" :key="index">-->
-              <!--<resume-job-block :data="item"></resume-job-block>-->
-            <!--</li>-->
-          <!--</ul>-->
-          <!--<el-pagination-->
-            <!--background-->
-            <!--layout="prev, pager, next"-->
-            <!--:page-size="4"-->
-            <!--:current-page.sync="currentPage"-->
-            <!--@current-change="handleCurrentChange"-->
-            <!--:total="getPages">-->
-          <!--</el-pagination>-->
-        <!--</el-tab-pane>-->
-        <!--<el-tab-pane label="技术">-->
-          <!--<ul>-->
-            <!--<li v-for="(item,index) in getItemData" :key="index">-->
-              <!--<resume-job-block :data="item"></resume-job-block>-->
-            <!--</li>-->
-          <!--</ul>-->
-          <!--<el-pagination-->
-            <!--background-->
-            <!--layout="prev, pager, next"-->
-            <!--:page-size="4"-->
-            <!--:current-page.sync="currentPage"-->
-            <!--@current-change="handleCurrentChange"-->
-            <!--:total="getPages">-->
-          <!--</el-pagination>-->
-        <!--</el-tab-pane>-->
-        <!--<el-tab-pane label="产品">-->
-
-        <!--</el-tab-pane>-->
-        <!--<el-tab-pane label="视觉设计">-->
-
-        <!--</el-tab-pane>-->
-        <!--<el-tab-pane label="运营">-->
-
-        <!--</el-tab-pane>-->
-        <!--<el-tab-pane label="市场">-->
-
-        <!--</el-tab-pane>-->
-        <!--<el-tab-pane label="人力资源">-->
-
-        <!--</el-tab-pane>-->
-        <!--<el-tab-pane label="金融">-->
-
-        <!--</el-tab-pane>-->
-      <!--</el-tabs>-->
-
       <div class="condition">
         <span class="head">类别</span>
         <ul>
@@ -89,13 +38,20 @@
   import resumeJobBlock from '@/components/block/resumeJobBlock'
     export default {
       name: "company-resume",
+      created(){
+        this.$reqs.get('/job/selectJobForCompany')
+          .then( (res) =>{
+            console.log(res.data);
+            this.list2  = [...res.data];
+            console.log(this.list2)
+          }).catch( (res)=> {
+          console.log(res.toString())
+        });
+      },
       components:{
         'resume-job-block':resumeJobBlock
       },
       methods:{
-        deleteRow(index, rows) {
-          rows.splice(index, 1);
-        },
         handleCurrentChange(){
           scrollTo(0,0);
         },
@@ -106,7 +62,7 @@
       },
       computed: {
         filterData() {
-          let list = [...this.list];
+          let list = [...this.list2];
           if (this.filterType !== '全部') {
             list = list.filter(item => item.type === this.filterType)
           }
@@ -130,6 +86,7 @@
           filterType: '全部',
           type:['全部','技术','产品','视觉设计','运营','市场','人力资源','金融'],
           currentPage: 1,
+          list2:[],
           list: [
             {
               name: '海外运营总监111111111111111111',

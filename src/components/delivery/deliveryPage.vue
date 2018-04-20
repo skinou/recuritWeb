@@ -8,9 +8,9 @@
         <el-menu-item index="/success">
           <span slot="title">投递成功</span>
         </el-menu-item>
-        <el-menu-item index="/checked">
-          <span slot="title">被查看</span>
-        </el-menu-item>
+        <!--<el-menu-item index="/checked">-->
+          <!--<span slot="title">被查看</span>-->
+        <!--</el-menu-item>-->
         <el-menu-item index="/communication">
           <span slot="title">待沟通</span>
         </el-menu-item>
@@ -39,5 +39,7 @@
   .delivery{
     margin: 10px auto;
     width: 1000px;
+    min-height: 500px;
   }
+
 </style>

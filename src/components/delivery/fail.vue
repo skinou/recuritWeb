@@ -1,25 +1,57 @@
 <template>
-  <div>
-    <ul class="fail">
-      <li v-for="(item,index) in getItemData" :key="index">
-        <delivery-list-item :item="item" :pass="false" :fail="true"></delivery-list-item>
-      </li>
-    </ul>
+  <!--<div>-->
+    <!--<ul class="fail">-->
+      <!--<li v-for="(item,index) in getItemData" :key="index">-->
+        <!--<delivery-list-item :item="item" :pass="false" :fail="true"></delivery-list-item>-->
+      <!--</li>-->
+    <!--</ul>-->
 
-    <el-pagination
-      background
-      layout="prev, pager, next"
-      :page-size="4"
-      :current-page.sync="currentPage"
-      :total="getPages">
-    </el-pagination>
+    <!--<el-pagination-->
+      <!--background-->
+      <!--layout="prev, pager, next"-->
+      <!--:page-size="4"-->
+      <!--:current-page.sync="currentPage"-->
+      <!--:total="getPages">-->
+    <!--</el-pagination>-->
+  <!--</div>-->
+  <div>
+    <div v-if="list.length!==0">
+      <ul class="fail">
+        <li v-for="(item,index) in getItemData" :key="index">
+          <delivery-list-item :item="item" :pass="false" :fail="false"></delivery-list-item>
+        </li>
+      </ul>
+
+      <el-pagination
+        background
+        layout="prev, pager, next"
+        :page-size="4"
+        :current-page.sync="currentPage"
+        :total="getPages">
+      </el-pagination>
+    </div>
+    <div v-else>
+      <h3>没有相关信息</h3>
+    </div>
   </div>
 </template>
 
 <script>
   import deliveryListItem from '@/components/block/deliveryListItem'
   export default {
-        name: "fail",
+      name: "fail",
+    created(){
+      this.$reqs.get('/deliver/getJobDeliverList' ,{
+        params: {
+          state: '不合适'
+        }
+      }).then( (res)=> {
+        console.log(res.data);
+        this.list = res.data
+      }).catch(function (res) {
+        console.log(res)
+      });
+    },
       components:{
         'delivery-list-item':deliveryListItem
       },

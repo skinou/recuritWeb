@@ -1,13 +1,12 @@
 <template>
   <div class="item">
    <div>
-     <span class="job_name"><router-link to="/resumeList">{{data.name}}</router-link></span>
-     <span class="job_salary">({{data.salary}})</span>
-     <span class="job_condition">{{data.experience}}/{{data.degree}}</span>
+     <h4 class="job_name"><router-link :to="'/resumeList/'+ data.jkey">{{data.jname}}</router-link></h4>
+     <span class="job_salary">{{data.salary}}</span>
+     <span class="job_condition">{{data.city}} / {{data.experience}} / {{data.degree}}</span>
    </div>
     <div>
-      <span class="resumeNum">已收到简历：{{data.received}}</span>
-      <span class="resumeNum" :class="{'red': data.undo > 0}">未处理：{{data.undo}}</span>
+      <span class="resumeNum">收到简历：{{data.num}}</span>
     </div>
 
 
@@ -44,12 +43,13 @@
     overflow: hidden;
     text-overflow: ellipsis;
     vertical-align: bottom;
+    /*font-weight: 500;*/
   }
 
 
   .job_name>a{
     text-decoration: none;
-    color: dodgerblue;
+    color: black;
   }
 
   .job_salary {
@@ -59,6 +59,7 @@
     margin: 13px 0 0 10px;
     height: 30px;
     vertical-align: bottom;
+    /*color: grey;*/
 
   }
 
@@ -66,24 +67,20 @@
     /*text-align: left;*/
     /*font-weight: lighter;*/
     margin: 13px 0 0 20px;
-    font-size: smaller;
+    font-size: small;
     display: inline-block;
     height: 23px;
     /*width: 400px;*/
-    color: dimgrey;
+    color: grey;
     vertical-align: top;
     /*float: left;*/
   }
 
   .resumeNum{
     margin: 5px 0 0 21px;
-    color: dimgrey;
+    color: gray;
     display: inline-block;
     vertical-align: bottom;
-  }
-  .red{
-    color: red;
-
   }
 
 

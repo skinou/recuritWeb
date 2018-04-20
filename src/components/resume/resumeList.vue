@@ -1,11 +1,13 @@
 <template>
 <div style="text-align: left">
-  <router-link to="/companyResume"><el-button size="small" icon="el-icon-d-arrow-left" plain class="back">返回</el-button></router-link>
+  <!--<router-link to="/companyResume"><el-button size="small" icon="el-icon-d-arrow-left" plain class="back">返回</el-button></router-link>-->
+  <router-link to="/companyResume"><span class="back iconfont">&#xe7be;</span></router-link>
+
   <div class="top">
-    <h2>{{form.name}}</h2>
+    <h2>{{form.jname}}</h2>
     <h4>{{form.salary}}</h4>
-    <h5>{{form.city}}/{{form.experience}}/ {{form.degree}}/ {{form.type}}</h5>
-    <h5>发布时间: {{form.date}}</h5>
+    <h5>{{form.city}}/{{form.experience}}/ {{form.degree}}/ {{form.jtype}}</h5>
+    <h5>发布时间: {{form.jtime}}</h5>
     <span class="job_tag"><el-tag v-for="(item,index) in form.jobTag" :key="index" size="small" >{{item}}</el-tag></span>
   </div>
 
@@ -23,12 +25,15 @@
   <ul class="resumeList">
     <li v-for="(item,index) in getItemData" :key="index">
       <div class="info">
-        <img src="@/assets/img1.jpg"/>
-        <span><router-link to="resume">{{item.name}}</router-link>/</span>
+        <img v-if="item.sex==='男'" src="@/assets/boy.png"/>
+        <img v-else="item.sex==='女'" src="@/assets/girl.png"/>
+        <span><router-link :to="'/resume/'+item.rkey+'/'+item.id">{{item.name}}</router-link>  /</span>
         <span>{{item.sex}}/</span>
         <span>{{item.school}}/</span>
-        <span>{{item.degree}}</span>
+        <span>{{item.degree}}/</span>
+        <span>{{item.major}}</span>
         <span><el-tag :type="getType(item.state)" size="small" >{{item.state}}</el-tag></span>
+        <span>{{item.rtime}}</span>
       </div>
     </li>
   </ul>
@@ -50,21 +55,57 @@
 <script>
     export default {
       name: "resume-list",
+
+      mounted(){
+
+
+        this.$reqs.post('/job/selectJobDetail',{
+          jkey:this.$route.params.jkey,
+        }).then((res)=>{
+
+          this.form = res.data[0];
+          if(this.form.jobTag){
+            this.form.jobTag =  this.form.jobTag.split(',');
+          }
+          else{
+            this.form.jobTag = []
+          }
+
+        }).catch((err)=>{
+          console.log(err.toString())
+        });
+
+
+
+        this.$reqs.post('/job_resume/getJobResumeList',{
+          jkey:this.$route.params.jkey,
+        }).then((res)=>{
+
+          this.info = res.data;
+          console.log(this.info);
+
+        }).catch((err)=>{
+          console.log(err.toString())
+        });
+
+      },
+
+
       computed:{
         getPages() {
           return this.getInfo.length
         },
         getItemData() {
-          let list = [...this.getInfo]
-          let start = 0
-          let end = 4
-          start += (this.currentPage - 1) * 4
-          end += (this.currentPage - 1) * 4
-          let arr = list.slice(start, end)
+          let list = [...this.getInfo];
+          let start = 0;
+          let end = 4;
+          start += (this.currentPage - 1) * 4;
+          end += (this.currentPage - 1) * 4;
+          let arr = list.slice(start, end);
           return arr
         },
         getInfo(){
-          let arr = this.info.filter(item=>item.state===this.filter)
+          let arr = this.info.filter(item=>item.state===this.filter);
           return arr
         }
       },
@@ -89,84 +130,86 @@
       },
       data() {
         return {
-          stateItem:['未查看','已查看','待沟通','通过','不合适'],
-          filter: '未查看',
+          stateItem:['投递成功','已查看','待沟通','通过','不合适'],
+          filter: '投递成功',
           currentPage: 1,
-          form: {
-            name: 'Java开发工程师',
-            salary: '10k-20k',
-            city: '上海',
-            experience: '验1-3年',
-            degree: '本科及以上',
-            type: '全职',
-            date: '2018/2/18上午11:35:05',
-            jobTag: ['运营', '跨国', '福利好', '法定假期'],
-          },
-          info:[
-            {
-              name:'张三',
-              sex:'男',
-              school:'广州大学',
-              degree:'本科',
-              state:'未查看'
-            },
-            {
-              name:'张三',
-              sex:'男',
-              school:'广州大学',
-              degree:'本科',
-              state:'未查看'
-            },
-            {
-              name:'张三',
-              sex:'男',
-              school:'广州大学',
-              degree:'本科',
-              state:'未查看'
-            },
-            {
-              name:'张三',
-              sex:'男',
-              school:'广州大学',
-              degree:'本科',
-              state:'未查看'
-            },
-            {
-              name:'张三',
-              sex:'男',
-              school:'广州大学',
-              degree:'本科',
-              state:'未查看'
-            },
-            {
-              name:'张三',
-              sex:'男',
-              school:'广州大学',
-              degree:'本科',
-              state:'已查看'
-            },
-            {
-              name:'张三',
-              sex:'男',
-              school:'广州大学',
-              degree:'本科',
-              state:'待沟通'
-            },
-            {
-              name:'张三',
-              sex:'男',
-              school:'广州大学',
-              degree:'本科',
-              state:'不合适'
-            },
-            {
-              name:'张三',
-              sex:'男',
-              school:'广州大学',
-              degree:'本科',
-              state:'通过'
-            },
-          ]
+          // form: {
+          //   name: 'Java开发工程师',
+          //   salary: '10k-20k',
+          //   city: '上海',
+          //   experience: '验1-3年',
+          //   degree: '本科及以上',
+          //   type: '全职',
+          //   date: '2018/2/18上午11:35:05',
+          //   jobTag: ['运营', '跨国', '福利好', '法定假期'],
+          // },
+          form:[],
+          info:[]
+          // info:[
+          //   {
+          //     name:'张三',
+          //     sex:'男',
+          //     school:'广州大学',
+          //     degree:'本科',
+          //     state:'未查看'
+          //   },
+          //   {
+          //     name:'张三',
+          //     sex:'男',
+          //     school:'广州大学',
+          //     degree:'本科',
+          //     state:'未查看'
+          //   },
+          //   {
+          //     name:'张三',
+          //     sex:'男',
+          //     school:'广州大学',
+          //     degree:'本科',
+          //     state:'未查看'
+          //   },
+          //   {
+          //     name:'张三',
+          //     sex:'男',
+          //     school:'广州大学',
+          //     degree:'本科',
+          //     state:'未查看'
+          //   },
+          //   {
+          //     name:'张三',
+          //     sex:'男',
+          //     school:'广州大学',
+          //     degree:'本科',
+          //     state:'未查看'
+          //   },
+          //   {
+          //     name:'张三',
+          //     sex:'男',
+          //     school:'广州大学',
+          //     degree:'本科',
+          //     state:'已查看'
+          //   },
+          //   {
+          //     name:'张三',
+          //     sex:'男',
+          //     school:'广州大学',
+          //     degree:'本科',
+          //     state:'待沟通'
+          //   },
+          //   {
+          //     name:'张三',
+          //     sex:'男',
+          //     school:'广州大学',
+          //     degree:'本科',
+          //     state:'不合适'
+          //   },
+          //   {
+          //     name:'张三',
+          //     sex:'男',
+          //     school:'广州大学',
+          //     degree:'本科',
+          //     state:'通过'
+          //   },
+          // ]
         }
       }
     }
@@ -177,7 +220,7 @@
     height: 200px;
     width: 700px;
     background-color: whitesmoke;
-    margin: 20px auto;
+    margin: 40px auto;
     padding: 30px 0 0 0;
   }
   h2,h4,h5,h6{
@@ -196,14 +239,12 @@
     color: #409EFF;
   }
 
-  h5{
+  h5 {
     margin: 0 0 0 20px;
     letter-spacing: 1px;
     color: #555555;
   }
-  .back{
-    border: none;
-  }
+
   .el-tag{
     margin-left: 20px;
   }
@@ -267,5 +308,54 @@
     color: white;
     text-decoration: none;
   }
+
+  .iconfont{
+    font-family:"iconfont" !important;
+    font-size:18px;
+    font-style:normal;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-stroke-width: 0.2px;
+    -moz-osx-font-smoothing: grayscale;
+    /*color: black;*/
+    /*height: 20px;*/
+    /*line-height: 20px;*/
+    margin-right: 5px;
+    padding-bottom: 2px;
+    /*display: inline-block;*/
+    color: dodgerblue;
+  }
+
+  .back{
+    /*float: left;*/
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    /*border: dodgerblue solid 1px;*/
+    border-radius: 90px;
+    background-color: whitesmoke;
+    color: dodgerblue;
+    position: relative;
+    top: 15px;
+    margin-left: 25px;
+  }
+
+  .back:hover{
+    color: whitesmoke;
+    background-color: dodgerblue;
+    animation:route 0.5s
+  }
+
+  @keyframes route
+  {
+    0% {
+      transform: rotate(0deg) scale(1.5);
+    }
+    100% {
+      transform: rotate(360deg) scale(1);
+    }
+  }
+
 
 </style>

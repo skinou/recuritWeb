@@ -1,15 +1,17 @@
 <template>
 <div>
   <div style="text-align: left">
-    <router-link to="/resumeList"><el-button size="small" icon="el-icon-d-arrow-left" plain class="back">返回</el-button></router-link>
-    <el-button size="small"  plain class="danger" type="danger">不合适</el-button>
-    <el-button size="small"  plain class="primary" type="primary">通过</el-button>
+    <router-link :to="'/resumeList/'+jkey"><el-button size="small" icon="el-icon-d-arrow-left" plain class="back">返回</el-button></router-link>
+    <el-button  size="small"  plain class="danger" type="danger"  @click="changeToFail">不合适</el-button>
+    <el-button v-if="state==='投递成功'" size="small"  plain class="primary" type="primary" @click="changeToCommun">待沟通</el-button>
+    <el-button v-else-if="state==='待沟通'" size="small"  plain class="primary" type="primary" @click="changeToPass">通过</el-button>
   </div>
   <el-tabs type="border-card">
 
     <el-tab-pane label="基本信息">
       <div class="info">
-        <img src="@/assets/img2.jpg"/>
+        <img v-if="info.img!==null" :src="info.img"/>
+        <img v-else src="@/assets/boy.png"/>
         <div class="item_name">{{info.name}}</div>
         <ul>
           <li>
@@ -37,7 +39,7 @@
         </div>
         <div style="margin-top: 10px">
           <span class="add"> <i class="el-icon-edit"></i>补充:</span>
-          <span v-show="job.supplement!== ''" class="supplement">{{job.supplement}}</span>
+          <span v-show="job.statement!== ''" class="supplement">{{job.statement}}</span>
         </div>
       </div>
 
@@ -66,22 +68,22 @@
             <span class="intern_time">{{item.start}} - {{item.end}}</span>
             <!--<span class="intern_describe">{{item.describe}}</span>-->
             <div class="describe">
-              <p v-for="(arrItem , index) in getWorkDesc(item.describe)" :key="index">{{arrItem}}</p>
+              <p v-for="(arrItem , index) in getWorkDesc(item.statement)" :key="index">{{arrItem}}</p>
             </div>
           </div>
         </li>
       </ul>
-
     </el-tab-pane>
+
     <el-tab-pane label="项目经验">
       <div class="project">
         <ul class="work">
           <li v-for="(item , index) in proData" :key="index">
             <div class="intern_content">
-              <span class="proName">{{item.name}}</span>
+              <span class="proName">{{item.project}}</span>
               <span class="intern_time">{{item.start}}  -  {{item.end}}</span>
               <div class="describe">
-                <p v-for="(arrItem , index) in getWorkDesc(item.describe)" :key="index">{{arrItem}}</p>
+                <p v-for="(arrItem , index) in getWorkDesc(item.statement)" :key="index">{{arrItem}}</p>
               </div>
             </div>
           </li>
@@ -102,7 +104,7 @@
         <ul>
           <li v-for="(item,index) in skillData" :key="index">
             <h5 class="title">{{item.skill}}</h5>
-            <el-progress :stroke-width="12" :percentage="item.value"></el-progress>
+            <el-progress :stroke-width="12" :percentage="item.sValue"></el-progress>
           </li>
         </ul>
       </div>
@@ -115,118 +117,166 @@
 <script>
     export default {
       name: "resume",
+      created(){
+
+        this.rkey =  this.$route.params.rkey;
+
+        this.$reqs.get('/job_resume/getJobResume' ,{
+          params: {
+            rkey: this.rkey,
+          }
+        }).then( (res)=> {
+          this.state = res.data[0].state;
+          this.jkey = res.data[0].jkey;
+          console.log('state',this.state)
+        }).catch(function (res) {
+        });
+
+
+
+        this.$reqs.get('/job_resume/userInfo' ,{
+          params: {
+            id: this.$route.params.id,
+          }
+        }).then( (res)=> {
+            this.info = res.data[0]
+          }).catch(function (res) {
+        });
+
+
+        this.$reqs.get('/job_resume/userExpect' ,{
+          params: {
+            id: this.$route.params.id,
+          }
+        }).then( (res)=> {
+          this.job = res.data[0]
+        }).catch(function (res) {
+        });
+
+
+        this.$reqs.get('/job_resume/getUserEducation' ,{
+          params: {
+            id: this.$route.params.id,
+          }
+        }).then( (res)=> {
+          this.eduData = res.data
+        }).catch(function (res) {
+        });
+
+
+        this.$reqs.get('/job_resume/getUserWork' ,{
+          params: {
+            id: this.$route.params.id,
+          }
+        }).then( (res)=> {
+          this.workData = res.data
+          console.log(res.data)
+        }).catch(function (res) {
+        });
+
+        //
+        this.$reqs.get('/job_resume/getUserPro' ,{
+          params: {
+            id: this.$route.params.id,
+          }
+        }).then( (res)=> {
+          this.proData = res.data;
+          console.log(res.data)
+        }).catch(function (res) {
+        });
+        //
+        //
+        this.$reqs.get('/job_resume/getUserDes' ,{
+          params: {
+            id: this.$route.params.id,
+          }
+        }).then( (res)=> {
+          this.describe = res.data[0].statement;
+          console.log(res.data[0].statement)
+        }).catch(function (res) {
+        });
+        //
+        //
+        this.$reqs.get('/job_resume/getUserSkill' ,{
+          params: {
+            id: this.$route.params.id,
+          }
+        }).then( (res)=> {
+          this.skillData = res.data
+        }).catch(function (res) {
+        });
+
+
+      },
       methods:{
         getWorkDesc (item) {
           var arr = item.split('\n');
           return arr
         },
+
+        changeToCommun(){
+          let state = "待沟通";
+          this.$reqs.post('/job_resume/updateJobResumeState' ,{
+            rkey: this.rkey,
+            state: state
+          }).then( (res)=> {
+            console.log(res.data);
+            this.state = "待沟通";
+          }).catch(function (res) {
+          });
+        },
+
+        changeToFail(){
+          let state = "不合适";
+          this.$reqs.post('/job_resume/updateJobResumeState' ,{
+            rkey: this.rkey,
+            state: state
+          }).then( (res)=> {
+            console.log(res.data);
+            this.state = "不合适";
+          }).catch(function (res) {
+          });
+        },
+
+        changeToPass(){
+          let state = "通过";
+          this.$reqs.post('/job_resume/updateJobResumeState' ,{
+            rkey: this.rkey,
+            state: state
+          }).then( (res)=> {
+            console.log(res.data);
+            this.state = "通过";
+          }).catch(function (res) {
+          });
+        },
+
+
       },
       data(){
         return{
-          info:{
-            name:'张三',
-            sex:'男',
-            age: 22 ,
-            city:'广州',
-            major:'计算机',
-            school:'广州大学',
-            phone:'18826054780',
-            email:"617851736@qq.com"
-          },
-          job:{
-            name:'java工程师',
-            type:'实习',
-            city:'广州',
-            salary:'2k-5k',
-            supplement:'努力转正'
-          },
-          eduData:[
-            {
-              school:'广州大学',
-              degree:'本科',
-              major:'计算机',
-              start:'2014.09.01',
-              end:'2018.06.25'
-            },
-            {
-              school:'广州大学',
-              degree:'本科',
-              major:'计算机',
-              start:'2014.09.01',
-              end:'2018.06.25'
-            }
-          ],
-          workData: [
-            {
-              company: 'A公司',
-              position: 'java工程师',
-              start: "2015.02.11",
-              end: '2015.05.15',
-              describe:'米矿服务品牌，从新零售做起\n' +
-              '一家全渠道融合运营滴服务公司，成立两年一直稳步发展。\n' +
-              '无论你喜欢相对稳定的环境还是快速发展的激情，这里都有属于你的舞台。\n' +
-              '\n' +
-              '合作项目繁多，分布在广东周边地域，总有一个是你家~\n' +
-              '新零售电商+移动互联网拓展整合ing，物色着同样有新零售互联网思维滴你加入！\n' +
-              '传统企业的产品+互联网思维运营，\n' +
-              '蛋糕已经准备好了，你还等待啥？\n' +
-              '\n' +
-              '【氛围】\n' +
-              '✔年轻团队，全部＜35\n' +
-              '✔扁平开放去阶级，高效协作常常自嗨\n' +
-              '✔追求高效能，偏好新技术、新工具\n' +
-              '✔协作核心：自我驱动+自律',
-            }
-          ],
-          proData: [
-            {
-              name: '项目A',
-              start: "2015.02.11",
-              end: '2015.05.15',
-              describe:'米矿服务品牌，从新零售做起\n' +
-              '一家全渠道融合运营滴服务公司，成立两年一直稳步发展。\n' +
-              '无论你喜欢相对稳定的环境还是快速发展的激情，这里都有属于你的舞台。\n' +
-              '\n' +
-              '合作项目繁多，分布在广东周边地域，总有一个是你家~\n' +
-              '新零售电商+移动互联网拓展整合ing，物色着同样有新零售互联网思维滴你加入！\n' +
-              '传统企业的产品+互联网思维运营，\n' +
-              '蛋糕已经准备好了，你还等待啥？\n' +
-              '\n' +
-              '【氛围】\n' +
-              '✔年轻团队，全部＜35\n' +
-              '✔扁平开放去阶级，高效协作常常自嗨\n' +
-              '✔追求高效能，偏好新技术、新工具\n' +
-              '✔协作核心：自我驱动+自律',
-            }
-          ],
-          describe:'米矿服务品牌，从新零售做起\n' +
-          '一家全渠道融合运营滴服务公司，成立两年一直稳步发展。\n' +
-          '无论你喜欢相对稳定的环境还是快速发展的激情，这里都有属于你的舞台。\n' +
-          '\n' +
-          '合作项目繁多，分布在广东周边地域，总有一个是你家~\n' +
-          '新零售电商+移动互联网拓展整合ing，物色着同样有新零售互联网思维滴你加入！\n' +
-          '传统企业的产品+互联网思维运营，\n' +
-          '蛋糕已经准备好了，你还等待啥？\n' +
-          '\n' +
-          '【氛围】\n' +
-          '✔年轻团队，全部＜35\n' +
-          '✔扁平开放去阶级，高效协作常常自嗨\n' +
-          '✔追求高效能，偏好新技术、新工具\n' +
-          '✔协作核心：自我驱动+自律',
+          state:'',
+          jkey:'',
+          rkey:'',
+          info:{},
+          job:{},
+          eduData:[],
+          workData: [],
+          proData: [],
+          describe:'',
           skillData:[
-            {
-              skill:'JavaScript',
-              value: 80
-            },
-            {
-              skill:'html5',
-              value: 70
-            },
+            // {
+            //   skill:'JavaScript',
+            //   value: 80
+            // },
+            // {
+            //   skill:'html5',
+            //   value: 70
+            // },
           ],
-          form:{
-            skill:'',
-            value:10
-          },
+          // form:{
+          //   skill:'',
+          //   value:10
+          // },
         }
       }
     }
@@ -358,7 +408,10 @@ width: 750px;
   .describe>p{
     font-size: small;
     color: dimgrey;
-    margin: 5px 0 0 0;
+    margin: 10px 0 0 0;
+    width: 450px;
+    white-space: pre-wrap;
+    word-break: break-all;
   }
   .selfDescribe{
     width: 600px;
