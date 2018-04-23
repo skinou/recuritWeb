@@ -2,66 +2,80 @@
 <div>
   <div class="top">
     <div class="left">
-      <h6>{{jobContentData.title}}</h6>
-      <h2>{{jobContentData.name}}</h2>
-      <h4>{{jobContentData.salary}}</h4>
-      <h5>{{jobContentData.city}}/{{jobContentData.experience}}/ {{jobContentData.degree}}/ {{jobContentData.type}}</h5>
-      <h6>{{jobContentData.date}} 发布于招聘网</h6>
+      <h5 class="cname">{{form.cname}} 招聘</h5>
+      <h2>{{form.jname}}</h2>
+      <h4>{{form.salary}}</h4>
+      <h5>{{form.city}}/{{form.experience}}/ {{form.degree}}/ {{form.jtype}}</h5>
+      <h5 class="time">{{form.jtime}} 发布于招聘网</h5>
     </div>
 
     <div class="right">
-      <el-button type="primary" plain class="btn">投简历</el-button>
-      <el-button type="primary"  class="btn">收藏</el-button>
+      <el-button type="primary" plain class="btn" @click="post">投简历</el-button>
+      <el-button type="primary"  class="btn" @click="collect">收藏</el-button>
     </div>
   </div>
 
   <div class="middle">
     <div class="middle_left">
       <h5 class="item">职位诱惑</h5>
-      <p>技术挑战与个人成长空间</p>
+      <ul class="temptation">
+        <li v-for="(item,index) in getTemptation" :key="index">
+          {{item}}
+        </li>
+      </ul>
+
+
       <h5 class="item">职位描述</h5>
       <h6 class="sub_item">岗位职责：</h6>
-      <p>拉勾招聘业务系统的设计、开发</p>
-      <p>解决线上系统问题，线上服务的整合与重构</p><br>
+
+      <ul class="duty">
+        <li v-for="(item,index) in getDuty" :key="index">
+          {{item}}
+        </li>
+      </ul>
+
       <h6 class="sub_item">能力要求：</h6>
-      <p>· 人靠谱，有责任心和团队协作精神</p>
-      <p>· 对技术有热情，学习能力强，在某个技术领域有自己的见解</p>
-      <p>· 有代码洁癖</p><br>
+      <ul class="ability">
+        <li v-for="(item,index) in getAbility" :key="index">
+          {{item}}
+        </li>
+      </ul>
+
       <h6 class="sub_item">技术要求：</h6>
-      <p>1.具有实的Java基础，逻辑思维缜密；</p>
-      <p>2.熟练使用RPC框架，具备相关的分布式开发经验；</p>
-      <p>3.具备TCP方面的网络编程经验；</p>
-      <p>4.具备WEB方面的开发经验；</p>
-      <p>5.熟练使用Mybatis，SpringMVC，SpringCloud等框架。</p><br>
+      <ul class="skill">
+        <li v-for="(item,index) in getSkill" :key="index">
+          {{item}}
+        </li>
+      </ul>
+
       <h5 class="item">工作地址</h5>
-      <p style="color: #1b6d85">北京 - 海淀区 - 苏州街 - 中关村海淀大街34号海置创投大厦4层</p>
+      <p class="address">{{form.address}}</p>
     </div>
     <div class="middle_right">
       <div class="company_content">
-        <div class="img"></div>
+        <img class="img" :src="form.cimg"/>
         <ul class="company_list">
           <li>
-            <a class="company_name">拉钩网</a>
+            <a class="company_name">{{form.cname}}</a>
           </li>
           <li>
             <!--<span class="glyphicon glyphicon-th-large"></span>-->
             <i slot="prefix" class="el-icon-menu"></i>
-            企业服务,招聘
+            {{form.field}}
           </li>
           <li>
             <!--<span class="glyphicon glyphicon-repeat"></span>-->
             <i slot="prefix" class="el-icon-refresh"></i>
-            D轮及以上
+            {{form.fiance}}
           </li>
           <li>
             <!--<span class="glyphicon glyphicon-paperclip"></span>-->
             <i slot="prefix" class="el-icon-share"></i>
-            东方弘道(C轮,天使轮)，真格基金(天使轮)，贝塔斯曼(A轮)，启明创投，贝塔斯曼(B轮)，前程无忧(D轮及以上)
-          </li>
+            {{form.sentence}}
           <li>
             <!--<span class="glyphicon glyphicon-user"></span>-->
             <i slot="prefix" class="el-icon-news"></i>
-            150-500人
+            {{form.city}}
           </li>
           <li>
             <!--<span class="glyphicon glyphicon-home"></span>-->
@@ -79,12 +93,94 @@
 <script>
   import jobData from '@/store/job'
     export default {
-        name: "job",
+      name: "job",
+      created(){
+        this.$reqs.get('/job/selectJobDetailForUser',{
+          params: {
+            // jkey: this.$route.params.jkey,
+            jkey: 4,
+          }
+        }).then((res)=>{
+          this.form = res.data[0];
+          if(this.form.jobTag){
+            this.form.jobTag =  this.form.jobTag.split(',');
+          }
+          else{
+            this.form.jobTag = []
+          }
+          console.log(this.form)
+
+        }).catch((err)=>{
+          console.log(err.toString())
+        });
+
+      },
       data(){
           return{
+            form:[],
             jobContentData:jobData.jobContentData
           }
-      }
+      },
+      methods:{
+        formatDateTime(inputTime) {
+          let date = new Date(inputTime);
+          let y = date.getFullYear();
+          let m = date.getMonth() + 1;
+          m = m < 10 ? ('0' + m) : m;
+          let d = date.getDate();
+          d = d < 10 ? ('0' + d) : d;
+          let h = date.getHours();
+          h = h < 10 ? ('0' + h) : h;
+          let minute = date.getMinutes();
+          let second = date.getSeconds();
+          minute = minute < 10 ? ('0' + minute) : minute;
+          second = second < 10 ? ('0' + second) : second;
+          return y + '-' + m + '-' + d+' '+h+':'+minute+':'+second;
+        },
+        post(){
+          this.$reqs.post('/job_resume/insertResume',{
+            cid: this.form.cid,
+            jkey:this.form.jkey,
+            rtime:this.formatDateTime(new Date())
+          }).then((res)=>{
+            console.log(res.data)
+          }).catch((err)=>{
+            console.log(err.toString())
+          });
+        },
+        collect(){
+          this.$reqs.post('/collect/insertCollectList',{
+            jkey:this.form.jkey,
+          }).then((res)=>{
+            console.log(res.data)
+          }).catch((err)=>{
+            console.log(err.toString())
+          });
+        }
+
+      },
+      computed:{
+        getTemptation(){
+          let list = this.form.temptation;
+          let arr = list.split('\n');
+          return arr
+        },
+        getDuty(){
+          let list = this.form.duty;
+          let arr = list.split('\n');
+          return arr
+        },
+        getAbility(){
+          let list = this.form.ability;
+          let arr = list.split('\n');
+          return arr
+        },
+        getSkill(){
+          let list = this.form.skill;
+          let arr = list.split('\n');
+          return arr
+        },
+      },
     }
 </script>
 
@@ -104,6 +200,7 @@
     background-color:  white;
     float: left;
     border: solid whitesmoke;
+    /*padding-top: 20px;*/
     /*display: inline-block;*/
   }
 
@@ -114,6 +211,10 @@
     border: solid whitesmoke;
     float: left;
     /*display: inline-block;*/
+  }
+
+  .time{
+    letter-spacing: 0;
   }
 
   h2,h4,h5,h6{
@@ -143,7 +244,7 @@
     color: #555555;
   }
 
-  h6{
+  .cname{
     margin: 20px 0 0 20px;
     color: #555555;
   }
@@ -154,26 +255,33 @@
   }
 
   .middle{
-    height: 810px;
+    /*height: 810px;*/
     width: 815px;
     margin: 0 auto;
+
+
 
   }
 
   .middle_left{
-    height: 800px;
+    /*height: 800px;*/
     width: 550px;
     background-color: whitesmoke;
     border: solid whitesmoke;
     float: left;
+    padding-bottom: 30px;
+    margin-bottom: 50px;
   }
 
   .middle_right{
-    height: 800px;
+    /*height: 800px;*/
     width: 250px;
     border: solid whitesmoke;
     background-color: white;
     float: left;
+    padding-bottom: 50px;
+    margin-bottom: 50px;
+
   }
 
   .item{
@@ -212,6 +320,7 @@
     height: 80px;
     background-color: #31b0d5;
     margin: 5px 0 0 15px;
+    display: block;
   }
   .company_list{
     list-style-type: none;
@@ -239,4 +348,24 @@
     font-weight: initial;
     text-decoration: none;
   }
+
+  .temptation,.ability,.duty,.skill{
+    list-style: none;
+    font-size: small;
+    width: 550px;
+    padding-left: 30px;
+    text-align: left;
+  }
+  .temptation>li,.ability>li,.duty>li,.skill>li{
+    display: inline-block;
+    margin-bottom: 20px;
+    width: 100%;
+  }
+
+  .address{
+    padding-left: 10px;
+    white-space: pre-wrap;
+    width: 80%;
+  }
+
 </style>

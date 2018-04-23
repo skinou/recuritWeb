@@ -43,7 +43,7 @@
       created(){
         this.$reqs.get('/job/selectJobForCompany')
           .then( (res) =>{
-            console.log(res.data);
+            // console.log(res.data);
             this.list2  = [...res.data];
             console.log(this.list2)
         }).catch( (res)=> {

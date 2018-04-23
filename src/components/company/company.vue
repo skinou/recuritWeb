@@ -1,24 +1,17 @@
 <template>
 <div>
-
   <div class="head">
     <div class="head_content">
       <div class="head_company">
-        <img src="@/assets/img2.jpg" class="head_img"/>
-        <h2 class="head_name">广州米矿信息科技有限公司</h2>
-        <span class="sentence">1111111111111111111111</span>
-        <div class="block">
-          <span class="number">200+</span>
-          <span class="block_item">面试评价</span>
-        </div>
-        <div class="block">
-          <span class="number">4</span>
-          <span class="block_item">在招职位</span>
-        </div>
-        <div class="block">
-          <span class="number">100%</span>
-          <span class="block_item">简历处理率</span>
-        </div>
+        <img :src="info.cimg" class="head_img"/>
+        <h2 class="head_name">{{info.cname}}</h2>
+        <ul class="info">
+          <li><i class="iconfont">&#xe626;</i> {{info.fiance}} </li>
+          <li><i class="iconfont">&#xe60b;</i> {{info.field}}</li>
+          <li><i class="iconfont">&#xe64a;</i> {{info.address}}</li>
+          <li><i class="iconfont">&#xe678;</i> {{info.sentence}}</li>
+        </ul>
+
       </div>
       <el-menu default-active="companyHome" :router="true" class="el-menu-demo" mode="horizontal">
         <el-menu-item index="companyHome">公司首页</el-menu-item>
@@ -37,7 +30,25 @@
 
 <script>
     export default {
-        name: "company"
+      name: "company",
+      created(){
+        this.$reqs.get('/companyForUser/getCompany',{
+          params:{
+            cid:'564165416115614'
+          }
+        })
+          .then( (res)=> {
+            this.info  = res.data[0];
+            console.log(this.info);
+          }).catch(function (res) {
+          console.log(res)
+        })
+      },
+      data(){
+        return{
+          info:[]
+        }
+      }
     }
 </script>
 
@@ -71,46 +82,43 @@
     display: inline-block;
     float: left;
     margin: 10px 10px 10px 20px;
-  }
-  .sentence{
-    display: inline-block;
-    float: left;
-    width: 550px;
-    height: 50px;
-    margin: 0 10px 0 20px;
-    white-space: pre-wrap;
-    word-break: break-all;
+    width: 590px;
     text-align: left;
   }
-  .block{
-    width: 80px;
-    height: 60px;
-    /*float: left;*/
-    margin: 5px 10px 0 10px;
+
+  .info{
+    list-style: none;
+    margin: 5px 0 0 0;
+    padding: 0 0 0 30px;
     float: left;
-    display: inline-block;
+    width: 550px;
   }
 
-  .number{
-    width: 80px;
-    color: #31b0d5;
-    position: relative;
-    top: 13px;
-    display: block;
+  .info>li{
+    margin-bottom: 5px;
+    text-align: left;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
   }
 
-  .block_item{
-    position: relative;
-    top: 18px;
-    color: #555555;
-    font-weight: lighter;
-    font-size: smaller;
-    display: block;
+  .iconfont{
+    font-family:"iconfont" !important;
+    font-size:18px;
+    font-style:normal;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-stroke-width: 0.2px;
+    -moz-osx-font-smoothing: grayscale;
+    color: black;
+    /*height: 20px;*/
+    /*line-height: 20px;*/
+    margin-right: 5px;
+    padding-bottom: 2px;
+    /*display: inline-block;*/
   }
-  .el-menu{
-    width: 800px;
-    margin: 0 auto;
-    border: none;
-  }
+
+
+
+
 
 </style>

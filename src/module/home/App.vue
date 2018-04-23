@@ -30,8 +30,8 @@
         <router-view/>
       </div>
 
-      <div class="footer">
-      </div>
+      <!--<div class="footer">-->
+      <!--</div>-->
 
     </div>
 </template>
@@ -89,11 +89,11 @@
 
   @font-face {
     font-family: 'iconfont';  /* project id 588199 */
-    src: url('//at.alicdn.com/t/font_588199_ixdkmzk9rt4ndn29.eot');
-    src: url('//at.alicdn.com/t/font_588199_ixdkmzk9rt4ndn29.eot?#iefix') format('embedded-opentype'),
-    url('//at.alicdn.com/t/font_588199_ixdkmzk9rt4ndn29.woff') format('woff'),
-    url('//at.alicdn.com/t/font_588199_ixdkmzk9rt4ndn29.ttf') format('truetype'),
-    url('//at.alicdn.com/t/font_588199_ixdkmzk9rt4ndn29.svg#iconfont') format('svg');
+    src: url('//at.alicdn.com/t/font_588199_k3uecylemugi7ldi.eot');
+    src: url('//at.alicdn.com/t/font_588199_k3uecylemugi7ldi.eot?#iefix') format('embedded-opentype'),
+    url('//at.alicdn.com/t/font_588199_k3uecylemugi7ldi.woff') format('woff'),
+    url('//at.alicdn.com/t/font_588199_k3uecylemugi7ldi.ttf') format('truetype'),
+    url('//at.alicdn.com/t/font_588199_k3uecylemugi7ldi.svg#iconfont') format('svg');
   }
 
   .iconfont{

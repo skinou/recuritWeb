@@ -147,6 +147,11 @@ export default new Router({
       component: job
     },
     {
+      path: '/job/:jkey',
+      name: 'job',
+      component: job
+    },
+    {
       path: '/searchPage',
       name: 'searchPage',
       component: searchPage

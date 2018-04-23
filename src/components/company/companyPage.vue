@@ -67,7 +67,7 @@
       </div>
 
       <div class="area">
-        <company-block v-for="(item , index) in getCompanyData" :company="item" :key="index"></company-block>
+        <company-block v-for="(item , index) in getCompanyData" :data="item" :key="index"></company-block>
         <h4 class="text" v-show="getCompanyData.length===0">没有相关信息</h4>
       </div>
 
@@ -85,12 +85,22 @@
 
 <script>
   import itemData from '@/store/nav-pane'
-  import companyBlock from '@/components/block/companyBlock'
+  import companyBlock from '@/components/block/companyBlock2'
   import company_data from '@/store/company'
     export default {
       name: "company-page",
       components:{
         'company-block': companyBlock
+      },
+      created(){
+        this.$reqs.get('/company/getAllCompany',{
+        }).then( (res) =>{
+            // console.log(res.data);
+            this.companyData  = res.data;
+            console.log(this.companyData)
+          }).catch( (res)=> {
+          console.log(res.toString())
+        });
       },
       data(){
           return{
@@ -98,13 +108,13 @@
             filterAddress:'全部',
             filterFiance:'全部',
             filterField:'全部',
-            companyData: company_data.companyData,
+            companyData:[],
             currentPage:1
           }
       },
       computed:{
         filterData(){
-          let list = [...this.companyData]
+          let list = [...this.companyData];
           if(this.filterAddress!=='全部'){
             list = list.filter(item=>item.address===this.filterAddress)
           }
@@ -120,13 +130,13 @@
           return this.filterData.length
         },
         getCompanyData(){
-          let list = [...this.filterData]
-          let start = 0
-          let end = 6
-          start += (this.currentPage - 1) * 6
-          end += (this.currentPage - 1) * 6
-          let arr = list.slice(start, end)
-          console.log(this.companyData.length)
+          let list = [...this.filterData];
+          let start = 0;
+          let end = 6;
+          start += (this.currentPage - 1) * 6;
+          end += (this.currentPage - 1) * 6;
+          let arr = list.slice(start, end);
+          console.log(this.companyData.length);
           return arr
         }
       },

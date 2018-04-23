@@ -2,7 +2,7 @@
   <div class="item">
     <!--<img src="@/assets/img2.jpg" class="img"/>-->
     <span class="left"></span>
-    <h3 class="job">{{item.jname}}</h3>
+    <router-link :to="'job/'+item.jkey"><h3 class="job">{{item.jname}}</h3></router-link>
     <span class="salary">{{item.salary}}</span>
     <span class="state" :class="{'pass': pass , 'fail':fail}">{{item.state}}</span>
     <span class="city">{{item.city}} / {{item.experience}} / {{item.degree}} / {{item.jtype}}</span>

@@ -1,49 +1,44 @@
 <template>
   <div class="item">
-    <img :src="jobListItem.cimg" class="img"/>
-    <span class="job_name"><router-link to="/job">{{jobListItem.jname}}</router-link></span>
-    <span class="job_salary">({{jobListItem.salary}})</span>
-    <span class="job_time">{{jobListItem.jtime}}</span>
-    <span class="job_condition">{{jobListItem.city}} / {{jobListItem.experience}} / {{jobListItem.degree}}</span><br>
-    <span class="job_tag"><el-tag type="info" v-for="(item,index) in tags" :key="index" size="mini" >{{item}}</el-tag></span>
+    <router-link :to="'/job/'+ positionData.jkey"><span class="job_name">{{positionData.jname}}</span></router-link>
+    <span class="job_salary">{{positionData.salary}}</span>
+    <span class="job_time">{{positionData.jtime}}</span>
+    <span class="job_condition">{{positionData.city}} / {{positionData.experience}} / {{positionData.degree}}</span><br>
+    <span class="job_tag" v-show="getTags!==null"><el-tag type="primary" v-for="(item,index) in getTags" :key="index" size="mini" >{{item}}</el-tag></span>
   </div>
 </template>
 
 <script>
-    export default {
-      name: "collect-list-item",
-      props:{
-        jobListItem: Object,
-        cancel:false
-      },
-      computed:{
-        tags(){
-          let arr = this.jobListItem.jobTag.split(',')
-          return arr
+  export default {
+    name: "position-block",
+    props:{
+      positionData: Object,
+    },
+    computed:{
+      getTags(){
+        if(this.positionData.jobTag){
+          let tag =  this.positionData.jobTag.split(',');
+          return tag
         }
-      },
-      data(){
-        return{
-
+        else{
+          return null
         }
-      },
-      // methods:{
-      //   btnChange(jkey){
-      //
-      //   }
-      // }
+      }
     }
+  }
 </script>
 
 <style scoped>
   .item{
-    width: 750px;
+    width: 600px;
     height: 105px;
     /*background-color: black;*/
-    margin: 0 auto;
-    border: whitesmoke solid 2px;
+    /*margin: 0 auto;*/
+    /*border: whitesmoke solid 2px;*/
     border-radius: 5px;
     text-align: left;
+    display: inline-block;
+    vertical-align: top;
 
   }
 
@@ -53,11 +48,13 @@
     margin: 13px 0 0 20px;
     display: inline-block;
     height: 30px;
-    max-width: 400px;
-    text-overflow: ellipsis;
+    color: dodgerblue;
+    max-width: 200px;
     overflow: hidden;
     white-space: nowrap;
+    text-overflow: ellipsis;
     vertical-align: top;
+    font-size: large;
   }
 
   .job_time {
@@ -67,37 +64,37 @@
     font-size: small;
     display: inline-block;
     height: 30px;
-    width: 150px;
+    /*width: 50px;*/
     text-align: right;
   }
 
-  .job_name>a{
-    text-decoration: none;
-    color: dodgerblue;
-  }
 
   .job_salary {
     text-align: left;
-    color: dodgerblue;
+    color: red;
     display: inline-block;
-    margin: 13px 0 0 10px;
+    margin: 13px 0 0 20px;
     /*float: right;*/
     height: 30px;
-    /*float: left;*/
     vertical-align: top;
+    font-size: large;
+    /*float: left;*/
 
   }
 
   .job_condition{
     text-align: left;
-    font-weight: lighter;
+    /*font-weight: lighter;*/
     margin: 0 0 0 20px;
-    font-size: smaller;
+    font-size: small;
     display: inline-block;
     height: 23px;
-    width: 500px;
+    width: 570px;
     color: black;
     float: left;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
   }
 
   .job_tag{
