@@ -2,7 +2,8 @@
     <div>
       <div style="margin: 40px auto;width: 190px">
         <i :class="{'text':imageShow}" class="avatar"></i>
-        <img id="imgContent3" :src="form.img"/>
+        <img v-if="form.img===null" class="imgContent3" src="@/assets/boy.png"/>
+        <img v-else class="imgContent3" :src="form.img"/>
         <div style="margin: 10px auto;width: 195px;text-align: center">
           <input type="file" name="file" id="imgFile2" accept="image/png,image/gif,image/jpeg" style="display: none">
           <el-button type="primary" plain size="mini" @click="loadImg2">更换头像</el-button>
@@ -264,7 +265,7 @@
     position: relative;
     left: 50px;
   }
-  #imgContent3{
+  .imgContent3{
     position: relative;
     left: -40px;
     display: inline-block;

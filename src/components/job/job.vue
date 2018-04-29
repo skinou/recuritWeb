@@ -6,12 +6,17 @@
       <h2>{{form.jname}}</h2>
       <h4>{{form.salary}}</h4>
       <h5>{{form.city}}/{{form.experience}}/ {{form.degree}}/ {{form.jtype}}</h5>
+      <span class="job_tag"> <el-tag v-for="(item,index) in form.jobTag" :key="index" size="mini">{{item}}</el-tag> </span>
       <h5 class="time">{{form.jtime}} 发布于招聘网</h5>
     </div>
 
     <div class="right">
-      <el-button type="primary" plain class="btn" @click="post">投简历</el-button>
-      <el-button type="primary"  class="btn" @click="collect">收藏</el-button>
+      <el-button  v-if="isPost" type="primary" plain class="btn" @click="post" disabled>已投简历</el-button>
+      <el-button  v-else type="primary" plain class="btn" @click="post">投简历</el-button>
+
+
+      <el-button  v-if="isCollect" type="primary"  class="btn" @click="cancel">取消收藏</el-button>
+      <el-button  v-else type="primary"  class="btn" @click="collect">收藏</el-button>
     </div>
   </div>
 
@@ -97,31 +102,81 @@
       created(){
         this.$reqs.get('/job/selectJobDetailForUser',{
           params: {
-            // jkey: this.$route.params.jkey,
             jkey: 4,
+            // id: this.$route.params.id,
           }
         }).then((res)=>{
           this.form = res.data[0];
+          console.log(this.form);
           if(this.form.jobTag){
             this.form.jobTag =  this.form.jobTag.split(',');
           }
           else{
             this.form.jobTag = []
           }
-          console.log(this.form)
+
+
+          this.$reqs.get('/collect/isCollect',{
+            params:{
+              jkey:this.form.jkey,
+            }
+          }).then((res)=>{
+            if(res.data.length!==0){
+              this.isCollect = true
+            }
+            else{
+              this.isCollect = false
+            }
+          }).catch((err)=>{
+            console.log(err.toString())
+          });
+
+
+          this.$reqs.get('/job_resume/isPost',{
+            params:{
+              jkey:this.form.jkey,
+            }
+          }).then((res)=>{
+            if(res.data.length!==0){
+              this.isPost = true
+            }
+            else{
+              this.isPost = false
+            }
+          }).catch((err)=>{
+            console.log(err.toString())
+          });
+
+
+
+
 
         }).catch((err)=>{
           console.log(err.toString())
         });
 
+
+
+
+
       },
       data(){
           return{
             form:[],
-            jobContentData:jobData.jobContentData
+            isCollect:false,
+            isPost:false,
           }
       },
       methods:{
+        cancel(){
+          this.$reqs.post('/collect/deleteCollectList',{
+            jkey:this.form.jkey
+          }).then((res)=>{
+            this.isCollect = false
+          }).catch((err)=>{
+            console.log(err.toString())
+          });
+        },
         formatDateTime(inputTime) {
           let date = new Date(inputTime);
           let y = date.getFullYear();
@@ -152,7 +207,8 @@
           this.$reqs.post('/collect/insertCollectList',{
             jkey:this.form.jkey,
           }).then((res)=>{
-            console.log(res.data)
+            // console.log(res.data)
+            this.isCollect = true
           }).catch((err)=>{
             console.log(err.toString())
           });
@@ -366,6 +422,16 @@
     padding-left: 10px;
     white-space: pre-wrap;
     width: 80%;
+  }
+
+  .job_tag{
+    display: block;
+    margin: 10px 0 10px 15px;
+    text-align: left;
+  }
+
+  .el-tag{
+    margin-right: 10px;
   }
 
 </style>

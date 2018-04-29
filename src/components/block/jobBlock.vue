@@ -1,7 +1,7 @@
 <template>
   <div class="job_item">
     <div class="job_intro">
-      <router-link to="/job"><span class="job_name">{{data.job_name}}</span></router-link>
+      <router-link to="/job/4"><span class="job_name">{{data.job_name}}</span></router-link>
       <span class="job_time">{{data.job_time}}</span>
       <span class="job_condition">{{data.job_experience}}/{{data.job_degree}}</span>
       <span class="job_salary">{{data.job_salary}}</span>
@@ -98,6 +98,7 @@
   .job_tag{
     display: inline-block;
     margin: 10px 0 0 15px;
+
   }
 
   .el-tag{

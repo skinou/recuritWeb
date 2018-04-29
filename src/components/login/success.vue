@@ -17,8 +17,8 @@
     width: 550px;
     margin: 50px auto;
     position: relative;
-    top: 20%;
-    transform: translateY(-60%);
+    top: 150px;
+    /*transform: translateY(-60%);*/
     background-color: whitesmoke;
   }
   .title{
