@@ -55,6 +55,21 @@
         }
       },
       methods: {
+        formatDateTime(inputTime) {
+          let date = new Date(inputTime);
+          let y = date.getFullYear();
+          let m = date.getMonth() + 1;
+          m = m < 10 ? ('0' + m) : m;
+          let d = date.getDate();
+          d = d < 10 ? ('0' + d) : d;
+          let h = date.getHours();
+          h = h < 10 ? ('0' + h) : h;
+          let minute = date.getMinutes();
+          let second = date.getSeconds();
+          minute = minute < 10 ? ('0' + minute) : minute;
+          second = second < 10 ? ('0' + second) : second;
+          return y + '-' + m + '-' + d+' '+h+':'+minute+':'+second;
+        },
         submitForm(formName) {
           this.$refs[formName].validate((valid) => {
             if (valid) {
@@ -101,7 +116,7 @@
     transform: translateY(10%);
     box-shadow: 0 0 5px 2px whitesmoke;
     background-color: rgba(255, 255, 255, 0.8);
-     border-radius: 5px;
+     border-radius: 10px;
   }
   .tab{
     font-weight:bold;

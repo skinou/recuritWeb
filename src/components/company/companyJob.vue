@@ -37,9 +37,10 @@
         name: "company-job",
       created(){
         window.scrollTo(0,0);
+        this.cid = this.$route.params.cid;
         this.$reqs.get('/companyForUser/selectJobForCompany',{
           params:{
-            cid:'564165416115614'
+            cid:this.cid
           }
         })
           .then( (res) =>{
@@ -104,59 +105,7 @@
             companyTag:['前景大','90后'],
           },
           currentPage: 1,
-          list2:[],
-          list: [
-            {
-              name: '海外运营总监2',
-              time: '18:24',
-              salary: '12k-20k',
-              experience: '经验1-3年',
-              degree: '本科',
-              address: '广州',
-              jobTag:['运营','跨国','福利好','法定假期'],
-              companyTag:['前景大','90后'],
-            },
-            {
-              name: '海外运营总监3',
-              time: '18:24',
-              salary: '12k-20k',
-              experience: '经验1-3年',
-              degree: '本科',
-              address: '广州',
-              jobTag:['运营','跨国','福利好','法定假期'],
-              companyTag:['前景大','90后'],
-            },
-            {
-              name: '海外运营总监4',
-              time: '18:24',
-              salary: '12k-20k',
-              experience: '经验1-3年',
-              degree: '本科',
-              address: '广州',
-              jobTag:['运营','跨国','福利好','法定假期'],
-              companyTag:['前景大','90后'],
-            },
-            {
-              name: '海外运营总监5',
-              time: '18:24',
-              salary: '12k-20k',
-              experience: '经验1-3年',
-              degree: '本科',
-              address: '广州',
-              jobTag:['运营','跨国','福利好','法定假期'],
-              companyTag:['前景大','90后'],
-            },
-            {
-              name: '海外运营总监6',
-              time: '18:24',
-              salary: '12k-20k',
-              experience: '经验1-3年',
-              degree: '本科',
-              address: '广州',
-              jobTag:['运营','跨国','福利好','法定假期'],
-              companyTag:['前景大','90后'],
-            }
-          ]
+          list2:[]
         }
       }
     }

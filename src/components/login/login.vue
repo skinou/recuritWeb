@@ -5,10 +5,18 @@
       <el-form :model="form" :rules="rules" ref="form">
         <!--<input type="text" name="username" class="input-login" placeholder="用户名"><br>-->
         <el-form-item prop="user">
-          <el-input v-model="form.user" placeholder="账号"></el-input>
+          <el-input v-model="form.user" placeholder="账号">
+            <i slot="prefix" class="el-input__icon iconfont">&#xe64b;</i>
+          </el-input>
         </el-form-item>
         <el-form-item prop="password">
-          <el-input v-model="form.password" placeholder="密码" type="password"></el-input>
+          <el-input v-model="form.password" placeholder="密码" type="password">
+            <i slot="prefix" class="el-input__icon iconfont">&#xe62d;</i>
+          </el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-checkbox v-model="remAccount">记住账号</el-checkbox>
+          <el-checkbox v-model="remPassword">记住密码</el-checkbox>
         </el-form-item>
         <!--<input type="text" name="password" class="input-login" placeholder="密码"><br>-->
         <!--<button type="button" class="login"  @click="btnSubmit">登    陆</button>-->
@@ -29,13 +37,30 @@
     export default {
       name: "login",
       created(){
-        let time = new Date();
-        console.log(time);
-        let time2 = this.formatDateTime(new Date());
-        console.log(time2)
+        let userAccount = localStorage.getItem("userAccount");
+        let userPassword = localStorage.getItem("userPassword");
+        console.log(userAccount);
+        console.log(userPassword);
+        if(userAccount){
+          this.remAccount = true;
+          this.form.user = userAccount;
+        }
+        else{
+          this.remAccount = false
+        }
+        if(userPassword){
+          this.remPassword = true;
+          this.form.password = userPassword;
+        }
+        else{
+          this.remPassword = false
+        }
+
       },
       data() {
         return{
+          remAccount:true,
+          remPassword:true,
          form:{
            user: '',
            password: ''
@@ -51,25 +76,14 @@
         }
       },
       methods: {
-        formatDateTime(inputTime) {
-          let date = new Date(inputTime);
-          let y = date.getFullYear();
-          let m = date.getMonth() + 1;
-          m = m < 10 ? ('0' + m) : m;
-          let d = date.getDate();
-          d = d < 10 ? ('0' + d) : d;
-          let h = date.getHours();
-          h = h < 10 ? ('0' + h) : h;
-          let minute = date.getMinutes();
-          let second = date.getSeconds();
-          minute = minute < 10 ? ('0' + minute) : minute;
-          second = second < 10 ? ('0' + second) : second;
-          return y + '-' + m + '-' + d+' '+h+':'+minute+':'+second;
-        },
         btnSubmit:function (form) {
-            // console.log("1231231")
           this.$refs[form].validate((valid) => {
             if (valid) {
+
+              localStorage.removeItem("userAccount");
+              localStorage.removeItem("userPassword");
+
+
               this.$reqs.post('/login/userLogin', {
                 account:this.form.user,
               }).then( (res)=> {
@@ -80,7 +94,15 @@
                 }
                 else {
                   if (data[0].password === this.form.password) {
-                    // that.$message.error('密码错误');
+
+                    if(this.remAccount){
+                      localStorage.setItem("userAccount", this.form.user);
+                    }
+
+                    if(this.remPassword){
+                      localStorage.setItem("userPassword", this.form.password);
+                    }
+
                     window.location.href='/home.html'
                   }
                   else {
@@ -102,14 +124,14 @@
 
 <style scoped>
   .box{
-    height: 350px;
-    width: 350px;
+    height: 400px;
+    width: 380px;
     transform: translateY(40%);
     margin: 0 auto;
     background-color: rgba(255, 255, 255, 0.9);
     text-align: center;
     box-shadow: 0 0 5px 2px whitesmoke;
-    border-radius: 5px;
+    border-radius: 10px;
   }
 
   .tab{
@@ -142,5 +164,23 @@
     text-decoration: none;
   }
 
+  .el-checkbox{
+    color: grey;
+  }
+
+  .iconfont{
+    font-family:"iconfont" !important;
+    font-size:15px;
+    font-style:normal;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-stroke-width: 0.2px;
+    -moz-osx-font-smoothing: grayscale;
+    color: darkgray;
+    /*height: 20px;*/
+    /*line-height: 20px;*/
+    margin-right: 10px;
+    padding-bottom: 2px;
+    /*display: inline-block;*/
+  }
 
 </style>

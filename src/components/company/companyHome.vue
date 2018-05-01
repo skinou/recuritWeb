@@ -18,6 +18,7 @@
               <span class="pname">{{item.pname}}</span>
               <div class="content">
                 <p v-for="(arrItem , index) in describeInfo(item.des)" :key="index">{{arrItem}}</p>
+                <!--<p>{{item.des}}</p>-->
               </div>
             </div>
           </div>
@@ -33,6 +34,7 @@
             <span class="name">{{item.mname}}</span>
             <!--<span class="name">/</span>-->
             <span class="name">{{item.mposition}}</span>
+            <span class="desc">{{item.mdesc}}</span>
           </div>
         </li>
       </ul>
@@ -48,6 +50,19 @@
       <!--</el-carousel>-->
     </div>
 
+    <div class="area" v-show="imgList.length!==0">
+      <h3>公司环境</h3>
+      <el-carousel indicator-position="outside" class="imgContent">
+        <el-carousel-item v-for="(item,index) in imgList" :key="index">
+          <img :src="item.img" class="img_li">
+        </el-carousel-item>
+      </el-carousel>
+      <!--<el-carousel class="infoImage" indicator-position="outside" height="300px">-->
+      <!--<el-carousel-item v-for="item in 4" :key="item">-->
+      <!--</el-carousel-item>-->
+      <!--</el-carousel>-->
+    </div>
+
   </div>
 
 </template>
@@ -57,10 +72,11 @@
       name: "company-home",
       created(){
         window.scrollTo(0,0);
+        this.cid = this.$route.params.cid;
 
         this.$reqs.get('/companyForUser/getCompanyProduct',{
           params:{
-            cid:'564165416115614'
+            cid:this.cid
           }
         }).then( (res)=> {
             this.proData = res.data
@@ -70,7 +86,7 @@
 
         this.$reqs.get('/companyForUser/selectCompanyIntro',{
           params:{
-            cid:'564165416115614'
+            cid:this.cid
           }
         }).then( (res)=> {
           console.log(res.data);
@@ -79,9 +95,22 @@
           console.log(res.toString())
         });
 
+        this.$reqs.get('/companyForUser/getCompanyImg',{
+          params:{
+            cid:this.cid
+          }
+        })
+          .then( (res)=> {
+            console.log(res.data);
+            this.imgList = res.data;
+            // console.log(this.imgList);
+          }).catch( (res)=> {
+          console.log(res.toString())
+        });
+
         this.$reqs.get('/companyForUser/selectCompanyTags',{
           params:{
-            cid:'564165416115614'
+            cid:this.cid
           }
         }).then( (res)=> {
           console.log(res.data);
@@ -92,7 +121,7 @@
 
         this.$reqs.get('/companyForUser/selectCompanyManager',{
           params:{
-            cid:'564165416115614'
+            cid:this.cid
           }
         })
           .then( (res)=> {
@@ -110,6 +139,8 @@
       },
       data(){
           return{
+            imgList:[],
+            cid:'',
             leader:[],
             tagData:'',
             proData:null,
@@ -190,7 +221,7 @@
   font-size: smaller;
 }
 .company_introduction{
-  margin: 0 30px 30px 30px;
+  margin: 0 30px 30px 40px;
 }
   .company_introduction>p{
     text-align: left;
@@ -213,13 +244,16 @@
 
 .content {
   width: 505px;
-  height: 120px;
+  height: 130px;
   overflow-y: auto;
   overflow-x: hidden;
+  padding-right: 20px;
 }
 
 .content>p{
   margin: 0 0 10px 0;
+  font-size: small;
+
 }
 
 .right>span{
@@ -312,4 +346,22 @@
   vertical-align: top;
   font-size: 1em;
 }
+.desc{
+  display: block;
+  margin: 0 auto;
+  width: 80%;
+  font-size: small;
+  text-align: left;
+  white-space: pre-wrap;
+  padding-bottom: 10px;
+}
+
+  .imgContent{
+    width: 70%;
+    margin: 30px auto;
+  }
+  .img_li{
+    width: 100%;
+  }
+
 </style>

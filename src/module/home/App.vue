@@ -9,9 +9,9 @@
             <a class="userEntrance" href="/index.html'"> 登陆 </a>
           </div>
           <div v-else-if="accountType === '个人用户'">
-            <router-link class="userEntrance" to="/userPage" @click.native="getActive=0">个人信息</router-link>
-            <router-link class="userEntrance" to="/deliveryPage" @click.native="getActive=0">投递箱</router-link>
             <router-link class="userEntrance" to="/userPage" @click.native="getActive=0">个人简历</router-link>
+            <router-link class="userEntrance" to="/deliveryPage" @click.native="getActive=0">投递箱</router-link>
+            <router-link class="userEntrance" to="/collectPage" @click.native="getActive=0">收藏箱</router-link>
           </div >
           <div v-else-if="accountType === '公司用户'">
             <router-link class="userEntrance" to="/companyInfo" @click.native="getActive=0">公司信息</router-link>
@@ -88,11 +88,11 @@
   }
   @font-face {
     font-family: 'iconfont';  /* project id 588199 */
-    src: url('//at.alicdn.com/t/font_588199_5e32sghm83v50zfr.eot');
-    src: url('//at.alicdn.com/t/font_588199_5e32sghm83v50zfr.eot?#iefix') format('embedded-opentype'),
-    url('//at.alicdn.com/t/font_588199_5e32sghm83v50zfr.woff') format('woff'),
-    url('//at.alicdn.com/t/font_588199_5e32sghm83v50zfr.ttf') format('truetype'),
-    url('//at.alicdn.com/t/font_588199_5e32sghm83v50zfr.svg#iconfont') format('svg');
+    src: url('//at.alicdn.com/t/font_588199_7wtt45l9nssdzpvi.eot');
+    src: url('//at.alicdn.com/t/font_588199_7wtt45l9nssdzpvi.eot?#iefix') format('embedded-opentype'),
+    url('//at.alicdn.com/t/font_588199_7wtt45l9nssdzpvi.woff') format('woff'),
+    url('//at.alicdn.com/t/font_588199_7wtt45l9nssdzpvi.ttf') format('truetype'),
+    url('//at.alicdn.com/t/font_588199_7wtt45l9nssdzpvi.svg#iconfont') format('svg');
   }
   .iconfont{
     font-family:"iconfont" !important;

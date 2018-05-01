@@ -23,6 +23,7 @@
         <li><span class="title">所在城市：</span><span class="content">{{info.city}}</span></li>
         <li><span class="title">公司类型：</span><span class="content">{{info.field}}</span></li>
         <li><span class="title">融资阶段：</span><span class="content">{{info.fiance}}</span></li>
+        <li><span class="title">公司人数：</span><span class="content">{{info.teamNum}}</span></li>
         <li><span class="title">公司地址：</span><span class="sentence">{{info.address}}</span></li>
         <li><span class="title">融资阶段：</span><span class="sentence">{{info.sentence}}</span></li>
         <li><el-button type="primary" plain   @click="dialogVisible = true">修改</el-button></li>
@@ -39,13 +40,18 @@
         <el-form ref="form" :model="form" :rules="rules" label-width="180px">
           <el-form-item label="公司名称" prop="name">
             <el-col :span="15">
-              <el-input v-model="form.name"></el-input>
+              <el-input v-model="form.name" disabled></el-input>
             </el-col>
           </el-form-item>
           <el-form-item label="公司所在城市" prop="city">
             <el-col :span="6">
               <el-input v-model="form.city"></el-input>
             </el-col>
+          </el-form-item>
+          <el-form-item label="公司人数" prop="teamNum">
+            <el-select v-model="form.teamNum" placeholder="请选择公司人数">
+              <el-option v-for="(item , index) in teamNum" :key="index" :label="item" :value="item"></el-option>
+            </el-select>
           </el-form-item>
           <el-form-item label="融资阶段" prop="fiance">
             <el-select v-model="form.fiance" placeholder="请选择融资阶段">
@@ -93,7 +99,6 @@
         this.$reqs.get('/company/getCompany')
           .then( (res)=> {
             this.info  = res.data[0];
-            // this.form = this.info
             console.log(this.info);
             let arr = this.info.field.split(',') ;
             this.form.sentence=this.info.sentence;
@@ -102,23 +107,18 @@
             this.form.field = arr;
             this.form.address=this.info.address;
             this.form.fiance=this.info.fiance;
+            this.form.teamNum = this.info.teamNum;
           }).catch(function (res) {
             console.log(res)
         })
       },
-      // computed:{
-      //   // setValues(){
-      //   //   let obj = [...this.info];
-      //   //
-      //   //   obj.
-      //   // }
-      // },
       data(){
           return{
             fianceItem: ['未融资','天使轮','A轮','B轮','C轮','D轮','D轮以上','上市公司','不需要融资'],
             fieldItem: ['移动互联网','电子商务','金融','企业服务','教育',
               '文化娱乐','游戏','O2O','硬件','旅游','医疗健康',
               '生活服务','广告营销','数据服务','社交服务','分类信息','信息安全','招聘','其他'],
+            teamNum:['0-20','20-50','50-100','100-300','300-500','500-1000','1000以上'],
             dialogVisible:false,
             imageShow: false,
             info:{},
@@ -128,7 +128,8 @@
               field:[],
               fiance:'',
               address:'',
-              sentence:''
+              sentence:'',
+              teamNum:''
             },
             rules: {
               name: [
@@ -146,6 +147,9 @@
               ],
               field: [
                 { required: true, message: '请选择公司类别', trigger: 'blur' }
+              ],
+              teamNum: [
+                { required: true, message: '请选择公司人数', trigger: 'blur' }
               ],
               address: [
                 { required: true, message: '请选择公司类别', trigger: 'blur' }
@@ -165,7 +169,8 @@
                     field:this.form.field.toString(),
                     fiance:this.form.fiance,
                     address:this.form.address,
-                    sentence:this.form.sentence
+                    sentence:this.form.sentence,
+                    teamNum:this.form.teamNum
                   }
                 }).then( (res)=> {
                   let data = res.data;
@@ -180,7 +185,8 @@
                     this.info.field=this.form.field.toString();
                     this.info.fiance=this.form.fiance;
                     this.info.address=this.form.address;
-                    this.info.sentence=this.form.sentence
+                    this.info.sentence=this.form.sentence;
+                    this.info.teamNum=this.form.teamNum;
                     this.dialogVisible = false
                   }
                   console.log(data)

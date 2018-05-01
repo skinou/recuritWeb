@@ -4,7 +4,7 @@
       <h4>公司产品</h4>
     </div>
     <div class="item_body">
-      <ul class="productList" v-show="proData!==null">
+      <ul class="productList" v-show="proData">
         <li v-for="(item , index) in proData" :key="index">
           <div>
             <div class="left">
@@ -15,6 +15,7 @@
               <el-button type="primary" plain class="delete" @click="deleteRow(index,proData)"  >╳</el-button>
               <div class="content">
                 <p v-for="(arrItem , index) in describeInfo(item.des)" :key="index">{{arrItem}}</p>
+                <!--<p>{{item.des}}</p>-->
               </div>
             </div>
           </div>
@@ -78,24 +79,7 @@
         return{
           dialogVisible:false,
           proData:null,
-            // {
-            //   img:img1,
-            //   product:'微商城',
-            //   describe:'米矿服务品牌，从新零售做起\n' +
-            //   '一家全渠道融合运营滴服务公司，成立两年一直稳步发展。\n' +
-            //   '无论你喜欢相对稳定的环境还是快速发展的激情，这里都有属于你的舞台。\n' +
-            //   '\n' +
-            //   '合作项目繁多，分布在广东周边地域，总有一个是你家~\n' +
-            //   '新零售电商+移动互联网拓展整合ing，物色着同样有新零售互联网思维滴你加入！\n' +
-            //   '传统企业的产品+互联网思维运营，\n' +
-            //   '蛋糕已经准备好了，你还等待啥？\n' +
-            //   '\n' +
-            //   '【氛围】\n' +
-            //   '✔年轻团队，全部＜35\n' +
-            //   '✔扁平开放去阶级，高效协作常常自嗨\n' +
-            //   '✔追求高效能，偏好新技术、新工具\n' +
-            //   '✔协作核心：自我驱动+自律',
-            // }
+
           form:{
             img:null,
             product:'',
@@ -161,7 +145,7 @@
               let obj={
                 pimg:this.form.img,
                 pname:this.form.product,
-                desc:this.form.describe,
+                des:this.form.describe,
               };
               this.$reqs.post('/company/insertCompanyProduct', {
                 obj:obj

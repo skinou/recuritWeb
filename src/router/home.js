@@ -205,18 +205,18 @@ export default new Router({
       ]
     },
     {
-      path: '/company',
+      path: '/company/:cid',
       name: 'company',
       component: company,
-      redirect: 'companyHome',
+      redirect: '/companyHome/:cid',
       children: [
         {
-          path: '/companyHome',
+          path: '/companyHome/:cid',
           name: 'companyHome',
           component: companyHome,
         },
         {
-          path: '/companyJob',
+          path: '/companyJob/:cid',
           name: 'companyJob',
           component: companyJob,
         },

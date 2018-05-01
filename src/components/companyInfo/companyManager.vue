@@ -39,6 +39,7 @@
             <!--<span class="name">/</span>-->
             <span class="name">{{item.mposition}}</span>
             <span class="del"> <el-button type="primary" plain class="delete" @click="deleteRow(index,leader)"  >╳</el-button></span>
+            <span class="desc">{{item.mdesc}}</span>
           </div>
         </li>
       </ul>
@@ -49,7 +50,7 @@
     </div>
 
     <el-dialog
-      title="产品信息"
+      title="管理团队"
       :visible.sync="dialogVisible"
       width="600px"
     >
@@ -70,6 +71,11 @@
           <el-form-item label="职位" prop="position">
             <el-col :span="20">
               <el-input v-model="form.position"></el-input>
+            </el-col>
+          </el-form-item>
+          <el-form-item label="描述" >
+            <el-col :span="20">
+              <el-input type="textarea" :rows="5" v-model="form.mdesc" placeholder="描述"></el-input>
             </el-col>
           </el-form-item>
         </el-form>
@@ -138,7 +144,8 @@
           form: {
             img:null,
             name:'',
-            position:''
+            position:'',
+            mdesc:''
           },
           rules:{
             name: [
@@ -233,6 +240,7 @@
                 mimg:this.form.img,
                 mname:this.form.name,
                 mposition:this.form.position,
+                mdesc:this.form.mdesc,
               };
               this.leader.push(obj);
 
@@ -413,5 +421,15 @@
     left: -55px;
     opacity: 0;
     z-index: 50;
+  }
+
+  .desc{
+    display: block;
+    margin: 0 auto;
+    width: 80%;
+    font-size: small;
+    text-align: left;
+    white-space: pre-wrap;
+    padding-bottom: 10px;
   }
 </style>

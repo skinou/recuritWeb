@@ -23,6 +23,11 @@
           <el-input v-model="form.city"></el-input>
         </el-col>
       </el-form-item>
+      <el-form-item label="公司人数" prop="teamNum">
+        <el-select v-model="form.teamNum" placeholder="请选择公司人数">
+          <el-option v-for="(item , index) in teamNum" :key="index" :label="item" :value="item"></el-option>
+        </el-select>
+      </el-form-item>
       <el-form-item label="融资阶段" prop="fiance">
         <el-select v-model="form.fiance" placeholder="请选择融资阶段">
           <el-option v-for="(item , index) in fianceItem" :key="index" :label="item" :value="item"></el-option>
@@ -66,7 +71,21 @@
       name: "company-login-info",
 
       methods:{
-
+        formatDateTime(inputTime) {
+          let date = new Date(inputTime);
+          let y = date.getFullYear();
+          let m = date.getMonth() + 1;
+          m = m < 10 ? ('0' + m) : m;
+          let d = date.getDate();
+          d = d < 10 ? ('0' + d) : d;
+          let h = date.getHours();
+          h = h < 10 ? ('0' + h) : h;
+          let minute = date.getMinutes();
+          let second = date.getSeconds();
+          minute = minute < 10 ? ('0' + minute) : minute;
+          second = second < 10 ? ('0' + second) : second;
+          return y + '-' + m + '-' + d+' '+h+':'+minute+':'+second;
+        },
         submitForm(formName) {
           this.$refs[formName].validate((valid) => {
             if (valid) {
@@ -120,7 +139,8 @@
           this.form.field = [];
           this.form.fiance = '';
           this.form.address = '';
-          this.form.sentence = ''
+          this.form.sentence = '';
+          this.form.teamNum = ''
         },
 
         fileImage:function(e){
@@ -148,11 +168,13 @@
           fieldItem: ['移动互联网','电子商务','金融','企业服务','教育',
             '文化娱乐','游戏','O2O','硬件','旅游','医疗健康',
             '生活服务','广告营销','数据服务','社交服务','分类信息','信息安全','招聘','其他'],
+          teamNum:['0-20','20-50','50-100','100-300','300-500','500-1000','1000以上'],
           form:{
             cimg:null,
             cname: this.$store.state.company_login.cname,
             cid:this.$store.state.company_login.cid,
             city:'',
+            teamNum:'',
             field:[],
             fiance:'',
             address:'',
@@ -176,6 +198,9 @@
             field: [
               { required: true, message: '请选择公司类别', trigger: 'blur' }
             ],
+            teamNum: [
+              { required: true, message: '请选择公司人数', trigger: 'blur' }
+            ],
             address: [
               { required: true, message: '请选择公司类别', trigger: 'blur' }
             ]
@@ -194,7 +219,7 @@
     transform: translateY(10%);
      box-shadow: 0 0 5px 2px whitesmoke;
     background-color: rgba(255, 255, 255, 0.9);
-     border-radius: 5px;
+     border-radius: 10px;
     text-align: left;
   }
   .tab{

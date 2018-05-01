@@ -1,7 +1,7 @@
 <template>
   <div class="company_item">
     <img class="logo" :src="data.cimg"/>
-    <span class="company"><router-link to="/company">{{data.cname}}</router-link></span>
+    <span class="company"><router-link :to="'/company/'+data.cid">{{data.cname}}</router-link></span>
     <span class="company_introduction">{{data.field}}</span>
     <span class="company_describe">{{data.sentence}}</span>
     <div class="block">
@@ -12,13 +12,9 @@
       <span class="number"><i class="iconfont">&#xe79a;</i></span>
       <span class="block_item">{{data.fiance}}</span>
     </div>
-    <div class="block" v-if="data.count">
-      <span class="number">{{data.count}}</span>
-      <span class="block_item">在招职位</span>
-    </div>
-    <div class="block" v-else>
-      <span class="number">0</span>
-      <span class="block_item">在招职位</span>
+    <div class="block">
+      <span class="number"><i class="iconfont">&#xe68c;</i></span>
+      <span class="block_item">{{data.teamNum}}</span>
     </div>
   </div>
 </template>

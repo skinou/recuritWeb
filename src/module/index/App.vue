@@ -26,8 +26,14 @@ export default {
   width: 100%;
   height: 100%;
 }
-
-
+@font-face {
+  font-family: 'iconfont';  /* project id 588199 */
+  src: url('//at.alicdn.com/t/font_588199_7wtt45l9nssdzpvi.eot');
+  src: url('//at.alicdn.com/t/font_588199_7wtt45l9nssdzpvi.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_588199_7wtt45l9nssdzpvi.woff') format('woff'),
+  url('//at.alicdn.com/t/font_588199_7wtt45l9nssdzpvi.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_588199_7wtt45l9nssdzpvi.svg#iconfont') format('svg');
+}
 /*.body{*/
   /*height: 250px;*/
   /*width: 100%;*/
