@@ -177,8 +177,9 @@
   margin: 20px auto;
   width: 650px;
   text-align: left;
-  background-color: whitesmoke;
+  /*background-color: whitesmoke;*/
   /*padding: 10px 0 10px 0;*/
+  background-color:rgba(	248,248,255,0.5);
   padding-left: 20px;
 
 }

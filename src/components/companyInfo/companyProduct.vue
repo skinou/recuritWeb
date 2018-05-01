@@ -225,14 +225,15 @@
     padding-top: 20px;
     /*float: left;*/
     /*overflow: auto;*/
-    background-color: whitesmoke;
+    /*background-color: whitesmoke;*/
+    background-color:rgba(	248,248,255,0.5);
     text-align: left;
     display: inline-block;
     vertical-align: top;
   }
   .content {
     width: 505px;
-    height: 145px;
+    height: 120px;
     overflow-y: auto;
     overflow-x: hidden;
   }
@@ -267,8 +268,9 @@
     display: inline-block;
     width: 490px;
     margin: 10px 0 15px 0;
-    background-color: whitesmoke;
+    /*background-color: whitesmoke;*/
     /*padding: 0 20px 0 20px;*/
+    background-color:rgba(	248,248,255,0.6);
   }
   .left>img{
     width: 150px;
@@ -287,8 +289,10 @@
   .productList>li{
     margin-top: 20px;
     /*float: left;*/
-    background-color: whitesmoke;
+    /*background-color: whitesmoke;*/
+    background-color:rgba(	248,248,255,0.6);
   }
+
   .content>p{
     text-align: left;
     white-space: pre-wrap;

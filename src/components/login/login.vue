@@ -29,24 +29,6 @@
     export default {
       name: "login",
       created(){
-        // let a = {
-        //   b:'123456'
-        // };
-        // let b = {
-        //   c:1
-        // };
-        // let string = '123123';
-        // let arr = ['12','121','565'];
-        // let arr2 = [];
-        // arr2 = arr;
-        // a.b = arr;
-        // let d = b;
-        // b.c++;
-        // console.log(a.b);
-        // console.log(d.c);
-        // console.log('123123');
-        // console.log(arr2);
-        // console.log(arr.toString())
         let time = new Date();
         console.log(time);
         let time2 = this.formatDateTime(new Date());
@@ -90,10 +72,6 @@
             if (valid) {
               this.$reqs.post('/login/userLogin', {
                 account:this.form.user,
-                obj:{
-                  num:10,
-                  num2:20
-                }
               }).then( (res)=> {
                 let data = res.data;
                 console.log(data[0]);

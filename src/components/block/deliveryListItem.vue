@@ -2,7 +2,7 @@
   <div class="item">
     <!--<img src="@/assets/img2.jpg" class="img"/>-->
     <span class="left"></span>
-    <router-link :to="'job/'+item.jkey"><h3 class="job">{{item.jname}}</h3></router-link>
+    <router-link :to="'job/'+item.jkey"><span class="job">{{item.jname}}</span></router-link>
     <span class="salary">{{item.salary}}</span>
     <span class="state" :class="{'pass': pass , 'fail':fail}">{{item.state}}</span>
     <span class="city">{{item.city}} / {{item.experience}} / {{item.degree}} / {{item.jtype}}</span>
@@ -26,10 +26,11 @@
     width: 600px;
     height: 100px;
     margin: 0 auto;
-    background-color: ghostwhite;
+    /*background-color: ghostwhite;*/
+    background-color:rgba(	248,248,255,0.5);
   }
   .left{
-    width: 40px;
+    width: 10px;
     height: 100px;
     margin-right: 20px;
     float: left;
@@ -47,6 +48,7 @@
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
+    font-family: STHeiti;
   }
   .city{
     display: inline-block;
@@ -73,7 +75,7 @@
     float: left;
     text-align: left;
     margin: 20px 0 10px 0;
-    color: red;
+    color: dodgerblue;
     font-size: large;
     padding-left: 10px;
 

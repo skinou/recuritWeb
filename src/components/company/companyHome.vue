@@ -1,8 +1,10 @@
 <template>
-  <div class="container">
+  <div class="container" style="background-color: white">
     <div class="area">
       <h3>公司标签</h3>
-      <el-tag v-for="(item,index) in getTagData" :key="index" >{{item}}</el-tag>
+      <div class="tags">
+        <el-tag v-for="(item,index) in getTagData" :key="index" >{{item}}</el-tag>
+      </div>
     </div>
     <div class="area" v-show="proData!==null">
       <h3>公司产品</h3>
@@ -13,11 +15,24 @@
               <img class="proImg" :src="item.pimg"/>
             </div>
             <div class="right">
-              <span>{{item.pname}}</span>
+              <span class="pname">{{item.pname}}</span>
               <div class="content">
                 <p v-for="(arrItem , index) in describeInfo(item.des)" :key="index">{{arrItem}}</p>
               </div>
             </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <div class="area">
+      <h3>管理团队</h3>
+      <ul v-show="leader.length!==0" class="manager">
+        <li v-for="(item , index) in leader" :key="index">
+          <div class="item">
+            <img :src="item.mimg"/>
+            <span class="name">{{item.mname}}</span>
+            <!--<span class="name">/</span>-->
+            <span class="name">{{item.mposition}}</span>
           </div>
         </li>
       </ul>
@@ -32,61 +47,17 @@
         <!--</el-carousel-item>-->
       <!--</el-carousel>-->
     </div>
+
   </div>
-  <!--<el-container>-->
-    <!--<el-main>-->
-      <!---->
-    <!--</el-main>-->
-    <!--<el-aside width="250px">-->
-      <!--<div class="area">-->
-        <!--<h3>基本信息</h3>-->
-        <!--<ul class="company_list">-->
-          <!--<li>-->
-            <!--<i slot="prefix" class="el-icon-menu"></i>-->
-            <!--企业服务,招聘-->
-          <!--</li>-->
-          <!--<li>-->
-            <!--<i slot="prefix" class="el-icon-refresh"></i>-->
-            <!--D轮及以上-->
-          <!--</li>-->
-          <!--<li>-->
-            <!--<i slot="prefix" class="el-icon-share"></i>-->
-            <!--东方弘道(C轮,天使轮)，真格基金(天使轮)，贝塔斯曼(A轮)，启明创投，贝塔斯曼(B轮)，前程无忧(D轮及以上)-->
-          <!--</li>-->
-          <!--<li>-->
-            <!--<i slot="prefix" class="el-icon-news"></i>-->
-            <!--150-500人-->
-          <!--</li>-->
-          <!--<li>-->
-            <!--<i slot="prefix" class="el-icon-location-outline"></i>-->
-            <!--<a href="http://www.lagou.com" target="_blank" title="http://www.lagou.com" rel="nofollow">http://www.lagou.com</a>-->
-          <!--</li>-->
-        <!--</ul>-->
-      <!--</div>-->
-      <!--<div class="area">-->
-        <!--<h3>公司标签</h3>-->
-        <!--<el-tag type="info" v-for="(item,index) in tagData" :key="index" >{{item}}</el-tag>-->
-      <!--</div>-->
-      <!--<div class="area">-->
-        <!--<h3>管理团队</h3>-->
-        <!--<el-carousel class="teamImage" indicator-position="outside" height="210px">-->
-          <!--<el-carousel-item v-for="item in 4" :key="item">-->
-            <!--<div class="leader">-->
-              <!--<img src="@/assets/img2.jpg"/>-->
-              <!--<span class="title">CEO</span>-->
-              <!--<span class="name">张三</span>-->
-            <!--</div>-->
-          <!--</el-carousel-item>-->
-        <!--</el-carousel>-->
-      <!--</div>-->
-    <!--</el-aside>-->
-  <!--</el-container>-->
+
 </template>
 
 <script>
     export default {
       name: "company-home",
       created(){
+        window.scrollTo(0,0);
+
         this.$reqs.get('/companyForUser/getCompanyProduct',{
           params:{
             cid:'564165416115614'
@@ -119,10 +90,27 @@
           console.log(res.toString())
         });
 
+        this.$reqs.get('/companyForUser/selectCompanyManager',{
+          params:{
+            cid:'564165416115614'
+          }
+        })
+          .then( (res)=> {
+            let data = res.data;
+            console.log(data);
+            if(data.length !== 0){
+              this.leader=data;
+              console.log(this.leader);
+            }
+          }).catch( (res)=> {
+          console.log(res.toString())
+        });
+
 
       },
       data(){
           return{
+            leader:[],
             tagData:'',
             proData:null,
             info:''
@@ -177,7 +165,7 @@
     margin: 0 0 20px 0;
   }
   h3{
-    margin: 15px 20px 25px 30px;
+    margin: 15px 20px 15px 30px;
     text-align: left;
   }
 .productList{
@@ -185,9 +173,10 @@
   /*float: left;*/
   width: 100%;
   padding: 0 0 0 0;
+  margin: 0 0 0 0;
 }
 .productList>li{
-  margin-top: 20px;
+  margin-top: 10px;
   /*float: left;*/
   background-color: white;
 }
@@ -221,51 +210,27 @@
 .el-carousel__item:nth-child(2n+1) {
   background-color: #d3dce6;
 }
-/*.company_list{*/
-  /*list-style-type: none;*/
-  /*text-align: left;*/
-  /*font-size: smaller;*/
-  /*display: inline-block;*/
-
-/*}*/
-
-/*.company_list>li{*/
-  /*width: 180px;*/
-  /*margin-bottom: 15px;*/
-  /*color: #888888;*/
-  /*word-break: break-all;*/
-
-/*}*/
-
-/*.company_list>li>a{*/
-  /*color: #888888;*/
-  /*text-decoration: none;*/
-/*}*/
-
-
-  /*.leader>img{*/
-    /*width: 100px;*/
-    /*height: 120px;*/
-    /*display: inline-block;*/
-    /*margin: 10px auto;*/
-  /*}*/
 
 .content {
   width: 505px;
-  height: 145px;
+  height: 120px;
   overflow-y: auto;
   overflow-x: hidden;
+}
+
+.content>p{
+  margin: 0 0 10px 0;
 }
 
 .right>span{
   display: inline-block;
   width: 490px;
-  margin: 10px 0 15px 0;
+  margin: 2px 0 8px 0;
   background-color: white;
   /*padding: 0 20px 0 20px;*/
 }
 .left>img{
-  width: 150px;
+  width: 180px;
   height: 150px;
   display: inline-block;
 }
@@ -274,7 +239,7 @@
   width: 180px;
   min-height: 150px;
   /*float: left;*/
-  padding: 30px 10px 10px 30px;
+  padding: 10px 10px 10px 30px;
   display: inline-block;
   vertical-align: top;
   /*background-color: dodgerblue;*/
@@ -283,7 +248,7 @@
   width: 540px;
   min-height: 150px;
   /*padding-bottom: 30px;*/
-  padding-top: 20px;
+  padding-top: 10px;
   /*float: left;*/
   /*overflow: auto;*/
   background-color: white;
@@ -307,5 +272,44 @@
   background: white;
 }
 
+.tags{
+  text-align: left;
+  padding-left: 30px;
+}
 
+.manager{
+  padding: 0 0 0 0;
+  margin: 0 0 0 30px;
+  /*height: 500px;*/
+  list-style: none;
+  width: 500px;
+}
+
+.manager>li{
+  background-color: white;
+  margin-bottom: 30px;
+}
+
+.item{
+  text-align: left;
+}
+.item>img{
+  margin: 15px 10px 15px 20px;
+  width: 60px;
+  height: 60px;
+  vertical-align: bottom;
+}
+
+.name{
+  display: inline-block;
+  max-width: 100px;
+  height: 90px;
+  line-height: 90px;
+  color: black;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  vertical-align: top;
+  font-size: 1em;
+}
 </style>

@@ -1,18 +1,18 @@
 <template>
   <div class="info">
-    <h4>账号信息</h4>
-    <div class="now">
-      <span>现有账号：</span><span>{{$store.state.account}}</span>
-    </div>
-    <el-form ref="form" :model="form" :rules="rules"  label-width="80px">
-      <el-form-item label="新账号" prop="account">
-        <el-input v-model="form.account"></el-input>
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" @click="submitForm('form')">确认</el-button>
-        <el-button @click="resetForm('form')">重置</el-button>
-      </el-form-item>
-    </el-form>
+    <!--<h4>账号信息</h4>-->
+    <!--<div class="now">-->
+      <!--<span>现有账号：</span><span>{{$store.state.account}}</span>-->
+    <!--</div>-->
+    <!--<el-form ref="form" :model="form" :rules="rules"  label-width="80px">-->
+      <!--<el-form-item label="新账号" prop="account">-->
+        <!--<el-input v-model="form.account"></el-input>-->
+      <!--</el-form-item>-->
+      <!--<el-form-item>-->
+        <!--<el-button type="primary" @click="submitForm('form')">确认</el-button>-->
+        <!--<el-button @click="resetForm('form')">重置</el-button>-->
+      <!--</el-form-item>-->
+    <!--</el-form>-->
 
     <h4>密码信息</h4>
 
@@ -55,7 +55,13 @@
           } else if (value !== this.ruleForm2.pass) {
             callback(new Error('两次输入密码不一致!'));
           } else {
-            callback();
+            // callback();
+            this.$reqs.post('/company/updateCompanyPassword' ,{
+              password: this.ruleForm2.pass,
+            }).then( (res)=> {
+              console.log(res.data);
+            }).catch(function (res) {
+            });
           }
         };
         return {

@@ -5,16 +5,20 @@
     <span class="company_introduction">{{data.company_field}}</span>
     <span class="company_describe">{{data.company_statement}}</span>
     <div class="block">
-      <span class="number">{{data.num_comment}}</span>
-      <span class="block_item">面试评价</span>
+      <span class="number"><i class="iconfont">&#xe609;</i></span>
+      <span class="block_item">广州</span>
     </div>
     <div class="block">
-      <span class="number">{{data.num_position}}</span>
+      <span class="number"><i class="iconfont">&#xe79a;</i></span>
+      <span class="block_item">{{data.company_fiance}}</span>
+    </div>
+    <div class="block" v-if="data.count">
+      <span class="number">{{data.count}}</span>
       <span class="block_item">在招职位</span>
     </div>
-    <div class="block">
-      <span class="number">{{data.num_rate}}%</span>
-      <span class="block_item">简历处理率</span>
+    <div class="block" v-else>
+      <span class="number">0</span>
+      <span class="block_item">在招职位</span>
     </div>
   </div>
 </template>
@@ -31,20 +35,23 @@
 <style scoped>
   .company_item{
     width: 280px;
-    height: 230px;
+    /*height: 230px;*/
     padding-top: 20px;
     margin-right: 20px;
     margin-left: 30px;
     margin-top: 20px;
-    border:1px solid lightgrey;
-    /*float: left;*/
+    border:1px solid whitesmoke;
+    box-shadow:  0 0 2px whitesmoke;
+    /*background-color: ghostwhite;*/
+    background-color:rgba(	248,248,255,0.5);
     text-align: center;
     display: inline-block;
+    vertical-align: top;
   }
 
-  .company_item:hover{
-    box-shadow:  0 0 2px darkgray;
-  }
+  /*.company_item:hover{*/
+  /*box-shadow:  0 0 2px darkgray;*/
+  /*}*/
 
 
   .logo{
@@ -55,12 +62,15 @@
   }
 
   .company{
-    position: relative;
-    top: 8px;
+    /*position: relative;*/
+    /*top: 8px;*/
     width: 150px;
-   text-align: center;
-    margin: 0 auto;
+    text-align: center;
+    margin: 5px auto;
     display: block;
+    font-weight: bold;
+    font-family: STHeiti;
+    font-size: large;
   }
 
   .company>a{
@@ -78,7 +88,7 @@
 
   .company>a:hover{
     text-decoration: none;
-    color: #31b0d5;
+    color: dodgerblue;
   }
 
   .company_introduction{
@@ -86,8 +96,9 @@
     /*float: left;*/
     font-size: smaller;
     width: 200px;
-    margin: 10px auto;
-    color: #9d9d9d;
+    height: 18px;
+    margin: 5px auto;
+    color: grey;
     display: inline-block;
     white-space: nowrap;
     overflow: hidden;
@@ -97,7 +108,7 @@
   .company_describe{
     display: block;
     margin: 0 20px 0 20px;
-    color: #9d9d9d;
+    color: grey;
     height: 25px;
     text-align: center;
     font-size: small;
@@ -109,27 +120,48 @@
 
   .block{
     width: 90px;
-    height: 73px;
+    height: 43px;
     /*float: left;*/
     margin: 5px 0 0 0;
     display: inline-block;
   }
 
   .number{
-    width: 93px;
-    color: #31b0d5;
-    position: relative;
-    top: 13px;
+    /*width: 93px;*/
+    color: black;
+    /*position: relative;*/
+    /*top: 13px;*/
+    margin: 10px 0 10px 0;
     display: block;
   }
 
   .block_item{
-    position: relative;
-    top: 18px;
+    /*position: relative;*/
+    /*top: 18px;*/
     color: #555555;
     font-weight: lighter;
     font-size: smaller;
     display: block;
+    width: 100%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .iconfont{
+    font-family:"iconfont" !important;
+    font-size:18px;
+    font-style:normal;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-stroke-width: 0.2px;
+    -moz-osx-font-smoothing: grayscale;
+    color: black;
+    /*height: 20px;*/
+    /*line-height: 20px;*/
+    margin-right: 5px;
+    padding-bottom: 2px;
+    /*color: dodgerblue;*/
+    /*display: inline-block;*/
   }
 
 </style>

@@ -219,7 +219,8 @@
   .top{
     height: 200px;
     width: 700px;
-    background-color: whitesmoke;
+    /*background-color: whitesmoke;*/
+    background-color:rgba(	248,248,255,0.5);
     margin: 40px auto;
     padding: 30px 0 0 0;
   }

@@ -74,6 +74,7 @@
               // this.form.field  = arr;
               if(this.form.field.length<=3){
                 if(this.form.cimg!==null){
+                  this.form.c_time = this.formatDateTime(new Date());
                   this.$store.commit('setValueInfo',this.form);
                   let company_login = this.$store.state.company_login;
                   let company_info = this.$store.state.company_info;
@@ -84,7 +85,7 @@
                     company_login:company_login,
                     company_info:company_info,
                   }).then( (res)=> {
-                    console.log(res.data)
+                    let data = res.data;
                     if(data === '注册成功'){
                       this.$router.push('/regSuccess');
                     }
@@ -155,7 +156,8 @@
             field:[],
             fiance:'',
             address:'',
-            sentence:''
+            sentence:'',
+            c_time:''
           },
           rules: {
             cname: [

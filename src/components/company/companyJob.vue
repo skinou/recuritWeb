@@ -36,6 +36,7 @@
     export default {
         name: "company-job",
       created(){
+        window.scrollTo(0,0);
         this.$reqs.get('/companyForUser/selectJobForCompany',{
           params:{
             cid:'564165416115614'
@@ -164,12 +165,14 @@
 <style scoped>
   .job{
     width: 900px;
-    margin: 30px auto;
+    margin: 0 auto;
+    min-height: 800px;
+    background-color: white;
   }
   .list{
     list-style: none;
-    padding: 10px 0 20px 0;
-    margin: 5px 0 5px 0;
+    padding: 0 0 20px 0;
+    margin: 0 0 5px 0;
     /*width: 609px;*/
 
   }
@@ -180,6 +183,7 @@
     background-color: whitesmoke;
     /*padding: 10px 0 10px 0;*/
     padding-left: 20px;
+    box-shadow: 0 0 5px 2px ghostwhite;
 
   }
   .item{
@@ -227,12 +231,12 @@
 
 
   .condition{
-    /*width: 750px;*/
-    height: 90px;
+    width: 85%;
+    /*height: 90px;*/
     /*line-height: 90px;*/
-    background-color: whitesmoke;
+    background-color: ghostwhite;
     margin: 20px auto;
-    display:flex;
+    display:inline-block;
     align-items: center;
     text-align: center;
     justify-content:center;

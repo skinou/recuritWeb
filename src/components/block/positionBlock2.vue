@@ -40,6 +40,7 @@
     display: inline-block;
     vertical-align: top;
 
+
   }
 
   .job_name{

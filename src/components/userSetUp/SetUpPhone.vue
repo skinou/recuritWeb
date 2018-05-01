@@ -33,8 +33,7 @@
       methods:{
         submitForm(formName) {
           this.$refs[formName].validate((valid) => {
-            if (valid) {
-              alert('submit!');
+            if (valid){
             } else {
               console.log('error submit!!');
               return false;

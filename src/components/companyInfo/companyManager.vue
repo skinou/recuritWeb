@@ -36,7 +36,7 @@
           <div class="item">
             <img :src="item.mimg"/>
             <span class="name">{{item.mname}}</span>
-            <span class="name">/</span>
+            <!--<span class="name">/</span>-->
             <span class="name">{{item.mposition}}</span>
             <span class="del"> <el-button type="primary" plain class="delete" @click="deleteRow(index,leader)"  >╳</el-button></span>
           </div>
@@ -318,8 +318,10 @@
   }
 
   li{
-    background-color: whitesmoke;
+    /*background-color: whitesmoke;*/
+    background-color:rgba(	248,248,255,0.7);
     margin-bottom: 30px;
+
   }
 
   .item{

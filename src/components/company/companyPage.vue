@@ -93,11 +93,28 @@
         'company-block': companyBlock
       },
       created(){
+
+        let compare = function (prop) {
+          return function (obj1, obj2) {
+            let val1 = new Date(obj1[prop].replace(/-/g,"\/"));
+            let val2 =  new Date(obj2[prop].replace(/-/g,"\/"));
+            if (val1 < val2) {
+              return 1;
+            } else if (val1 > val2) {
+              return -1;
+            } else {
+              return 0;
+            }
+          }
+        };
+
+
         this.$reqs.get('/company/getAllCompany',{
         }).then( (res) =>{
             // console.log(res.data);
-            this.companyData  = res.data;
-            console.log(this.companyData)
+          this.companyData  = res.data;
+          this.companyData = this.companyData.sort(compare('c_time'));
+          console.log(this.companyData)
           }).catch( (res)=> {
           console.log(res.toString())
         });
@@ -141,15 +158,6 @@
         }
       },
       methods: {
-        // contain(arr,value){
-        //   for(let item in arr){
-        //     if(item === value){
-        //       return true
-        //     }
-        //   }
-        //   return false
-        //
-        // },
         handleAddress(item) {
           this.filterAddress = item
           // console.log(this.filterAddress)

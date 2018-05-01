@@ -36,7 +36,14 @@
           } else if (value !== this.ruleForm2.pass) {
             callback(new Error('两次输入密码不一致!'));
           } else {
-            callback();
+            this.$reqs.post('/users/updateUserPassword' ,{
+              password:this.pass
+            }).then( (res)=> {
+              console.log(res.data);
+              this.list = res.data
+            }).catch(function (res) {
+              console.log(res)
+            });
           }
         };
         return {

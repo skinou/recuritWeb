@@ -34,7 +34,8 @@
             user: '',
             password: '',
             name: '',
-            id: ''
+            id: '',
+            c_time:''
           },
           rules: {
             user: [
@@ -54,23 +55,36 @@
         }
       },
       methods: {
+        formatDateTime(inputTime) {
+          let date = new Date(inputTime);
+          let y = date.getFullYear();
+          let m = date.getMonth() + 1;
+          m = m < 10 ? ('0' + m) : m;
+          let d = date.getDate();
+          d = d < 10 ? ('0' + d) : d;
+          let h = date.getHours();
+          h = h < 10 ? ('0' + h) : h;
+          let minute = date.getMinutes();
+          let second = date.getSeconds();
+          minute = minute < 10 ? ('0' + minute) : minute;
+          second = second < 10 ? ('0' + second) : second;
+          return y + '-' + m + '-' + d+' '+h+':'+minute+':'+second;
+        },
         submitForm(formName) {
           this.$refs[formName].validate((valid) => {
             if (valid) {
-              // this.$message({
-              //   message: '注册成功',
-              //   type: 'success'
-              // });
-              let that = this
+              this.form.c_time = this.formatDateTime(new Date());
+              let that = this;
               this.$reqs.post('/login/userReg', {
                 account:that.form.user,
                 password:that.form.password,
                 id:that.form.id,
-                name:that.form.name
+                name:that.form.name,
+                c_time:that.form.c_time
               }).then(function (res) {
-                let data = res.data
+                let data = res.data;
                 if(data === '注册成功'){
-                  console.log(data)
+                  console.log(data);
                   // that.$message.error(data);
                   that.$router.push('/success')
                 }else{

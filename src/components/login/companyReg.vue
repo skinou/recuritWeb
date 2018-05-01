@@ -34,7 +34,8 @@
             account: '',
             password: '',
             cname: '',
-            cid: ''
+            cid: '',
+            c_time:''
           },
           rules: {
             account: [
@@ -47,7 +48,7 @@
               { required: true, message: '请输入公司名称', trigger: 'blur' }
             ],
             cid: [
-              { required: true, message: '请输入身份证', trigger: 'blur' },
+              { required: true, message: '请输入注册编号', trigger: 'blur' },
               { min: 15, max: 15, message: '注册编号为15位', trigger: 'blur' }
             ]
           }
@@ -55,34 +56,33 @@
       },
       methods: {
         submitForm(formName) {
-          // let that = this;
-          // this.$refs[formName].validate((valid) => {
-          //   if (valid) {
+          this.$refs[formName].validate((valid) => {
+            if (valid) {
+              this.form.c_time = this.formatDateTime(new Date());
+              this.$reqs.post('/login/companyReg', {
+                account:this.form.account,
+                cname:this.form.cname,
+                cid:this.form.cid
+              }).then( (res)=>{
+                console.log(res);
+                let data = res.data;
+                if(data === '注册成功'){
+                  this.$store.commit('setValueLogin',this.form);
+                  this.$router.push('/companyLoginInfo');
+                }else{
+                  this.$message.error(data);
+                }
+              }).catch( (res)=> {
+                console.log(res.toString())
+              })
 
-          //     this.$reqs.post('/login/companyReg', {
-          //       account:this.form.account,
-          //       cname:this.form.cname,
-          //       cid:this.form.cid
-          //     }).then( (res)=>{
-          //       console.log(res);
-          //       let data = res.data;
-          //       if(data === '注册成功'){
-          //         this.$store.commit('setValueLogin',this.form);
-          //         this.$router.push('/companyLoginInfo');
-          //       }else{
-          //         this.$message.error(data);
-          //       }
-          //     }).catch( (res)=> {
-          //       console.log(res.toString())
-          //     })
+            } else {
+              console.log('error submit!!');
+              return false;
+            }
+          });
 
-          //   } else {
-          //     console.log('error submit!!');
-          //     return false;
-          //   }
-          // });
-
-           this.$router.push('/companyLoginInfo');
+           // this.$router.push('/companyLoginInfo');
 
         },
         resetForm(formName) {

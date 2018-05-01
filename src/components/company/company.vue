@@ -20,8 +20,12 @@
     </div>
   </div>
 
-  <div>
+  <div style="background-color: ghostwhite;width: 100%;min-width: 1200px">
     <router-view></router-view>
+  </div>
+
+  <div style="height: 50px;width: 100%;background-color: ghostwhite">
+
   </div>
 
 
@@ -32,6 +36,7 @@
     export default {
       name: "company",
       created(){
+        window.scrollTo(0,0);
         this.$reqs.get('/companyForUser/getCompany',{
           params:{
             cid:'564165416115614'
@@ -55,10 +60,10 @@
 <style scoped>
   .head{
     width: 100%;
-    min-width: 1000px;
+    min-width: 1200px;
     height: 300px;
     background-color: ghostwhite;
-    border: ghostwhite solid 2px;
+    /*border: ghostwhite solid 2px;*/
   }
   .head_content{
     width: 900px;
@@ -117,7 +122,9 @@
     /*display: inline-block;*/
   }
 
-
+/*.el-menu{*/
+  /*border: none;*/
+/*}*/
 
 
 
