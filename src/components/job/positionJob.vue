@@ -325,7 +325,7 @@
                   experience:this.form2.experience,
                   degree:this.form2.degree,
                   jtype:this.form2.jtype,
-                  time: this.form2.time,
+                  jtime: this.form2.time,
                   jobTag:this.form2.jobTag.toString(),
                 }
               }).then((res)=>{
@@ -357,9 +357,11 @@
         },
         submit2() {
           if(this.form2.temptation!==''){
+            let time = this.formatDateTime(new Date());
             this.$reqs.post('/job/updateJobTemptation',{
               temptation:this.form2.temptation,
               jkey:this.$route.params.jkey,
+              jtime:time
             }).then((res)=>{
 
               console.log(res.data);
@@ -385,9 +387,11 @@
         },
         submit3() {
           if(this.form2.duty!==''){
+            let time = this.formatDateTime(new Date());
             this.$reqs.post('/job/updateJobDuty',{
               duty:this.form2.duty,
               jkey:this.$route.params.jkey,
+              jtime:time
             }).then((res)=>{
 
               console.log(res.data);
@@ -412,9 +416,11 @@
         },
         submit4() {
           if(this.form2.ability!==''){
+            let time = this.formatDateTime(new Date());
             this.$reqs.post('/job/updateJobAbility',{
               ability:this.form2.ability,
               jkey:this.$route.params.jkey,
+              jtime:time
             }).then((res)=>{
 
               console.log(res.data);
@@ -439,9 +445,11 @@
         },
         submit5() {
           if(this.form2.skill!==''){
+            let time = this.formatDateTime(new Date());
             this.$reqs.post('/job/updateJobSkill',{
               skill:this.form2.skill,
               jkey:this.$route.params.jkey,
+              jtime:time
             }).then((res)=>{
 
               console.log(res.data);
@@ -466,9 +474,11 @@
         },
         submit6() {
           if(this.form2.address!==''){
+            let time = this.formatDateTime(new Date());
             this.$reqs.post('/job/updateJobAddress',{
               address:this.form2.address,
               jkey:this.$route.params.jkey,
+              jtime:time
             }).then((res)=>{
 
               console.log(res.data);

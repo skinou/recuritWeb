@@ -151,11 +151,28 @@
       },
       methods:{
         search(){
+
+          let compare = function (prop) {
+            return function (obj1, obj2) {
+              let val1 = new Date(obj1[prop].replace(/-/g,"\/"));
+              let val2 =  new Date(obj2[prop].replace(/-/g,"\/"));
+              if (val1 < val2) {
+                return 1;
+              } else if (val1 > val2) {
+                return -1;
+              } else {
+                return 0;
+              }
+            }
+          };
+
+
           this.$reqs.post('/search/search', {
             keyword:this.searchCondition
           }).then( (res)=> {
             // console.log(res.data)
             this.jobListData = res.data;
+            this.jobListData = this.jobListData.sort(compare('jtime'));
           }).catch(function (res) {
           })
         },
