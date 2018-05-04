@@ -27,13 +27,13 @@
       <div class="info">
         <img v-if="item.sex==='男'" src="@/assets/boy.png"/>
         <img v-else="item.sex==='女'" src="@/assets/girl.png"/>
-        <span><router-link :to="'/resume/'+item.rkey+'/'+item.id">{{item.name}}</router-link>  /</span>
-        <span>{{item.sex}}/</span>
-        <span>{{item.school}}/</span>
-        <span>{{item.degree}}/</span>
-        <span>{{item.major}}</span>
+        <span><router-link :to="'/resume/'+item.rkey+'/'+item.id">{{item.name}}</router-link></span>
+        <!--<span>{{item.sex}}/</span>-->
+        <!--<span>{{item.school}}/</span>-->
+        <!--<span>{{item.degree}}/</span>-->
+        <!--<span>{{item.major}}</span>-->
         <span><el-tag :type="getType(item.state)" size="small" >{{item.state}}</el-tag></span>
-        <span>{{item.rtime}}</span>
+        <span class="time">{{item.rtime}}</span>
       </div>
     </li>
   </ul>
@@ -105,8 +105,16 @@
           return arr
         },
         getInfo(){
-          let arr = this.info.filter(item=>item.state===this.filter);
-          return arr
+          let list = [...this.info];
+          if (this.filter !== '全部') {
+            list = list.filter(item => item.state === this.filter)
+          }
+          return list
+          // let arr;
+          // if (this.filter !== '全部') {
+          //   arr = this.info.filter(item=>item.state===this.filter);
+          // }
+          // return arr
         }
       },
       methods:{
@@ -130,86 +138,11 @@
       },
       data() {
         return {
-          stateItem:['投递成功','已查看','待沟通','通过','不合适'],
-          filter: '投递成功',
+          stateItem:['全部','投递成功','待沟通','通过','不合适'],
+          filter: '全部',
           currentPage: 1,
-          // form: {
-          //   name: 'Java开发工程师',
-          //   salary: '10k-20k',
-          //   city: '上海',
-          //   experience: '验1-3年',
-          //   degree: '本科及以上',
-          //   type: '全职',
-          //   date: '2018/2/18上午11:35:05',
-          //   jobTag: ['运营', '跨国', '福利好', '法定假期'],
-          // },
           form:[],
           info:[]
-          // info:[
-          //   {
-          //     name:'张三',
-          //     sex:'男',
-          //     school:'广州大学',
-          //     degree:'本科',
-          //     state:'未查看'
-          //   },
-          //   {
-          //     name:'张三',
-          //     sex:'男',
-          //     school:'广州大学',
-          //     degree:'本科',
-          //     state:'未查看'
-          //   },
-          //   {
-          //     name:'张三',
-          //     sex:'男',
-          //     school:'广州大学',
-          //     degree:'本科',
-          //     state:'未查看'
-          //   },
-          //   {
-          //     name:'张三',
-          //     sex:'男',
-          //     school:'广州大学',
-          //     degree:'本科',
-          //     state:'未查看'
-          //   },
-          //   {
-          //     name:'张三',
-          //     sex:'男',
-          //     school:'广州大学',
-          //     degree:'本科',
-          //     state:'未查看'
-          //   },
-          //   {
-          //     name:'张三',
-          //     sex:'男',
-          //     school:'广州大学',
-          //     degree:'本科',
-          //     state:'已查看'
-          //   },
-          //   {
-          //     name:'张三',
-          //     sex:'男',
-          //     school:'广州大学',
-          //     degree:'本科',
-          //     state:'待沟通'
-          //   },
-          //   {
-          //     name:'张三',
-          //     sex:'男',
-          //     school:'广州大学',
-          //     degree:'本科',
-          //     state:'不合适'
-          //   },
-          //   {
-          //     name:'张三',
-          //     sex:'男',
-          //     school:'广州大学',
-          //     degree:'本科',
-          //     state:'通过'
-          //   },
-          // ]
         }
       }
     }
@@ -358,5 +291,12 @@
     }
   }
 
+
+  .time{
+    font-size: small;
+    color: grey;
+    float: right;
+    padding-right: 30px;
+  }
 
 </style>

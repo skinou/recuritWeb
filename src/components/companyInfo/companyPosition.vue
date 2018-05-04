@@ -12,8 +12,6 @@
             {{aItem}}
           </li>
         </ul>
-
-
       </div>
 
       <router-link to="/jobRelease"><el-button size="small" type="primary" class="add">发布职位</el-button></router-link>
@@ -41,10 +39,26 @@
     export default {
       name: "company-position",
       created(){
+
+        let compare = function (prop) {
+          return function (obj1, obj2) {
+            let val1 = new Date(obj1[prop].replace(/-/g,"\/"));
+            let val2 =  new Date(obj2[prop].replace(/-/g,"\/"));
+            if (val1 < val2) {
+              return 1;
+            } else if (val1 > val2) {
+              return -1;
+            } else {
+              return 0;
+            }
+          }
+        };
+
         this.$reqs.get('/job/selectJobForCompany')
           .then( (res) =>{
             // console.log(res.data);
             this.list2  = [...res.data];
+            this.list2 = this.list2.sort(compare('jtime'));
             console.log(this.list2)
         }).catch( (res)=> {
           console.log(res.toString())
@@ -71,9 +85,6 @@
           if (this.filterType !== '全部') {
             list = list.filter(item => item.direction === this.filterType)
           }
-
-
-
           return list
         },
         getPages() {
@@ -105,58 +116,6 @@
           },
           currentPage: 1,
           list2:[],
-          list: [
-            {
-              name: '海外运营总监2',
-              time: '18:24',
-              salary: '12k-20k',
-              experience: '经验1-3年',
-              degree: '本科',
-              address: '广州',
-              jobTag:['运营','跨国','福利好','法定假期'],
-              companyTag:['前景大','90后'],
-            },
-            {
-              name: '海外运营总监3',
-              time: '18:24',
-              salary: '12k-20k',
-              experience: '经验1-3年',
-              degree: '本科',
-              address: '广州',
-              jobTag:['运营','跨国','福利好','法定假期'],
-              companyTag:['前景大','90后'],
-            },
-            {
-              name: '海外运营总监4',
-              time: '18:24',
-              salary: '12k-20k',
-              experience: '经验1-3年',
-              degree: '本科',
-              address: '广州',
-              jobTag:['运营','跨国','福利好','法定假期'],
-              companyTag:['前景大','90后'],
-            },
-            {
-              name: '海外运营总监5',
-              time: '18:24',
-              salary: '12k-20k',
-              experience: '经验1-3年',
-              degree: '本科',
-              address: '广州',
-              jobTag:['运营','跨国','福利好','法定假期'],
-              companyTag:['前景大','90后'],
-            },
-            {
-              name: '海外运营总监6',
-              time: '18:24',
-              salary: '12k-20k',
-              experience: '经验1-3年',
-              degree: '本科',
-              address: '广州',
-              jobTag:['运营','跨国','福利好','法定假期'],
-              companyTag:['前景大','90后'],
-            }
-          ]
         }
       }
     }

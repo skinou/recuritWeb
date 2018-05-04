@@ -46,7 +46,7 @@
         </li>
       </ul>
 
-      <h6 class="sub_item">技术要求：</h6>
+      <h6 class="sub_item">福利待遇：</h6>
       <ul class="skill">
         <li v-for="(item,index) in getSkill" :key="index">
           {{item}}
@@ -61,7 +61,7 @@
         <img class="img" :src="form.cimg"/>
         <ul class="company_list">
           <li>
-            <a class="company_name">{{form.cname}}</a>
+            <router-link :to="'/company/'+form.cid" class="company_name">{{form.cname}}</router-link>
           </li>
           <li>
             <!--<span class="glyphicon glyphicon-th-large"></span>-->
@@ -100,9 +100,12 @@
     export default {
       name: "job",
       created(){
+
+        this.jkey = this.$route.params.jkey;
+
         this.$reqs.get('/job/selectJobDetailForUser',{
           params: {
-            jkey: 4,
+            jkey: this.jkey,
             // id: this.$route.params.id,
           }
         }).then((res)=>{
@@ -114,54 +117,48 @@
           else{
             this.form.jobTag = []
           }
-
-
-          this.$reqs.get('/collect/isCollect',{
-            params:{
-              jkey:this.form.jkey,
-            }
-          }).then((res)=>{
-            if(res.data.length!==0){
-              this.isCollect = true
-            }
-            else{
-              this.isCollect = false
-            }
-          }).catch((err)=>{
-            console.log(err.toString())
-          });
-
-
-          this.$reqs.get('/job_resume/isPost',{
-            params:{
-              jkey:this.form.jkey,
-            }
-          }).then((res)=>{
-            if(res.data.length!==0){
-              this.isPost = true
-            }
-            else{
-              this.isPost = false
-            }
-          }).catch((err)=>{
-            console.log(err.toString())
-          });
-
-
-
-
-
         }).catch((err)=>{
           console.log(err.toString())
         });
 
 
+        this.$reqs.get('/collect/isCollect',{
+          params:{
+            jkey:this.jkey,
+          }
+        }).then((res)=>{
+          console.log('12313',res.data);
+          if(res.data.length!==0){
+            this.isCollect = true
+          }
+          else{
+            this.isCollect = false
+          }
+        }).catch((err)=>{
+          console.log(err.toString())
+        });
 
 
+        this.$reqs.get('/job_resume/isPost',{
+          params:{
+            jkey:this.jkey,
+          }
+        }).then((res)=>{
+          console.log('3',res.data);
+          if(res.data.length!==0){
+            this.isPost = true
+          }
+          else{
+            this.isPost = false
+          }
+        }).catch((err)=>{
+          console.log(err.toString())
+        });
 
       },
       data(){
           return{
+            jkey:'',
             form:[],
             isCollect:false,
             isPost:false,
@@ -198,7 +195,8 @@
             jkey:this.form.jkey,
             rtime:this.formatDateTime(new Date())
           }).then((res)=>{
-            console.log(res.data)
+            console.log(res.data);
+            this.isPost = true;
           }).catch((err)=>{
             console.log(err.toString())
           });
@@ -244,14 +242,14 @@
 
   .top{
     height: 216px;
-    width: 815px;
+    width: 915px;
     background-color: white;
     margin: 20px auto;
     /*text-align: center;*/
   }
 
   .left{
-    width: 550px;
+    width: 600px;
     height: 230px;
     background-color:  white;
     float: left;
@@ -261,7 +259,7 @@
   }
 
   .right{
-    width: 250px;
+    width: 300px;
     height: 230px;
     background-color: whitesmoke;
     border: solid whitesmoke;
@@ -312,7 +310,7 @@
 
   .middle{
     /*height: 810px;*/
-    width: 815px;
+    width: 915px;
     margin: 0 auto;
 
 
@@ -321,7 +319,7 @@
 
   .middle_left{
     /*height: 800px;*/
-    width: 550px;
+    width: 600px;
     background-color: whitesmoke;
     border: solid whitesmoke;
     float: left;
@@ -331,7 +329,7 @@
 
   .middle_right{
     /*height: 800px;*/
-    width: 250px;
+    width: 300px;
     border: solid whitesmoke;
     background-color: white;
     float: left;
@@ -359,9 +357,10 @@
     width: 530px;
     margin-left: 20px;
     margin-top: 10px;
-    margin-bottom: 0px;
+    margin-bottom: 0;
     text-align: left;
     font-size: small;
+    white-space: pre-wrap;
   }
 
   .company_content{

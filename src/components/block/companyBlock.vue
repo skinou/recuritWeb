@@ -1,24 +1,20 @@
 <template>
   <div class="company_item">
-    <img class="logo" :src="data.company_img"/>
-    <span class="company"><router-link to="/company">{{data.company_name}}</router-link></span>
-    <span class="company_introduction">{{data.company_field}}</span>
-    <span class="company_describe">{{data.company_statement}}</span>
+    <img class="logo" :src="data.cimg"/>
+    <span class="company"><router-link to="/company">{{data.cname}}</router-link></span>
+    <span class="company_introduction">{{data.field}}</span>
+    <span class="company_describe">{{data.sentence}}</span>
     <div class="block">
-      <span class="number"><i class="iconfont">&#xe609;</i></span>
-      <span class="block_item">广州</span>
+      <span class="number"><i class="iconfont">&#xe64a;</i></span>
+      <span class="block_item">{{data.city}}</span>
     </div>
     <div class="block">
       <span class="number"><i class="iconfont">&#xe79a;</i></span>
-      <span class="block_item">{{data.company_fiance}}</span>
+      <span class="block_item">{{data.fiance}}</span>
     </div>
-    <div class="block" v-if="data.count">
-      <span class="number">{{data.count}}</span>
-      <span class="block_item">在招职位</span>
-    </div>
-    <div class="block" v-else>
-      <span class="number">0</span>
-      <span class="block_item">在招职位</span>
+    <div class="block">
+      <span class="number"><i class="iconfont">&#xe68c;</i></span>
+      <span class="block_item">{{data.teamNum}}</span>
     </div>
   </div>
 </template>

@@ -11,14 +11,14 @@
 
         <div class="area">
           <el-menu default-active="hot" class="el-menu" mode="horizontal">
-            <el-menu-item index="hot">热门职位</el-menu-item>
+            <el-menu-item index="hot">最新职位</el-menu-item>
           </el-menu>
             <job-block v-for="(item , index) in jobDataHot" :data="item" :key="index"></job-block>
         </div>
 
         <div class="area">
           <el-menu default-active="hot" class="el-menu" mode="horizontal">
-            <el-menu-item index="hot">热门公司</el-menu-item>
+            <el-menu-item index="hot">最新公司</el-menu-item>
           </el-menu>
           <company-block v-for="(item , index) in companyData" :data="item" :key="index"></company-block>
         </div>
@@ -44,19 +44,36 @@
         'search-input':search
       },
       created(){
-        this.$reqs.get('/home/getHomeJob' )
+
+        let compare = function (prop) {
+          return function (obj1, obj2) {
+            let val1 = new Date(obj1[prop].replace(/-/g,"\/"));
+            let val2 =  new Date(obj2[prop].replace(/-/g,"\/"));
+            if (val1 < val2) {
+              return 1;
+            } else if (val1 > val2) {
+              return -1;
+            } else {
+              return 0;
+            }
+          }
+        };
+
+
+        this.$reqs.get('/job/getAllJob' )
           .then((res)=> {
             // let data = res.data;
             this.jobDataHot = res.data;
+            this.jobDataHot = this.jobDataHot.sort(compare('jtime'));
             // this.form = this.info;
             console.log(this.jobDataHot)
           }).catch(function (res) {
-        })
-        this.$reqs.get('/home/getHomeCompany' )
+        });
+
+        this.$reqs.get('/company/getAllCompany' )
           .then((res)=> {
-            // let data = res.data;
             this.companyData = res.data;
-            // this.form = this.info;
+            this.companyData = this.companyData.sort(compare('c_time'));
             console.log(this.companyData)
           }).catch(function (res) {
         })

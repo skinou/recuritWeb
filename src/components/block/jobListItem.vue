@@ -2,25 +2,22 @@
     <div class="item">
       <div class="left">
         <div class="top">
-          <img src="@/assets/img2.jpg" class="img"/>
-          <span class="job_name"><router-link to="/job">{{jobListItem.name}}</router-link></span>
-          <span class="job_address"> [{{jobListItem.address}}]</span>
-          <span class="job_time">{{jobListItem.time}}</span>
+          <!--<img :src="jobListItem.cimg" class="img"/>-->
+          <span class="job_name"><router-link :to="'/job/'+jobListItem.jkey">{{jobListItem.jname}}</router-link></span>
+          <span class="job_address"> [{{jobListItem.city}}]</span>
+          <span class="job_time">{{jobListItem.jtime}}</span>
           <span class="job_condition"> <span class="job_salary">{{jobListItem.salary}}</span>   {{jobListItem.experience}}/{{jobListItem.degree}}</span>
         </div>
         <div class="bottom">
-          <span class="job_tag"><el-tag type="info" v-for="(item,index) in jobListItem.jobTag" :key="index" size="mini" >{{item}}</el-tag></span>
+          <span class="job_tag"><el-tag type="info" v-for="(item,index) in getTags(jobListItem.jobTag)" :key="index" size="mini" >{{item}}</el-tag></span>
         </div>
       </div>
       <div class="right">
-        <div class="top">
-          <img src="@/assets/img2.jpg" class="img"/>
-          <span class="company_name"><router-link to="/company">{{jobListItem.company}}</router-link></span><br>
-          <span class="company_intro">{{jobListItem.field}}/{{jobListItem.financing}}/{{jobListItem.address}}</span>
-        </div>
-        <div class="bottom">
-          <span class="job_tag"><el-tag type="info" v-for="(item,index) in jobListItem.companyTag" :key="index" size="mini" >{{item}}</el-tag></span>
-        </div>
+        <img :src="jobListItem.cimg" class="img"/>
+        <span class="company_name"><router-link :to="'/company/'+jobListItem.cid">{{jobListItem.cname}}</router-link></span><br>
+        <span class="company_intro">{{jobListItem.fiance}} / {{jobListItem.city}}</span>
+        <span class="company_intro">{{jobListItem.field}}</span>
+
       </div>
     </div>
 </template>
@@ -30,6 +27,12 @@
       name: "job-list-item",
       props:{
           jobListItem: Object
+      },
+      methods:{
+        getTags(jobTag){
+          let arr = jobTag.split(',');
+          return arr;
+        }
       }
     }
 </script>
@@ -83,9 +86,9 @@
 
 .company_name{
   text-align: left;
-  margin: 13px 0 0 20px;
-  display: inline-block;
-  font-size: small;
+  margin: 18px 0 0 20px;
+  display: block;
+  font-size: 14px;
   height: 20px;
 }
 
@@ -96,7 +99,7 @@
   font-size: small;
   display: inline-block;
   height: 25px;
-  width: 50px;
+  /*width: 50px;*/
   text-align: right;
 }
 
@@ -166,9 +169,9 @@
 }
 
   .img{
-    width: 50px;
-    height: 50px;
-    margin: 10px 0 10px 10px;
+    width: 60px;
+    height: 60px;
+    margin: 20px 0 20px 10px;
     display: inline-block;
     float: left;
   }
@@ -179,11 +182,15 @@
     margin: 5px 0 0 20px;
     float: left;
     display: block;
-    font-size: x-small;
+    font-size: small;
     text-align: left;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+  }
+
+  .fiance{
+
   }
 
   .el-tag{

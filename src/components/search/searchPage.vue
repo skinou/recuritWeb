@@ -107,7 +107,8 @@
           filterDegree: '全部',
           filterSalary: '全部',
           filterType: '全部',
-          jobListData:jobListData.jobListItem,
+          // jobListData:jobListData.jobListItem,
+          jobListData:[],
           currentPage:1,
           searchCondition:''
         }
@@ -153,7 +154,8 @@
           this.$reqs.post('/search/search', {
             keyword:this.searchCondition
           }).then( (res)=> {
-            console.log(res.data)
+            // console.log(res.data)
+            this.jobListData = res.data;
           }).catch(function (res) {
           })
         },

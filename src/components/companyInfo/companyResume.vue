@@ -87,48 +87,6 @@
           type:['全部','技术','产品','视觉设计','运营','市场','人力资源','金融'],
           currentPage: 1,
           list2:[],
-          list: [
-            {
-              name: '海外运营总监111111111111111111',
-              salary: '12k-20k',
-              experience: '经验1-3年',
-              degree: '本科',
-              received: 20,
-              undo: 10
-            },
-            {
-              name: '海外运营总监12',
-              salary: '12k-20k',
-              experience: '经验1-3年',
-              degree: '本科',
-              received: 50,
-              undo: 0
-            },
-            {
-              name: '海外运营总监31',
-              salary: '12k-20k',
-              experience: '经验1-3年',
-              degree: '本科',
-              received: 20,
-              undo: 20
-            },
-            {
-              name: '海外运营总监51',
-              salary: '12k-20k',
-              experience: '经验1-3年',
-              degree: '本科',
-              received: 20,
-              undo: 0
-            },
-            {
-              name: '海外运营总监16',
-              salary: '12k-20k',
-              experience: '经验1-3年',
-              degree: '本科',
-              received: 20,
-              undo: 15
-            }
-          ]
         }
       }
     }

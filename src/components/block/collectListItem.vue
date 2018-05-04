@@ -1,7 +1,7 @@
 <template>
   <div class="item">
     <img :src="jobListItem.cimg" class="img"/>
-    <span class="job_name"><router-link to="/job">{{jobListItem.jname}}</router-link></span>
+    <span class="job_name"><router-link :to="'/job/'+jobListItem.jkey">{{jobListItem.jname}}</router-link></span>
     <span class="job_salary">({{jobListItem.salary}})</span>
     <span class="job_time">{{jobListItem.jtime}}</span>
     <span class="job_condition">{{jobListItem.city}} / {{jobListItem.experience}} / {{jobListItem.degree}}</span><br>

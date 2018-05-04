@@ -1,17 +1,17 @@
 <template>
   <div class="job_item">
     <div class="job_intro">
-      <router-link to="/job/4"><span class="job_name">{{data.job_name}}</span></router-link>
-      <span class="job_time">{{data.job_time}}</span>
-      <span class="job_condition">{{data.job_experience}}/{{data.job_degree}}</span>
-      <span class="job_salary">{{data.job_salary}}</span>
+      <router-link :to="'/job/'+data.jkey"><span class="job_name">{{data.jname}}</span></router-link>
+      <span class="job_salary">{{data.salary}}</span>
+      <span class="job_condition">{{data.experience}}/{{data.degree}}</span>
+      <span class="job_time">{{data.jtime}}</span>
       <span class="job_tag"> <el-tag v-for="(item,index) in tags" :key="index" size="mini">{{item}}</el-tag> </span>
     </div>
     <hr>
     <div class="job_company">
-      <img class="img" :src="data.company_img"/>
-      <span class="company_name">{{data.company_name}}</span><br>
-      <span class="company_intro">{{data.company_field}}/{{data.company_fiance}}/{{data.company_city}}</span>
+      <img class="img" :src="data.cimg"/>
+      <span class="company_name">{{data.cname}}</span><br>
+      <span class="company_intro">{{data.field}}/{{data.fiance}}/{{data.city}}</span>
     </div>
   </div>
 </template>
@@ -24,7 +24,7 @@
       },
       computed:{
         tags(){
-          let arr = this.data.job_tag.split(',')
+          let arr = this.data.jobTag.split(',');
           return arr
         }
       }
@@ -77,22 +77,22 @@
   }
 
   .job_time{
-    float: left;
-    margin-right: 20px;
+    display: inline-block;
+    margin: 10px 20px 0 0;
+    float: right;
+    color: #9d9d9d;
     font-size: smaller;
     font-weight: lighter;
-    color: #9d9d9d;
+  }
+
+  .job_salary {
+    float: left;
+    margin-right: 20px;
+    color: red;
     width: 90px;
     height: 22px;
     text-align: right;
 
-  }
-
-  .job_salary {
-    color: red;
-    display: inline-block;
-    margin: 10px 20px 0 0;
-    float: right;
   }
 
   .job_tag{
@@ -114,7 +114,7 @@
     color: #9d9d9d;
     display: inline-block;
     text-align: left;
-    width: 150px;
+    /*width: 150px;*/
   }
 
   hr{
@@ -133,10 +133,10 @@
   }
 
   .company_name{
-    font-weight: lighter;
     float: left;
-    font-size: smaller;
+    font-size: small;
     margin: 15px 0 0 10px;
+    color: black;
     /*display: inline-block;*/
   }
 

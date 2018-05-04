@@ -1,5 +1,20 @@
 <template>
     <div class="collect">
+
+      <div class="condition">
+        <span class="head">类别</span>
+        <ul>
+          <li
+            v-for="(aItem , index) in type" :key="index"
+            :class="{on: aItem === filterType}"
+            @click="handleType(aItem)"
+          >
+            {{aItem}}
+          </li>
+        </ul>
+      </div>
+
+
       <div v-if="getJobListData.length!==0" style="width: 800px;margin: 0 auto;text-align: center">
         <ul class="list">
           <li v-for="(item , index) in getJobListData" :key="index">
@@ -28,9 +43,25 @@
     export default {
       name: "collect-page",
       created(){
+
+        let compare = function (prop) {
+          return function (obj1, obj2) {
+            let val1 = new Date(obj1[prop].replace(/-/g,"\/"));
+            let val2 =  new Date(obj2[prop].replace(/-/g,"\/"));
+            if (val1 < val2) {
+              return 1;
+            } else if (val1 > val2) {
+              return -1;
+            } else {
+              return 0;
+            }
+          }
+        };
+
         this.$reqs.get('/collect/getCollectList',{
         }).then((res)=>{
           this.list = res.data;
+          this.list = this.list.sort(compare('time'));
           console.log(this.list)
         }).catch((err)=>{
           console.log(err.toString())
@@ -41,17 +72,28 @@
       },
       data(){
         return{
+          filterType: '全部',
+          type:['全部','技术','产品','视觉设计','运营','市场','人力资源','金融'],
           jobListData:jobListData.jobListItem,
           currentPage:1,
           list:[],
         }
       },
       computed: {
+        filterData() {
+          let list = [...this.list];
+          // this.list2 = [...this.list];
+          // console.log(this.list2);
+          if (this.filterType !== '全部') {
+            list = list.filter(item => item.direction === this.filterType)
+          }
+          return list
+        },
         getPages() {
-          return this.list.length
+          return this.filterData.length
         },
         getJobListData(){
-          let list = [...this.list];
+          let list = [...this.filterData];
           let start = 0;
           let end = 6;
           start += (this.currentPage - 1) * 6;
@@ -73,6 +115,10 @@
           }).catch((err)=>{
             console.log(err.toString())
           });
+        },
+        handleType(item){
+          this.filterType = item
+          // console.log(this.filterAddress)
         }
       }
     }
@@ -100,6 +146,64 @@
   .el-pagination{
     display: inline-block;
     text-align: center;
+  }
+
+  .condition{
+    width: 750px;
+    height: 90px;
+    /*line-height: 90px;*/
+    background-color: whitesmoke;
+    margin: 20px auto;
+    display:flex;
+    align-items: center;
+    text-align: center;
+    justify-content:center;
+  }
+
+  .condition>ul{
+    list-style: none;
+    text-align: left;
+    padding: 0 0 0 0;
+    display: inline-block;
+    /*height: 50px;*/
+  }
+
+  .head{
+    font-weight: bold;
+    display: inline-block;
+    padding: 5px 10px 5px 10px;
+    margin: 0 5px 0 5px;
+    /*width: 70px;*/
+  }
+
+  .condition>ul>li{
+    /*margin-right: 10px;*/
+    color: black;
+    display: inline-block;
+    padding: 5px 10px 5px 10px;
+    cursor: pointer;
+    margin: 0 5px 0 5px;
+  }
+
+  .aItem{
+    /*margin-right: 10px;*/
+    color: black;
+    display: inline-block;
+    padding: 5px 10px 5px 10px;
+    cursor: pointer;
+    margin: 0 5px 0 5px;
+  }
+
+  .condition>ul>li:hover{
+    background-color: dodgerblue;
+    color: white;
+  }
+
+
+  .condition>ul>li.on{
+    background-color: dodgerblue;
+    color: white;
+    text-decoration: none;
   }
 
 </style>

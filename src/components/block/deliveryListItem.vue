@@ -4,7 +4,8 @@
     <span class="left"></span>
     <router-link :to="'job/'+item.jkey"><span class="job">{{item.jname}}</span></router-link>
     <span class="salary">{{item.salary}}</span>
-    <span class="state" :class="{'pass': pass , 'fail':fail}">{{item.state}}</span>
+    <!--<span class="state" :class="{'pass': pass , 'fail':fail}">{{item.state}}</span>-->
+    <span class="state"><el-tag :type="getType(item.state)" >{{item.state}}</el-tag></span>
     <span class="city">{{item.city}} / {{item.experience}} / {{item.degree}} / {{item.jtype}}</span>
     <span class="date">{{item.rtime}}</span>
   </div>
@@ -15,9 +16,19 @@
       name: "delivery-list-item",
       props:{
         item:Object,
-        pass:Boolean,
-        fail:Boolean
       },
+      methods:{
+        getType(state){
+          let type = '';
+          if(state ==='不合适'){
+            type = 'danger'
+          }
+          else if(state ==='通过'){
+            type = 'success'
+          }
+         return type;
+        }
+      }
     }
 </script>
 
@@ -38,7 +49,7 @@
   }
   .job{
     display: inline-block;
-    max-width: 130px;
+    max-width: 230px;
     height: 30px;
     float: left;
     text-align: left;
@@ -70,7 +81,7 @@
   }
   .salary{
     display: inline-block;
-    width: 60px;
+    min-width: 60px;
     height: 20px;
     float: left;
     text-align: left;
@@ -82,7 +93,7 @@
   }
   .date{
     display: inline-block;
-    width: 100px;
+    /*width: 100px;*/
     height: 30px;
     float: right;
     text-align: right;
@@ -95,5 +106,12 @@
   }
   .fail{
     color: red;
+  }
+  .el-tag{
+    min-width: 65px;
+    text-align: center;
+    /*font-size: 15px;*/
+    /*letter-spacing: 5px;*/
+    /*font-weight: bold;*/
   }
 </style>

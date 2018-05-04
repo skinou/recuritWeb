@@ -3,7 +3,7 @@
     <div v-if="list.length!==0">
       <ul class="pass">
         <li v-for="(item,index) in getItemData" :key="index">
-          <delivery-list-item :item="item" :pass="false" :fail="false"></delivery-list-item>
+          <delivery-list-item :item="item"></delivery-list-item>
         </li>
       </ul>
 
