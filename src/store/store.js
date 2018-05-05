@@ -7,7 +7,8 @@ Vue.use(Vuex);
 const state = {
   company_login:{},
   company_info:{},
-  account:''
+  account:'',
+  searchValue:'',
 };
 
 const mutations={
@@ -22,6 +23,10 @@ const mutations={
   setAccount(state,value){
     state.account = value;
     console.log(state.account)
+  },
+  setSearchValue(state,value){
+    state.searchValue = value;
+    console.log(state.searchValue)
   }
 };
 

@@ -4,7 +4,7 @@
       <div class="header">
 
         <div class="header-tab">
-          <a class="companyEntrance" href="/index.html'"> < 企业入口</a>
+          <a class="companyEntrance" href="/index.html#/companyLogin"> < 企业入口</a>
           <div  v-if="accountType === '' ">
             <a class="userEntrance" href="/index.html'"> 登陆 </a>
           </div>

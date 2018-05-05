@@ -1,86 +1,91 @@
 <template>
-    <div>
+      <div style="width: 1200px;margin: 0 auto">
+        <div class="recommend">
+          <el-carousel trigger="click" height="320px">
+            <el-carousel-item v-for="item in 2" :key="item">
+              <div class="content">
+                <div class="recommend_item">
+                  <div class="recommend_img"></div>
+                  <div class="recommend_sentence">
+                    <span>以移动互联网改变精英教育</span>
+                  </div>
+                </div>
+                <div class="recommend_item">
+                  <div class="recommend_img"></div>
+                  <div class="recommend_sentence">
+                    <span>以移动互联网改变精英教育</span>
+                  </div>
+                </div>
+                <div class="recommend_item">
+                  <div class="recommend_img"></div>
+                  <div class="recommend_sentence">
+                    <span>以移动互联网改变精英教育</span>
+                  </div>
+                </div>
+                <div class="recommend_item">
+                  <div class="recommend_img"></div>
+                  <div class="recommend_sentence">
+                    <span>以移动互联网改变精英教育</span>
+                  </div>
+                </div>
+              </div>
+            </el-carousel-item>
+          </el-carousel>
+        </div>
 
-      <div class="recommend">
-        <el-carousel trigger="click" height="320px">
-          <el-carousel-item v-for="item in 2" :key="item">
-            <div class="content">
-              <div class="recommend_item">
-                <div class="recommend_img"></div>
-                <div class="recommend_sentence">
-                  <span>以移动互联网改变精英教育</span>
-                </div>
-              </div>
-              <div class="recommend_item">
-                <div class="recommend_img"></div>
-                <div class="recommend_sentence">
-                  <span>以移动互联网改变精英教育</span>
-                </div>
-              </div>
-              <div class="recommend_item">
-                <div class="recommend_img"></div>
-                <div class="recommend_sentence">
-                  <span>以移动互联网改变精英教育</span>
-                </div>
-              </div>
-              <div class="recommend_item">
-                <div class="recommend_img"></div>
-                <div class="recommend_sentence">
-                  <span>以移动互联网改变精英教育</span>
-                </div>
-              </div>
-            </div>
-          </el-carousel-item>
-        </el-carousel>
+        <div class="search">
+          <div class="search_div">
+            <input type="text" name="search" class="search_input" v-model="searchCondition">
+            <!--<button type="button" class="search_btn"><router-link to="/searchPage">搜 索</router-link></button>-->
+            <button type="button" class="search_btn" @click="search()">搜 索</button>
+          </div>
+        </div>
+
+        <div class="search_condition">
+          <ul>
+            <li>
+              <span class="head">公司地点</span>
+              <a
+                class="aItem"
+                v-for="(aItem , index) in  itemData.addressItem" :key="index"
+                :class="{on: aItem === filterAddress}"
+                @click="handleAddress(aItem)"
+              >{{aItem}}</a>
+            </li>
+            <li>
+              <span class="head">融资阶段</span>
+              <a
+                class="aItem"
+                v-for="(aItem , index) in  itemData.fianceItem" :key="index"
+                :class="{on: aItem === filterFiance}"
+                @click="handleFiance(aItem)"
+              >{{aItem}}</a>
+            </li>
+            <li>
+              <span class="head">行业领域</span>
+              <a
+                class="aItem"
+                v-for="(aItem , index) in itemData.fieldItem" :key="index"
+                :class="{on: aItem === filterField}"
+                @click="handleField(aItem)"
+              >{{aItem}}</a>
+            </li>
+          </ul>
+        </div>
+        <div class="area">
+          <company-block v-for="(item , index) in getCompanyData" :data="item" :key="index"></company-block>
+          <h4 class="text" v-show="getCompanyData.length===0">没有相关信息</h4>
+        </div>
+
+        <el-pagination
+          background
+          layout="prev, pager, next"
+          :page-size="6"
+          :current-page.sync="currentPage"
+          @current-change="handleCurrentChange"
+          :total="getPages">
+        </el-pagination>
       </div>
-
-      <div class="search_condition">
-        <ul>
-          <li>
-            <span class="head">公司地点</span>
-            <a
-              class="aItem"
-              v-for="(aItem , index) in  itemData.addressItem" :key="index"
-              :class="{on: aItem === filterAddress}"
-              @click="handleAddress(aItem)"
-            >{{aItem}}</a>
-          </li>
-          <li>
-            <span class="head">融资阶段</span>
-            <a
-              class="aItem"
-              v-for="(aItem , index) in  itemData.fianceItem" :key="index"
-              :class="{on: aItem === filterFiance}"
-              @click="handleFiance(aItem)"
-            >{{aItem}}</a>
-          </li>
-          <li>
-            <span class="head">行业领域</span>
-            <a
-              class="aItem"
-              v-for="(aItem , index) in itemData.fieldItem" :key="index"
-              :class="{on: aItem === filterField}"
-              @click="handleField(aItem)"
-            >{{aItem}}</a>
-          </li>
-        </ul>
-      </div>
-
-      <div class="area">
-        <company-block v-for="(item , index) in getCompanyData" :data="item" :key="index"></company-block>
-        <h4 class="text" v-show="getCompanyData.length===0">没有相关信息</h4>
-      </div>
-
-      <el-pagination
-        background
-        layout="prev, pager, next"
-        :page-size="6"
-        :current-page.sync="currentPage"
-        @current-change="handleCurrentChange"
-        :total="getPages">
-      </el-pagination>
-
-    </div>
 </template>
 
 <script>
@@ -121,6 +126,7 @@
       },
       data(){
           return{
+            searchCondition:'',
             itemData:itemData.companyItem,
             filterAddress:'全部',
             filterFiance:'全部',
@@ -158,6 +164,28 @@
         }
       },
       methods: {
+        search(){
+          let compare = function (prop) {
+            return function (obj1, obj2) {
+              let val1 = new Date(obj1[prop].replace(/-/g,"\/"));
+              let val2 =  new Date(obj2[prop].replace(/-/g,"\/"));
+              if (val1 < val2) {
+                return 1;
+              } else if (val1 > val2) {
+                return -1;
+              } else {
+                return 0;
+              }
+            }
+          };
+          this.$reqs.post('/search/searchCompany', {
+            keyword:this.searchCondition
+          }).then( (res)=> {
+            this.companyData  = res.data;
+            this.companyData = this.companyData.sort(compare('c_time'));
+          }).catch(function (res) {
+          })
+        },
         handleAddress(item) {
           this.filterAddress = item
           // console.log(this.filterAddress)
@@ -192,7 +220,7 @@
     background-color: #d3dce6;
   }
   .recommend{
-    width: 1000px;
+    width: 1100px;
     margin: 10px auto;
   }
 
@@ -246,7 +274,7 @@
     width: 750px;
     height: 210px;
     background-color: whitesmoke;
-    margin: 20px auto;
+    margin: 0 auto;
     padding-top: 5px;
   }
 
@@ -306,6 +334,47 @@
     width: 500px;
     margin: 0 auto;
     text-align: center;
+  }
+
+  .search{
+    width: 750px;
+    height: 60px;
+    background-color: whitesmoke;
+    margin: 0 auto;
+
+  }
+
+  .search_input{
+    float: left;
+    height: 30px;
+    width: 350px;
+    border: solid white 1px;
+    padding-left: 10px;
+  }
+
+  .search_input:focus{
+    border: 1px solid deepskyblue;
+  }
+
+  .search_btn{
+    float: left;
+    height: 35px;
+    line-height: 35px;
+    width: 100px;
+    border: solid deepskyblue 1px;
+    background-color: deepskyblue;
+    font-size: large;
+    /*padding-top: 4px;*/
+    color: white;
+    text-decoration: none;
+  }
+
+  .search_div{
+    width: 470px;
+    height: 35px;
+    margin: 0 auto;
+    position: relative;
+    top: 30px;
   }
 
 </style>

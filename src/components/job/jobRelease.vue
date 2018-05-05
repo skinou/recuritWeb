@@ -10,7 +10,7 @@
       <li><a href="#temptation" :class="{'active':site===2}" @click="change(2)"><i class="iconfont">&#xe62a;</i>岗位诱惑</a></li>
       <li><a href="#duty" :class="{'active':site===3}" @click="change(3)"><i class="iconfont">&#xe62c;</i>岗位职责</a></li>
       <li><a href="#ability" :class="{'active':site===4}" @click="change(4)"><i class="iconfont">&#xe62e;</i>能力要求</a></li>
-      <li><a href="#skill" :class="{'active':site===5}" @click="change(5)"><i class="iconfont">&#xe630;</i>技术要求</a></li>
+      <li><a href="#skill" :class="{'active':site===5}" @click="change(5)"><i class="iconfont">&#xe630;</i>福利待遇</a></li>
       <li><a href="#skill" :class="{'active':site===6}" @click="change(6)"><i class="iconfont">&#xe632;</i>工作地址</a></li>
     </ul>
   </div>
@@ -79,7 +79,7 @@
           <el-input type="textarea" :rows="7" v-model="form.ability"></el-input>
           <span>{{form.ability.length}}字</span>
         </el-form-item>
-        <h3 style=" margin: 50px 0 50px 0" id="skill" ref="skill">技术要求</h3>
+        <h3 style=" margin: 50px 0 50px 0" id="skill" ref="skill">福利待遇</h3>
         <el-form-item  prop="skill">
           <el-input type="textarea" :rows="7" v-model="form.skill"></el-input>
           <span>{{form.skill.length}}字</span>

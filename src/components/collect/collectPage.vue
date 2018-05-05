@@ -1,6 +1,8 @@
 <template>
     <div class="collect">
 
+      <h2 class="title">岗位收藏</h2>
+
       <div class="condition">
         <span class="head">类别</span>
         <ul>
@@ -127,6 +129,8 @@
 <style scoped>
   .collect{
     min-height: 500px;
+    width: 1200px;
+    margin: 10px auto;
   }
   .list{
     margin: 20px auto;
@@ -204,6 +208,12 @@
     background-color: dodgerblue;
     color: white;
     text-decoration: none;
+  }
+
+  .title{
+    color: dodgerblue;
+    font-family: STHeiti;
+    letter-spacing: 5px;
   }
 
 </style>

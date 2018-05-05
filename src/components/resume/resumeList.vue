@@ -3,51 +3,53 @@
   <!--<router-link to="/companyResume"><el-button size="small" icon="el-icon-d-arrow-left" plain class="back">返回</el-button></router-link>-->
   <router-link to="/companyResume"><span class="back iconfont">&#xe7be;</span></router-link>
 
-  <div class="top">
-    <h2>{{form.jname}}</h2>
-    <h4>{{form.salary}}</h4>
-    <h5>{{form.city}}/{{form.experience}}/ {{form.degree}}/ {{form.jtype}}</h5>
-    <h5>发布时间: {{form.jtime}}</h5>
-    <span class="job_tag"><el-tag v-for="(item,index) in form.jobTag" :key="index" size="small" >{{item}}</el-tag></span>
-  </div>
+ <div style="margin-left: 80px">
+   <div class="top">
+     <h2>{{form.jname}}</h2>
+     <h4>{{form.salary}}</h4>
+     <h5>{{form.city}}/{{form.experience}}/ {{form.degree}}/ {{form.jtype}}</h5>
+     <h5>发布时间: {{form.jtime}}</h5>
+     <span class="job_tag"><el-tag v-for="(item,index) in form.jobTag" :key="index" size="small" >{{item}}</el-tag></span>
+   </div>
 
-  <ul class="filter">
-    <li>
-      <a
-        class="aItem"
-        v-for="(aItem , index) in  stateItem" :key="index"
-        :class="{'active': aItem === filter}"
-        @click="handle(aItem)"
-      >{{aItem}}</a>
-    </li>
-  </ul>
+   <ul class="filter">
+     <li>
+       <a
+         class="aItem"
+         v-for="(aItem , index) in  stateItem" :key="index"
+         :class="{'active': aItem === filter}"
+         @click="handle(aItem)"
+       >{{aItem}}</a>
+     </li>
+   </ul>
 
-  <ul class="resumeList">
-    <li v-for="(item,index) in getItemData" :key="index">
-      <div class="info">
-        <img v-if="item.sex==='男'" src="@/assets/boy.png"/>
-        <img v-else="item.sex==='女'" src="@/assets/girl.png"/>
-        <span><router-link :to="'/resume/'+item.rkey+'/'+item.id">{{item.name}}</router-link></span>
-        <!--<span>{{item.sex}}/</span>-->
-        <!--<span>{{item.school}}/</span>-->
-        <!--<span>{{item.degree}}/</span>-->
-        <!--<span>{{item.major}}</span>-->
-        <span><el-tag :type="getType(item.state)" size="small" >{{item.state}}</el-tag></span>
-        <span class="time">{{item.rtime}}</span>
-      </div>
-    </li>
-  </ul>
+   <ul class="resumeList">
+     <li v-for="(item,index) in getItemData" :key="index">
+       <div class="info">
+         <img v-if="item.sex==='男'" src="@/assets/boy.png"/>
+         <img v-else="item.sex==='女'" src="@/assets/girl.png"/>
+         <span><router-link :to="'/resume/'+item.rkey+'/'+item.id">{{item.name}}</router-link></span>
+         <!--<span>{{item.sex}}/</span>-->
+         <!--<span>{{item.school}}/</span>-->
+         <!--<span>{{item.degree}}/</span>-->
+         <!--<span>{{item.major}}</span>-->
+         <span><el-tag :type="getType(item.state)" size="small" >{{item.state}}</el-tag></span>
+         <span class="time">{{item.rtime}}</span>
+       </div>
+     </li>
+   </ul>
 
-  <div style="text-align: center">
-    <el-pagination
-      background
-      layout="prev, pager, next"
-      :page-size="4"
-      :current-page.sync="currentPage"
-      @current-change="handleCurrentChange"
-      :total="getPages">
-    </el-pagination>
-  </div>
+   <div style="text-align: center">
+     <el-pagination
+       background
+       layout="prev, pager, next"
+       :page-size="4"
+       :current-page.sync="currentPage"
+       @current-change="handleCurrentChange"
+       :total="getPages">
+     </el-pagination>
+   </div>
+ </div>
 
 </div>
 </template>
@@ -273,12 +275,13 @@
     position: relative;
     top: 15px;
     margin-left: 25px;
+    float: left;
   }
 
   .back:hover{
     color: whitesmoke;
     background-color: dodgerblue;
-    animation:route 0.5s
+    animation:route 0.5s;
   }
 
   @keyframes route

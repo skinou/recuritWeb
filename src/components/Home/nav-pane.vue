@@ -21,10 +21,12 @@
     >
       <span>{{dataItem.item}}</span>
      <div class="aItem">
-       <a
+       <router-link
          v-for="(aItem ,index) in dataItem.itemData"
          :key="index"
-       >{{aItem}}</a>
+         to="/searchPage"
+         @click.native="setValue(aItem)"
+       >{{aItem}}</router-link>
      </div>
     </div>
   </div>
@@ -58,6 +60,9 @@
       methods :{
         handClick(index){
           this.data = dataList.data[index]
+        },
+        setValue(value){
+          this.$store.commit('setSearchValue',value);
         }
       }
     }
@@ -110,6 +115,7 @@
   background-color: ghostwhite;
   color: dimgrey;
   display: inline-block;
+  text-decoration: none;
 }
 
 .aItem>a:hover{

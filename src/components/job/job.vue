@@ -1,5 +1,5 @@
 <template>
-<div>
+<div style="width: 1200px;margin: 0 auto">
   <div class="top">
     <div class="left">
       <h5 class="cname">{{form.cname}} 招聘</h5>
@@ -22,7 +22,7 @@
 
   <div class="middle">
     <div class="middle_left">
-      <h5 class="item">职位诱惑</h5>
+      <h4 class="item">职位诱惑</h4>
       <ul class="temptation">
         <li v-for="(item,index) in getTemptation" :key="index">
           {{item}}
@@ -30,8 +30,8 @@
       </ul>
 
 
-      <h5 class="item">职位描述</h5>
-      <h6 class="sub_item">岗位职责：</h6>
+      <h4 class="item">职位描述</h4>
+      <h5 class="sub_item">岗位职责：</h5>
 
       <ul class="duty">
         <li v-for="(item,index) in getDuty" :key="index">
@@ -39,14 +39,14 @@
         </li>
       </ul>
 
-      <h6 class="sub_item">能力要求：</h6>
+      <h5 class="sub_item">能力要求：</h5>
       <ul class="ability">
         <li v-for="(item,index) in getAbility" :key="index">
           {{item}}
         </li>
       </ul>
 
-      <h6 class="sub_item">福利待遇：</h6>
+      <h5 class="sub_item">福利待遇：</h5>
       <ul class="skill">
         <li v-for="(item,index) in getSkill" :key="index">
           {{item}}

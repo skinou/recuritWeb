@@ -4,8 +4,8 @@
     <div class="search">
       <div class="search_div">
         <input type="text" name="search" class="search_input" v-model="searchCondition">
-        <!--<button type="button" class="search_btn"><router-link to="/searchPage">搜 索</router-link></button>-->
-        <button type="button" class="search_btn" @click="search()">搜 索</button>
+        <router-link to="/searchPage"><button type="button" class="search_btn" @click="search()">搜 索</button></router-link>
+        <!--<button type="button" class="search_btn" @click="search()">搜 索</button>-->
       </div>
       <ul class="search-recommend">
         <li>
@@ -99,6 +99,31 @@
         'search-input':search,
         'job-list-item':jobListItem
       },
+      created(){
+        let compare = function (prop) {
+          return function (obj1, obj2) {
+            let val1 = new Date(obj1[prop].replace(/-/g,"\/"));
+            let val2 =  new Date(obj2[prop].replace(/-/g,"\/"));
+            if (val1 < val2) {
+              return 1;
+            } else if (val1 > val2) {
+              return -1;
+            } else {
+              return 0;
+            }
+          }
+        };
+        let searchValue = this.$store.state.searchValue;
+        this.searchCondition = searchValue;
+        this.$reqs.post('/search/search', {
+          keyword:searchValue
+        }).then( (res)=> {
+          // console.log(res.data)c
+          this.jobListData = res.data;
+          this.jobListData = this.jobListData.sort(compare('jtime'));
+        }).catch(function (res) {
+        })
+      },
       data(){
         return{
           itemData:itemData.jobItem,
@@ -120,7 +145,7 @@
         filterData(){
           let list = [...this.jobListData]
           if(this.filterAddress!=='全部'){
-            list = list.filter(item=>item.address===this.filterAddress)
+            list = list.filter(item=>item.city===this.filterAddress)
           }
           if(this.filterExp!=='全部'){
             list = list.filter(item=>item.experience===this.filterExp)
@@ -166,11 +191,10 @@
             }
           };
 
-
           this.$reqs.post('/search/search', {
             keyword:this.searchCondition
           }).then( (res)=> {
-            // console.log(res.data)
+            // console.log(res.data)c
             this.jobListData = res.data;
             this.jobListData = this.jobListData.sort(compare('jtime'));
           }).catch(function (res) {

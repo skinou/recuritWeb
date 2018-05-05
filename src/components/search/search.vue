@@ -3,7 +3,7 @@
     <div class="search_div">
       <input type="text" name="search" class="search_input" v-model="searchCondition">
       <!--<button type="button" class="search_btn"><router-link to="/searchPage">搜 索</router-link></button>-->
-      <router-link to="/searchPage" class="search_btn" @click="search()">搜 索</router-link>
+      <router-link to="/searchPage" class="search_btn" @click.native="search()">搜 索</router-link>
     </div>
     <ul class="search-recommend">
       <li>
@@ -29,16 +29,7 @@
       },
       methods:{
         search(){
-          this.$reqs.post('/login/userLogin', {
-            account:this.form.user,
-            obj:{
-              num:10,
-              num2:20
-            }
-          }).then( (res)=> {
-            console.log()
-          }).catch(function (res) {
-          })
+          this.$store.commit('setSearchValue',this.searchCondition);
         }
       }
     }
