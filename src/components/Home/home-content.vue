@@ -60,11 +60,11 @@
         };
 
 
-        this.$reqs.get('/job/getAllJob' )
+        this.$reqs.get('/job/getAllJobHome' )
           .then((res)=> {
             // let data = res.data;
             this.jobDataHot = res.data;
-            this.jobDataHot = this.jobDataHot.sort(compare('jtime'));
+            // this.jobDataHot = this.jobDataHot.sort(compare('jtime'));
             // this.form = this.info;
             console.log(this.jobDataHot)
           }).catch(function (res) {

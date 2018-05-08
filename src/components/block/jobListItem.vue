@@ -78,6 +78,7 @@
   /*display: inline-block;*/
   height: 25px;
   max-width: 220px;
+  min-width: 50px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

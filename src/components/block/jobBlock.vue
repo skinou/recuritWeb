@@ -25,6 +25,7 @@
       computed:{
         tags(){
           let arr = this.data.jobTag.split(',');
+          arr  = arr.slice(0,3);
           return arr
         }
       }

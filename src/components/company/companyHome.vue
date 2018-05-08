@@ -181,7 +181,7 @@
   /*float: left;*/
   width: 100%;
   padding: 0 0 0 0;
-  margin: 0 0 0 0;
+  margin: 0 0 0 20px;
 }
 .productList>li{
   margin-top: 10px;
@@ -190,20 +190,25 @@
 }
 .container>p{
   text-align: left;
-  white-space: pre-wrap;
-  word-break: break-all;
+  /*white-space: pre-wrap;*/
+  /*word-break: break-all;*/
   width: 450px;
   overflow: auto;
   margin: 0 0 2px 0;
   font-size: smaller;
 }
 .company_introduction{
-  margin: 0 30px 30px 40px;
+  margin: 0 30px 30px 30px;
 }
   .company_introduction>p{
     text-align: left;
-    height: 21px;
+    /*height: 21px;*/
     margin: 10px 0 0 10px;
+    width: 650px;
+    text-indent:2em;
+    /*word-break: break-all;*/
+    white-space: pre-wrap;
+    line-height: 200%;
   }
 
 .infoImage{
@@ -228,7 +233,7 @@
 }
 
 .content>p{
-  margin: 0 0 10px 0;
+  margin: 0 0 20px 0;
   font-size: small;
 
 }
@@ -290,7 +295,7 @@
 
 .manager{
   padding: 0 0 0 0;
-  margin: 0 0 0 30px;
+  margin: 0 0 0 40px;
   /*height: 500px;*/
   list-style: none;
   width: 500px;

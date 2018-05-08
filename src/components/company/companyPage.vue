@@ -139,7 +139,7 @@
         filterData(){
           let list = [...this.companyData];
           if(this.filterAddress!=='全部'){
-            list = list.filter(item=>item.address===this.filterAddress)
+            list = list.filter(item=>item.city===this.filterAddress)
           }
           if(this.filterFiance!=='全部'){
             list = list.filter(item=>item.fiance===this.filterFiance)

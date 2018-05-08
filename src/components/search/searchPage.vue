@@ -120,7 +120,8 @@
         }).then( (res)=> {
           // console.log(res.data)c
           this.jobListData = res.data;
-          this.jobListData = this.jobListData.sort(compare('jtime'));
+          console.log(this.jobListData)
+          // this.jobListData = this.jobListData.sort(compare('jtime'));
         }).catch(function (res) {
         })
       },

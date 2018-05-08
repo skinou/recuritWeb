@@ -1,5 +1,5 @@
 <template>
-<div style="width: 1200px;margin: 0 auto">
+<div style="width: 1200px;margin: 0 auto;">
   <div class="top">
     <div class="left">
       <h5 class="cname">{{form.cname}} 招聘</h5>
@@ -21,7 +21,7 @@
   </div>
 
   <div class="middle">
-    <div class="middle_left">
+    <div class="middle_left" ref="elememt" >
       <h4 class="item">职位诱惑</h4>
       <ul class="temptation">
         <li v-for="(item,index) in getTemptation" :key="index">
@@ -30,7 +30,7 @@
       </ul>
 
 
-      <h4 class="item">职位描述</h4>
+      <h4 class="item" v-if="form.duty">职位描述</h4>
       <h5 class="sub_item">岗位职责：</h5>
 
       <ul class="duty">
@@ -39,14 +39,14 @@
         </li>
       </ul>
 
-      <h5 class="sub_item">能力要求：</h5>
+      <h5 class="sub_item" v-if="form.ability">能力要求：</h5>
       <ul class="ability">
         <li v-for="(item,index) in getAbility" :key="index">
           {{item}}
         </li>
       </ul>
 
-      <h5 class="sub_item">福利待遇：</h5>
+      <h5 class="sub_item" v-if="form.skill">福利待遇：</h5>
       <ul class="skill">
         <li v-for="(item,index) in getSkill" :key="index">
           {{item}}
@@ -100,6 +100,10 @@
     export default {
       name: "job",
       created(){
+
+        // this.$nextTick(function () {
+        //   console.log('123132132123132',this.$refs.element.height);
+        // });
 
         this.jkey = this.$route.params.jkey;
 
@@ -330,7 +334,7 @@
   .middle_right{
     /*height: 800px;*/
     width: 300px;
-    border: solid whitesmoke;
+    border-right: solid whitesmoke;
     background-color: white;
     float: left;
     padding-bottom: 50px;

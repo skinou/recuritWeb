@@ -1,7 +1,7 @@
 <template>
   <div class="company_item">
     <img class="logo" :src="data.cimg"/>
-    <span class="company"><router-link to="/company">{{data.cname}}</router-link></span>
+    <span class="company"><router-link :to="'/company/'+data.cid">{{data.cname}}</router-link></span>
     <span class="company_introduction">{{data.field}}</span>
     <span class="company_describe">{{data.sentence}}</span>
     <div class="block">
