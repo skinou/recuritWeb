@@ -47,8 +47,8 @@
               ></el-date-picker>
             </el-col>
           </el-form-item>
-          <el-form-item label="项目描述" prop="statement">
-            <el-input type="textarea" v-model="form.statement"></el-input>
+          <el-form-item label="工作描述" prop="statement">
+            <el-input type="textarea"  :rows="7" v-model="form.statement"></el-input>
           </el-form-item>
           <!--<el-form-item>-->
           <!--<el-button @click="dialogVisible = false">取 消</el-button>-->

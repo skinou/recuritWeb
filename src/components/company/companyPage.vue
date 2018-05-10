@@ -2,30 +2,12 @@
       <div style="width: 1200px;margin: 0 auto">
         <div class="recommend">
           <el-carousel trigger="click" height="320px">
-            <el-carousel-item v-for="item in 2" :key="item">
+            <el-carousel-item>
               <div class="content">
-                <div class="recommend_item">
-                  <div class="recommend_img"></div>
+                <div class="recommend_item" v-for="(item,index) in topData" :key="index">
+                  <img :src="item.cimg" class="recommend_img"/>
                   <div class="recommend_sentence">
-                    <span>以移动互联网改变精英教育</span>
-                  </div>
-                </div>
-                <div class="recommend_item">
-                  <div class="recommend_img"></div>
-                  <div class="recommend_sentence">
-                    <span>以移动互联网改变精英教育</span>
-                  </div>
-                </div>
-                <div class="recommend_item">
-                  <div class="recommend_img"></div>
-                  <div class="recommend_sentence">
-                    <span>以移动互联网改变精英教育</span>
-                  </div>
-                </div>
-                <div class="recommend_item">
-                  <div class="recommend_img"></div>
-                  <div class="recommend_sentence">
-                    <span>以移动互联网改变精英教育</span>
+                    <router-link :to="'/company/'+item.cid"><span>{{item.sentence}}</span></router-link>
                   </div>
                 </div>
               </div>
@@ -118,7 +100,11 @@
         }).then( (res) =>{
             // console.log(res.data);
           this.companyData  = res.data;
+          // this.topData = res.data.splice(0,4);
           this.companyData = this.companyData.sort(compare('c_time'));
+          for(let i=0;i<4;i++){
+            this.topData.push(this.companyData[i])
+          }
           console.log(this.companyData)
           }).catch( (res)=> {
           console.log(res.toString())
@@ -126,6 +112,7 @@
       },
       data(){
           return{
+            topData:[],
             searchCondition:'',
             itemData:itemData.companyItem,
             filterAddress:'全部',
@@ -200,6 +187,7 @@
         },
         handleCurrentChange(){
           console.log(this.currentPage)
+          scrollTo(0,0);
         }
       }
     }
@@ -375,6 +363,10 @@
     margin: 0 auto;
     position: relative;
     top: 30px;
+  }
+  .recommend_sentence>a{
+    text-decoration: none;
+    color: dodgerblue;
   }
 
 </style>

@@ -63,7 +63,7 @@
         this.$reqs.get('/collect/getCollectList',{
         }).then((res)=>{
           this.list = res.data;
-          this.list = this.list.sort(compare('time'));
+          // this.list = this.list.sort(compare('time'));
           console.log(this.list)
         }).catch((err)=>{
           console.log(err.toString())

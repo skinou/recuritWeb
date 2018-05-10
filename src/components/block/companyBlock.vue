@@ -53,7 +53,7 @@
   .logo{
     width: 70px;
     height: 70px;
-    background: yellow;
+    /*background: yellow;*/
     margin: 0 auto;
   }
 

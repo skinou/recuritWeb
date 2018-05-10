@@ -82,6 +82,7 @@
       layout="prev, pager, next"
       :page-size="6"
       :current-page.sync="currentPage"
+      @current-change="handleCurrentChange"
       :total="getPages">
     </el-pagination>
 
@@ -176,6 +177,9 @@
         }
       },
       methods:{
+        handleCurrentChange(){
+          scrollTo(0,0);
+        },
         search(){
 
           let compare = function (prop) {

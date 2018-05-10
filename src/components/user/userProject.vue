@@ -18,7 +18,7 @@
     </el-button>
 
     <el-dialog
-      title="工作经验"
+      title="项目经验"
       :visible.sync="dialogVisible"
       width="600px"
     >
@@ -46,8 +46,8 @@
               ></el-date-picker>
             </el-col>
           </el-form-item>
-          <el-form-item label="任职描述" prop="describe">
-            <el-input type="textarea" v-model="form.statement"></el-input>
+          <el-form-item label="项目描述" prop="describe">
+            <el-input type="textarea" :rows="7" v-model="form.statement"></el-input>
           </el-form-item>
         </el-form>
       </div>

@@ -1,6 +1,8 @@
 <template>
     <div>
+
       <div style="margin: 40px auto;width: 190px">
+        <h3>个人简历信息</h3>
         <i :class="{'text':imageShow}" class="avatar"></i>
         <img v-if="form.img===null" class="imgContent3" src="@/assets/boy.png"/>
         <img v-else class="imgContent3" :src="form.img"/>

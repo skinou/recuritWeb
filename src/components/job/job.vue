@@ -208,6 +208,7 @@
         collect(){
           this.$reqs.post('/collect/insertCollectList',{
             jkey:this.form.jkey,
+            time:this.formatDateTime(new Date())
           }).then((res)=>{
             // console.log(res.data)
             this.isCollect = true

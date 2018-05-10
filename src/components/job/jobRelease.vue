@@ -181,6 +181,7 @@
                   message: '成功',
                   type: 'success'
                 });
+                this.$router.push('companyPosition')
               }).catch((err)=>{
                 console.log(err.toString())
               })
