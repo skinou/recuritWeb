@@ -15,7 +15,7 @@
           </li>
           <li>
             <i class="el-icon-setting"></i>
-            <router-link to="/setUpPage">设置</router-link>
+            <router-link to="/setUpPsw">设置</router-link>
           </li>
         </ul>
 

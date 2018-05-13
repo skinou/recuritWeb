@@ -118,23 +118,23 @@ export default new Router({
 
       ]
     },
+    // {
+    //   path: '/setUpPage',
+    //   name: 'setUpPage',
+    //   component: setUpPage,
+    //   redirect: 'setUpPhone',
+    //   children: [
+    //     {
+    //       path: '/setUpPhone',
+    //       name: 'setUpPhone',
+    //       component: setUpPhone,
+    //     },
+    //     ]
+    // },
     {
-      path: '/setUpPage',
-      name: 'setUpPage',
-      component: setUpPage,
-      redirect: 'setUpPhone',
-      children: [
-        {
-          path: '/setUpPhone',
-          name: 'setUpPhone',
-          component: setUpPhone,
-        },
-        {
-          path: '/setUpPsw',
-          name: 'setUpPsw',
-          component: setUpPsw,
-        },
-        ]
+      path: '/setUpPsw',
+      name: 'setUpPsw',
+      component: setUpPsw,
     },
     {
       path: '/',
