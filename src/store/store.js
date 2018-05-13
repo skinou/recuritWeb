@@ -9,6 +9,7 @@ const state = {
   company_info:{},
   account:'',
   searchValue:'',
+  accountType:'',
 };
 
 const mutations={
@@ -27,6 +28,10 @@ const mutations={
   setSearchValue(state,value){
     state.searchValue = value;
     console.log(state.searchValue)
+  },
+  setAccountType(state,value){
+    state.accountType = value;
+    console.log(state.accountType)
   }
 };
 

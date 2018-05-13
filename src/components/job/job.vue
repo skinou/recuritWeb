@@ -15,8 +15,11 @@
       <el-button  v-else type="primary" plain class="btn" @click="post">投简历</el-button>
 
 
-      <el-button  v-if="isCollect" type="primary"  class="btn" @click="cancel">取消收藏</el-button>
-      <el-button  v-else type="primary"  class="btn" @click="collect">收藏</el-button>
+      <el-button  v-if="isCollect&&!type" type="primary"  class="btn" @click="cancel">取消收藏</el-button>
+      <el-button  v-else-if="!isCollect&&!type" type="primary"  class="btn" @click="collect">收藏</el-button>
+      <el-button  v-else-if="type" type="primary"  class="btn" @click="collect" disabled>收藏</el-button>
+
+
     </div>
   </div>
 
@@ -126,42 +129,52 @@
         });
 
 
-        this.$reqs.get('/collect/isCollect',{
-          params:{
-            jkey:this.jkey,
-          }
-        }).then((res)=>{
-          console.log('12313',res.data);
-          if(res.data.length!==0){
-            this.isCollect = true
-          }
-          else{
-            this.isCollect = false
-          }
-        }).catch((err)=>{
-          console.log(err.toString())
-        });
+        let type = this.$store.state.accountType;
+        console.log('type',type);
+
+        if(type === '个人用户'){
+          this.$reqs.get('/collect/isCollect',{
+            params:{
+              jkey:this.jkey,
+            }
+          }).then((res)=>{
+            if(res.data.length!==0){
+              this.isCollect = true
+            }
+            else{
+              this.isCollect = false
+            }
+          }).catch((err)=>{
+            console.log(err.toString())
+          });
 
 
-        this.$reqs.get('/job_resume/isPost',{
-          params:{
-            jkey:this.jkey,
-          }
-        }).then((res)=>{
-          console.log('3',res.data);
-          if(res.data.length!==0){
-            this.isPost = true
-          }
-          else{
-            this.isPost = false
-          }
-        }).catch((err)=>{
-          console.log(err.toString())
-        });
+          this.$reqs.get('/job_resume/isPost',{
+            params:{
+              jkey:this.jkey,
+            }
+          }).then((res)=>{
+            console.log('3',res.data);
+            if(res.data.length!==0){
+              this.isPost = true
+            }
+            else{
+              this.isPost = false
+            }
+          }).catch((err)=>{
+            console.log(err.toString())
+          });
+        }
+        else{
+          this.isPost = true;
+          this.isCollect = true;
+          this.type = true;
+        }
 
       },
       data(){
           return{
+            type:false,
             jkey:'',
             form:[],
             isCollect:false,

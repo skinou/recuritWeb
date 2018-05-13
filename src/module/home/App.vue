@@ -65,6 +65,7 @@
             this.username = data.name;
             this.accountType = data.type;
             this.$store.commit('setAccount',data.account);
+            this.$store.commit('setAccountType',data.type);
             console.log(data)
         }).catch(function (res) {
 

@@ -59,7 +59,10 @@
             this.$reqs.post('/company/updateCompanyPassword' ,{
               password: this.ruleForm2.pass,
             }).then( (res)=> {
-              console.log(res.data);
+              this.$message({
+                message: '成功',
+                type: 'success'
+              });
             }).catch(function (res) {
             });
           }
