@@ -70,7 +70,7 @@
           }).catch(function (res) {
         });
 
-        this.$reqs.get('/company/getAllCompany' )
+        this.$reqs.get('/company/getAllCompanyHome' )
           .then((res)=> {
             this.companyData = res.data;
             this.companyData = this.companyData.sort(compare('c_time'));

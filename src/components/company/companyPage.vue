@@ -12,6 +12,16 @@
                 </div>
               </div>
             </el-carousel-item>
+            <el-carousel-item>
+              <div class="content">
+                <div class="recommend_item" v-for="(item,index) in topData2" :key="index">
+                  <img :src="item.cimg" class="recommend_img"/>
+                  <div class="recommend_sentence">
+                    <router-link :to="'/company/'+item.cid"><span>{{item.sentence}}</span></router-link>
+                  </div>
+                </div>
+              </div>
+            </el-carousel-item>
           </el-carousel>
         </div>
 
@@ -105,6 +115,9 @@
           for(let i=0;i<4;i++){
             this.topData.push(this.companyData[i])
           }
+          for(let i=4;i<8;i++){
+            this.topData2.push(this.companyData[i])
+          }
           console.log(this.companyData)
           }).catch( (res)=> {
           console.log(res.toString())
@@ -113,6 +126,7 @@
       data(){
           return{
             topData:[],
+            topData2:[],
             searchCondition:'',
             itemData:itemData.companyItem,
             filterAddress:'全部',
@@ -225,7 +239,7 @@
     width: 110px;
     height: 110px;
     margin: 15px 15px 10px 15px;
-    background-color: #31b0d5;
+    /*background-color: #31b0d5;*/
     /*float: left;*/
     display: inline-block;
   }

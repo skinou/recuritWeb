@@ -387,33 +387,37 @@
     color: whitesmoke;
     /*margin: 5px 0 5px 0;*/
     transform:scale(1.2);
-    animation:change 0.5s
+    /*animation:change 0.5s*/
   }
 
   .sideNav>li>a:hover i{
     background-color: dodgerblue;
     color: whitesmoke;
-    animation:change 0.8s
+    /*animation:change 0.8s*/
   }
 
-  @keyframes route
-  {
-    0% {
-      transform: rotate(0deg) scale(1.5);
-    }
-    100% {
-      transform: rotate(360deg) scale(1);
-    }
-  }
+  /*@keyframes route*/
+  /*{*/
+    /*0% {*/
+      /*transform: rotate(0deg) scale(1.5);*/
+    /*}*/
+    /*100% {*/
+      /*transform: rotate(360deg) scale(1);*/
+    /*}*/
+  /*}*/
 
   @keyframes change
   {
     0% {
       transform:scale(1);
     }
-    100% {
+    50% {
       transform:scale(1.2);
     }
+    100% {
+      transform:scale(1);
+    }
+
   }
 
 </style>

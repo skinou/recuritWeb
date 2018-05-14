@@ -188,6 +188,7 @@
     padding: 20px 0 20px 0;
     list-style: none;
     margin: 20px auto;
+    min-height: 50px;
     width: 700px;
     background-color: ghostwhite;
   }
@@ -287,10 +288,13 @@
   @keyframes route
   {
     0% {
-      transform: rotate(0deg) scale(1.5);
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.2);
     }
     100% {
-      transform: rotate(360deg) scale(1);
+      transform: scale(1);
     }
   }
 

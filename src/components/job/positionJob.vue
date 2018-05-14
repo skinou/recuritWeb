@@ -42,7 +42,7 @@
       </ul>
 
       <el-button type="primary" plain size="mini"  @click="dialog5 = true" class="change">修改</el-button>
-      <h5 class="sub_item">技术要求：</h5>
+      <h5 class="sub_item">福利待遇：</h5>
       <ul class="skill">
         <li v-for="(item,index) in getSkill" :key="index">
           {{item}}
@@ -166,10 +166,10 @@
      </el-dialog>
 
 
-     <el-dialog title="技术要求" :visible.sync="dialog5" width="800px">
+     <el-dialog title="福利待遇" :visible.sync="dialog5" width="800px">
        <div class="form_content">
          <el-form ref="form2" :model="form2">
-           <el-form-item  prop="skill">
+           <el-form-item>
              <el-input type="textarea" :rows="7" v-model="form2.skill"></el-input>
              <span>{{form2.skill.length}}字</span>
            </el-form-item>
@@ -444,32 +444,34 @@
 
         },
         submit5() {
-          if(this.form2.skill!==''){
-            let time = this.formatDateTime(new Date());
-            this.$reqs.post('/job/updateJobSkill',{
-              skill:this.form2.skill,
-              jkey:this.$route.params.jkey,
-              jtime:time
-            }).then((res)=>{
+          // if(this.form2.skill!==''){
+          //
+          // }
+          // else{
+          //   this.$message({
+          //     message: '不能为空',
+          //     type: 'warning'
+          //   });
+          // }
 
-              console.log(res.data);
-              this.form.skill=this.form2.skill;
-              this.dialog5=false;
-              this.$message({
-                message: '成功',
-                type: 'success'
-              });
+          let time = this.formatDateTime(new Date());
+          this.$reqs.post('/job/updateJobSkill',{
+            skill:this.form2.skill,
+            jkey:this.$route.params.jkey,
+            jtime:time
+          }).then((res)=>{
 
-            }).catch((err)=>{
-              console.log(err.toString())
-            })
-          }
-          else{
+            console.log(res.data);
+            this.form.skill=this.form2.skill;
+            this.dialog5=false;
             this.$message({
-              message: '不能为空',
-              type: 'warning'
+              message: '成功',
+              type: 'success'
             });
-          }
+
+          }).catch((err)=>{
+            console.log(err.toString())
+          })
 
         },
         submit6() {
@@ -627,7 +629,7 @@
     height: 220px;
     width: 700px;
     background-color: whitesmoke;
-    margin: 20px auto;
+    margin: 20px  0 0 100px;
     padding: 30px 0 0 0;
   }
   h2,h4,h5,h6{
@@ -660,7 +662,7 @@
   .middle{
     min-height: 810px;
     width: 700px;
-    margin: 0 auto;
+    margin: 0 0 0 100px;
 
   }
   .item{
@@ -695,6 +697,7 @@
   }
   .back{
     border: none;
+    float: left;
   }
   .back>span>a{
     color: #909399;
