@@ -95,8 +95,8 @@
                <el-option v-for="(item , index) in degreeItem" :key="index" :label="item" :value="item"></el-option>
              </el-select>
            </el-form-item>
-           <el-form-item label="类别" prop="type">
-             <el-select   v-model="form2.type" placeholder="请选择类别">
+           <el-form-item label="类别" prop="jtype">
+             <el-select   v-model="form2.jtype" placeholder="请选择类别">
                <el-option v-for="(item , index) in typeItem" :key="index" :label="item" :value="item"></el-option>
              </el-select>
            </el-form-item>
@@ -108,7 +108,7 @@
          </el-form>
        </div>
        <span slot="footer" class="dialog-footer">
-              <el-button @click="dialog=false">取 消</el-button>
+              <el-button @click="dialog1=false">取 消</el-button>
               <el-button type="primary" @click="submit1('form2')">确 定</el-button>
             </span>
      </el-dialog>
@@ -215,7 +215,7 @@
         }).then((res)=>{
 
           this.setValue(res.data[0]);
-          console.log(this.form)
+          console.log('132132',this.form)
 
         }).catch((err)=>{
           console.log(err.toString())
@@ -252,7 +252,7 @@
           this.form2.degree = data.degree;
           this.form2.direction = data.direction;
           this.form2.experience = data.experience;
-          this.form2.type = data.jtype;
+          this.form2.jtype = data.jtype;
           this.form2.time = data.jtime;
           this.form2.jobTag = data.jobTag;
           if(data.jobTag){
@@ -336,7 +336,7 @@
                 this.form.direction=this.form2.direction;
                 this.form.experience=this.form2.experience;
                 this.form.degree=this.form2.degree;
-                this.form.jtype=this.form2.jtype;
+                this.form.type=this.form2.jtype;
                 this.form.time=this.form2.time;
                 this.form.jobTag=this.form2.jobTag;
                 this.$message({
@@ -366,6 +366,7 @@
 
               console.log(res.data);
               this.form.temptation=this.form2.temptation;
+              this.form.time = time;
               this.dialog2=false;
               this.$message({
                 message: '成功',
@@ -395,6 +396,7 @@
             }).then((res)=>{
 
               console.log(res.data);
+              this.form.time = time;
               this.form.duty=this.form2.duty;
               this.dialog3=false;
               this.$message({
@@ -425,6 +427,7 @@
 
               console.log(res.data);
               this.form.ability=this.form2.ability;
+              this.form.time = time;
               this.dialog4=false;
               this.$message({
                 message: '成功',
@@ -463,6 +466,7 @@
 
             console.log(res.data);
             this.form.skill=this.form2.skill;
+            this.form.time = time;
             this.dialog5=false;
             this.$message({
               message: '成功',
@@ -482,10 +486,10 @@
               jkey:this.$route.params.jkey,
               jtime:time
             }).then((res)=>{
-
               console.log(res.data);
               this.form.address=this.form2.address;
               this.dialog6=false;
+              this.form.time = time;
               this.$message({
                 message: '成功',
                 type: 'success'
@@ -553,7 +557,7 @@
             direction:'',
             experience:'',
             degree:'',
-            type:'',
+            jtype:'',
             time: '',
             jobTag:[],
             temptation:'',
@@ -599,7 +603,7 @@
             degree: [
               {required: true, message: '不能为空', trigger: 'blur'}
             ],
-            type: [
+            jtype: [
               {required: true, message: '不能为空', trigger: 'blur'}
             ]
           }

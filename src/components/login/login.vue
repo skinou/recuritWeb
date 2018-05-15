@@ -100,6 +100,7 @@
                     }
 
                     if(this.remPassword){
+                      localStorage.setItem("userAccount", this.form.user);
                       localStorage.setItem("userPassword", this.form.password);
                     }
 

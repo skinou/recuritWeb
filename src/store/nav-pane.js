@@ -5,19 +5,19 @@ const technology = [
   {
     item: '后端开发',
     itemData: [
-      'Java','C++','PHP','C','C#'
+      'Java','C++','PHP','C','C#','数据'
     ]
   },
   {
     item: '移动开发',
     itemData: [
-      'HTML5','Android','iOS'
+      'html','Android','ios','app','移动端'
     ]
   },
   {
     item: '前端开发',
     itemData: [
-      'web前端','Flash','JavaScript','COCOS2D-X'
+      'web前端','Flash','JavaScript','3D'
     ]
   }
 ];
@@ -47,7 +47,7 @@ const  view = [
   {
     item: '视觉设计',
     itemData: [
-      '视觉设计师','网页设计师','Flash设计师','APP设计师','平面设计师'
+      '视觉设计师','APP设计师','平面设计师','产品设计'
       ]
   },
   {
@@ -91,13 +91,13 @@ const  market = [
   {
     item: '市场/营销',
     itemData: [
-      '市场营销','市场策划','市场顾问','市场推广','SEO'
+      '市场营销','市场策划','广告营销','市场推广','新媒体','电商'
       ]
   },
   {
     item: '公关',
     itemData: [
-      '媒介经理','广告协调','品牌公关'
+      '媒介经理','广告协调','品牌公关','总监'
       ]
   },
   {
@@ -133,7 +133,7 @@ const fiance = [
   {
     item: '投融资',
     itemData: [
-      '投资经理','分析师','投资助理','融资'
+      '投资','分析师','投资助理','融资'
       ]
   },
   {

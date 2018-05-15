@@ -6,7 +6,7 @@
           <span class="job_name"><router-link :to="'/job/'+jobListItem.jkey">{{jobListItem.jname}}</router-link></span>
           <span class="job_address"> [{{jobListItem.city}}]</span>
           <span class="job_time">{{jobListItem.jtime}}</span>
-          <span class="job_condition"> <span class="job_salary">{{jobListItem.salary}}</span>   {{jobListItem.experience}}/{{jobListItem.degree}}</span>
+          <span class="job_condition"> <span class="job_salary">{{jobListItem.salary}}</span>   {{jobListItem.experience}}/{{jobListItem.degree}}/{{jobListItem.jtype}}</span>
         </div>
         <div class="bottom">
           <span class="job_tag"><el-tag type="info" v-for="(item,index) in getTags(jobListItem.jobTag)" :key="index" size="mini" >{{item}}</el-tag></span>

@@ -11,8 +11,12 @@
     </div>
 
     <div class="right">
-      <el-button  v-if="isPost" type="primary" plain class="btn" @click="post" disabled>已投简历</el-button>
-      <el-button  v-else type="primary" plain class="btn" @click="post">投简历</el-button>
+      <!--<el-button  v-if="isPost" type="primary" plain class="btn" @click="post" disabled>已投简历</el-button>-->
+      <!--<el-button  v-else type="primary" plain class="btn" @click="post">投简历</el-button>-->
+
+      <el-button  v-if="isPost&&!type" type="primary" plain class="btn" @click="cancel" disabled>已投简历</el-button>
+      <el-button  v-else-if="!isCollect&&!type" type="primary"  class="btn" @click="post">投简历</el-button>
+      <el-button  v-else-if="type" type="primary"  class="btn" @click="post" disabled>投简历</el-button>
 
 
       <el-button  v-if="isCollect&&!type" type="primary"  class="btn" @click="cancel">取消收藏</el-button>
@@ -391,7 +395,7 @@
   .img{
     width: 80px;
     height: 80px;
-    background-color: #31b0d5;
+    /*background-color: #31b0d5;*/
     margin: 5px 0 0 15px;
     display: block;
   }

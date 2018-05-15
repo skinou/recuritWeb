@@ -318,7 +318,7 @@
 
 .name{
   display: inline-block;
-  max-width: 100px;
+  max-width: 150px;
   height: 90px;
   line-height: 90px;
   color: black;
@@ -326,7 +326,7 @@
   overflow: hidden;
   white-space: nowrap;
   vertical-align: top;
-  font-size: 1em;
+  font-size: 0.9em;
 }
 .desc{
   display: block;

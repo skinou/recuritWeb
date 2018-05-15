@@ -159,7 +159,7 @@
             list = list.filter(item=>item.salary===this.filterSalary)
           }
           if(this.filterType!=='全部'){
-            list = list.filter(item=>item.type===this.filterType)
+            list = list.filter(item=>item.jtype===this.filterType)
           }
 
           return list
