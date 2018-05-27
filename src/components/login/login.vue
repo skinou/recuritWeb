@@ -16,7 +16,7 @@
         </el-form-item>
         <el-form-item>
           <el-checkbox v-model="remAccount">记住账号</el-checkbox>
-          <el-checkbox v-model="remPassword">记住密码</el-checkbox>
+          <el-checkbox v-model="remPassword">记住账号及密码</el-checkbox>
         </el-form-item>
         <!--<input type="text" name="password" class="input-login" placeholder="密码"><br>-->
         <!--<button type="button" class="login"  @click="btnSubmit">登    陆</button>-->
